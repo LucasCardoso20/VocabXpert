@@ -1,0 +1,27 @@
+{
+  "name": "@vocabxpert/api",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc",
+    "lint": "echo \"(api) add eslint later\"",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@fastify/formbody": "^8.0.2",
+    "@google/generative-ai": "^0.24.1",
+    "@vocabxpert/db": "workspace:*",
+    "@vocabxpert/shared": "workspace:*",
+    "dotenv": "^16.4.5",
+    "fastify": "^5.0.0",
+    "fastify-plugin": "^5.1.0",
+    "pino": "^9.4.0",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "tsx": "^4.21.0",
+    "typescript": "^5.6.3"
+  }
+}

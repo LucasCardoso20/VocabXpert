@@ -1,0 +1,2086 @@
+import type * as runtime from "@prisma/client/runtime/client";
+import type * as Prisma from "../internal/prismaNamespace.js";
+/**
+ * Model Vocab
+ *
+ */
+export type VocabModel = runtime.Types.Result.DefaultSelection<Prisma.$VocabPayload>;
+export type AggregateVocab = {
+    _count: VocabCountAggregateOutputType | null;
+    _min: VocabMinAggregateOutputType | null;
+    _max: VocabMaxAggregateOutputType | null;
+};
+export type VocabMinAggregateOutputType = {
+    id: string | null;
+    userId: string | null;
+    listId: string | null;
+    word: string | null;
+    translation: string | null;
+    createdAt: Date | null;
+    updatedAt: Date | null;
+    wordNormalized: string | null;
+};
+export type VocabMaxAggregateOutputType = {
+    id: string | null;
+    userId: string | null;
+    listId: string | null;
+    word: string | null;
+    translation: string | null;
+    createdAt: Date | null;
+    updatedAt: Date | null;
+    wordNormalized: string | null;
+};
+export type VocabCountAggregateOutputType = {
+    id: number;
+    userId: number;
+    listId: number;
+    word: number;
+    translation: number;
+    createdAt: number;
+    updatedAt: number;
+    wordNormalized: number;
+    _all: number;
+};
+export type VocabMinAggregateInputType = {
+    id?: true;
+    userId?: true;
+    listId?: true;
+    word?: true;
+    translation?: true;
+    createdAt?: true;
+    updatedAt?: true;
+    wordNormalized?: true;
+};
+export type VocabMaxAggregateInputType = {
+    id?: true;
+    userId?: true;
+    listId?: true;
+    word?: true;
+    translation?: true;
+    createdAt?: true;
+    updatedAt?: true;
+    wordNormalized?: true;
+};
+export type VocabCountAggregateInputType = {
+    id?: true;
+    userId?: true;
+    listId?: true;
+    word?: true;
+    translation?: true;
+    createdAt?: true;
+    updatedAt?: true;
+    wordNormalized?: true;
+    _all?: true;
+};
+export type VocabAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Filter which Vocab to aggregate.
+     */
+    where?: Prisma.VocabWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of Vocabs to fetch.
+     */
+    orderBy?: Prisma.VocabOrderByWithRelationInput | Prisma.VocabOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the start position
+     */
+    cursor?: Prisma.VocabWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` Vocabs from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` Vocabs.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Count returned Vocabs
+    **/
+    _count?: true | VocabCountAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to find the minimum value
+    **/
+    _min?: VocabMinAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to find the maximum value
+    **/
+    _max?: VocabMaxAggregateInputType;
+};
+export type GetVocabAggregateType<T extends VocabAggregateArgs> = {
+    [P in keyof T & keyof AggregateVocab]: P extends '_count' | 'count' ? T[P] extends true ? number : Prisma.GetScalarType<T[P], AggregateVocab[P]> : Prisma.GetScalarType<T[P], AggregateVocab[P]>;
+};
+export type VocabGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.VocabWhereInput;
+    orderBy?: Prisma.VocabOrderByWithAggregationInput | Prisma.VocabOrderByWithAggregationInput[];
+    by: Prisma.VocabScalarFieldEnum[] | Prisma.VocabScalarFieldEnum;
+    having?: Prisma.VocabScalarWhereWithAggregatesInput;
+    take?: number;
+    skip?: number;
+    _count?: VocabCountAggregateInputType | true;
+    _min?: VocabMinAggregateInputType;
+    _max?: VocabMaxAggregateInputType;
+};
+export type VocabGroupByOutputType = {
+    id: string;
+    userId: string;
+    listId: string;
+    word: string;
+    translation: string | null;
+    createdAt: Date;
+    updatedAt: Date;
+    wordNormalized: string;
+    _count: VocabCountAggregateOutputType | null;
+    _min: VocabMinAggregateOutputType | null;
+    _max: VocabMaxAggregateOutputType | null;
+};
+export type GetVocabGroupByPayload<T extends VocabGroupByArgs> = Prisma.PrismaPromise<Array<Prisma.PickEnumerable<VocabGroupByOutputType, T['by']> & {
+    [P in ((keyof T) & (keyof VocabGroupByOutputType))]: P extends '_count' ? T[P] extends boolean ? number : Prisma.GetScalarType<T[P], VocabGroupByOutputType[P]> : Prisma.GetScalarType<T[P], VocabGroupByOutputType[P]>;
+}>>;
+export type VocabWhereInput = {
+    AND?: Prisma.VocabWhereInput | Prisma.VocabWhereInput[];
+    OR?: Prisma.VocabWhereInput[];
+    NOT?: Prisma.VocabWhereInput | Prisma.VocabWhereInput[];
+    id?: Prisma.StringFilter<"Vocab"> | string;
+    userId?: Prisma.StringFilter<"Vocab"> | string;
+    listId?: Prisma.StringFilter<"Vocab"> | string;
+    word?: Prisma.StringFilter<"Vocab"> | string;
+    translation?: Prisma.StringNullableFilter<"Vocab"> | string | null;
+    createdAt?: Prisma.DateTimeFilter<"Vocab"> | Date | string;
+    updatedAt?: Prisma.DateTimeFilter<"Vocab"> | Date | string;
+    wordNormalized?: Prisma.StringFilter<"Vocab"> | string;
+    user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
+    list?: Prisma.XOR<Prisma.VocabListScalarRelationFilter, Prisma.VocabListWhereInput>;
+    examples?: Prisma.VocabExampleListRelationFilter;
+    notes?: Prisma.VocabNoteListRelationFilter;
+    reviews?: Prisma.VocabReviewListRelationFilter;
+    progresses?: Prisma.VocabProgressListRelationFilter;
+    studyExercises?: Prisma.StudyExerciseListRelationFilter;
+};
+export type VocabOrderByWithRelationInput = {
+    id?: Prisma.SortOrder;
+    userId?: Prisma.SortOrder;
+    listId?: Prisma.SortOrder;
+    word?: Prisma.SortOrder;
+    translation?: Prisma.SortOrderInput | Prisma.SortOrder;
+    createdAt?: Prisma.SortOrder;
+    updatedAt?: Prisma.SortOrder;
+    wordNormalized?: Prisma.SortOrder;
+    user?: Prisma.UserOrderByWithRelationInput;
+    list?: Prisma.VocabListOrderByWithRelationInput;
+    examples?: Prisma.VocabExampleOrderByRelationAggregateInput;
+    notes?: Prisma.VocabNoteOrderByRelationAggregateInput;
+    reviews?: Prisma.VocabReviewOrderByRelationAggregateInput;
+    progresses?: Prisma.VocabProgressOrderByRelationAggregateInput;
+    studyExercises?: Prisma.StudyExerciseOrderByRelationAggregateInput;
+};
+export type VocabWhereUniqueInput = Prisma.AtLeast<{
+    id?: string;
+    listId_wordNormalized?: Prisma.VocabListIdWordNormalizedCompoundUniqueInput;
+    AND?: Prisma.VocabWhereInput | Prisma.VocabWhereInput[];
+    OR?: Prisma.VocabWhereInput[];
+    NOT?: Prisma.VocabWhereInput | Prisma.VocabWhereInput[];
+    userId?: Prisma.StringFilter<"Vocab"> | string;
+    listId?: Prisma.StringFilter<"Vocab"> | string;
+    word?: Prisma.StringFilter<"Vocab"> | string;
+    translation?: Prisma.StringNullableFilter<"Vocab"> | string | null;
+    createdAt?: Prisma.DateTimeFilter<"Vocab"> | Date | string;
+    updatedAt?: Prisma.DateTimeFilter<"Vocab"> | Date | string;
+    wordNormalized?: Prisma.StringFilter<"Vocab"> | string;
+    user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
+    list?: Prisma.XOR<Prisma.VocabListScalarRelationFilter, Prisma.VocabListWhereInput>;
+    examples?: Prisma.VocabExampleListRelationFilter;
+    notes?: Prisma.VocabNoteListRelationFilter;
+    reviews?: Prisma.VocabReviewListRelationFilter;
+    progresses?: Prisma.VocabProgressListRelationFilter;
+    studyExercises?: Prisma.StudyExerciseListRelationFilter;
+}, "id" | "listId_wordNormalized">;
+export type VocabOrderByWithAggregationInput = {
+    id?: Prisma.SortOrder;
+    userId?: Prisma.SortOrder;
+    listId?: Prisma.SortOrder;
+    word?: Prisma.SortOrder;
+    translation?: Prisma.SortOrderInput | Prisma.SortOrder;
+    createdAt?: Prisma.SortOrder;
+    updatedAt?: Prisma.SortOrder;
+    wordNormalized?: Prisma.SortOrder;
+    _count?: Prisma.VocabCountOrderByAggregateInput;
+    _max?: Prisma.VocabMaxOrderByAggregateInput;
+    _min?: Prisma.VocabMinOrderByAggregateInput;
+};
+export type VocabScalarWhereWithAggregatesInput = {
+    AND?: Prisma.VocabScalarWhereWithAggregatesInput | Prisma.VocabScalarWhereWithAggregatesInput[];
+    OR?: Prisma.VocabScalarWhereWithAggregatesInput[];
+    NOT?: Prisma.VocabScalarWhereWithAggregatesInput | Prisma.VocabScalarWhereWithAggregatesInput[];
+    id?: Prisma.StringWithAggregatesFilter<"Vocab"> | string;
+    userId?: Prisma.StringWithAggregatesFilter<"Vocab"> | string;
+    listId?: Prisma.StringWithAggregatesFilter<"Vocab"> | string;
+    word?: Prisma.StringWithAggregatesFilter<"Vocab"> | string;
+    translation?: Prisma.StringNullableWithAggregatesFilter<"Vocab"> | string | null;
+    createdAt?: Prisma.DateTimeWithAggregatesFilter<"Vocab"> | Date | string;
+    updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Vocab"> | Date | string;
+    wordNormalized?: Prisma.StringWithAggregatesFilter<"Vocab"> | string;
+};
+export type VocabCreateInput = {
+    id?: string;
+    word: string;
+    translation?: string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    wordNormalized: string;
+    user: Prisma.UserCreateNestedOneWithoutVocabsInput;
+    list: Prisma.VocabListCreateNestedOneWithoutVocabsInput;
+    examples?: Prisma.VocabExampleCreateNestedManyWithoutVocabInput;
+    notes?: Prisma.VocabNoteCreateNestedManyWithoutVocabInput;
+    reviews?: Prisma.VocabReviewCreateNestedManyWithoutVocabInput;
+    progresses?: Prisma.VocabProgressCreateNestedManyWithoutVocabInput;
+    studyExercises?: Prisma.StudyExerciseCreateNestedManyWithoutVocabInput;
+};
+export type VocabUncheckedCreateInput = {
+    id?: string;
+    userId: string;
+    listId: string;
+    word: string;
+    translation?: string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    wordNormalized: string;
+    examples?: Prisma.VocabExampleUncheckedCreateNestedManyWithoutVocabInput;
+    notes?: Prisma.VocabNoteUncheckedCreateNestedManyWithoutVocabInput;
+    reviews?: Prisma.VocabReviewUncheckedCreateNestedManyWithoutVocabInput;
+    progresses?: Prisma.VocabProgressUncheckedCreateNestedManyWithoutVocabInput;
+    studyExercises?: Prisma.StudyExerciseUncheckedCreateNestedManyWithoutVocabInput;
+};
+export type VocabUpdateInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    word?: Prisma.StringFieldUpdateOperationsInput | string;
+    translation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    wordNormalized?: Prisma.StringFieldUpdateOperationsInput | string;
+    user?: Prisma.UserUpdateOneRequiredWithoutVocabsNestedInput;
+    list?: Prisma.VocabListUpdateOneRequiredWithoutVocabsNestedInput;
+    examples?: Prisma.VocabExampleUpdateManyWithoutVocabNestedInput;
+    notes?: Prisma.VocabNoteUpdateManyWithoutVocabNestedInput;
+    reviews?: Prisma.VocabReviewUpdateManyWithoutVocabNestedInput;
+    progresses?: Prisma.VocabProgressUpdateManyWithoutVocabNestedInput;
+    studyExercises?: Prisma.StudyExerciseUpdateManyWithoutVocabNestedInput;
+};
+export type VocabUncheckedUpdateInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    userId?: Prisma.StringFieldUpdateOperationsInput | string;
+    listId?: Prisma.StringFieldUpdateOperationsInput | string;
+    word?: Prisma.StringFieldUpdateOperationsInput | string;
+    translation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    wordNormalized?: Prisma.StringFieldUpdateOperationsInput | string;
+    examples?: Prisma.VocabExampleUncheckedUpdateManyWithoutVocabNestedInput;
+    notes?: Prisma.VocabNoteUncheckedUpdateManyWithoutVocabNestedInput;
+    reviews?: Prisma.VocabReviewUncheckedUpdateManyWithoutVocabNestedInput;
+    progresses?: Prisma.VocabProgressUncheckedUpdateManyWithoutVocabNestedInput;
+    studyExercises?: Prisma.StudyExerciseUncheckedUpdateManyWithoutVocabNestedInput;
+};
+export type VocabCreateManyInput = {
+    id?: string;
+    userId: string;
+    listId: string;
+    word: string;
+    translation?: string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    wordNormalized: string;
+};
+export type VocabUpdateManyMutationInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    word?: Prisma.StringFieldUpdateOperationsInput | string;
+    translation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    wordNormalized?: Prisma.StringFieldUpdateOperationsInput | string;
+};
+export type VocabUncheckedUpdateManyInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    userId?: Prisma.StringFieldUpdateOperationsInput | string;
+    listId?: Prisma.StringFieldUpdateOperationsInput | string;
+    word?: Prisma.StringFieldUpdateOperationsInput | string;
+    translation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    wordNormalized?: Prisma.StringFieldUpdateOperationsInput | string;
+};
+export type VocabListRelationFilter = {
+    every?: Prisma.VocabWhereInput;
+    some?: Prisma.VocabWhereInput;
+    none?: Prisma.VocabWhereInput;
+};
+export type VocabOrderByRelationAggregateInput = {
+    _count?: Prisma.SortOrder;
+};
+export type VocabListIdWordNormalizedCompoundUniqueInput = {
+    listId: string;
+    wordNormalized: string;
+};
+export type VocabCountOrderByAggregateInput = {
+    id?: Prisma.SortOrder;
+    userId?: Prisma.SortOrder;
+    listId?: Prisma.SortOrder;
+    word?: Prisma.SortOrder;
+    translation?: Prisma.SortOrder;
+    createdAt?: Prisma.SortOrder;
+    updatedAt?: Prisma.SortOrder;
+    wordNormalized?: Prisma.SortOrder;
+};
+export type VocabMaxOrderByAggregateInput = {
+    id?: Prisma.SortOrder;
+    userId?: Prisma.SortOrder;
+    listId?: Prisma.SortOrder;
+    word?: Prisma.SortOrder;
+    translation?: Prisma.SortOrder;
+    createdAt?: Prisma.SortOrder;
+    updatedAt?: Prisma.SortOrder;
+    wordNormalized?: Prisma.SortOrder;
+};
+export type VocabMinOrderByAggregateInput = {
+    id?: Prisma.SortOrder;
+    userId?: Prisma.SortOrder;
+    listId?: Prisma.SortOrder;
+    word?: Prisma.SortOrder;
+    translation?: Prisma.SortOrder;
+    createdAt?: Prisma.SortOrder;
+    updatedAt?: Prisma.SortOrder;
+    wordNormalized?: Prisma.SortOrder;
+};
+export type VocabScalarRelationFilter = {
+    is?: Prisma.VocabWhereInput;
+    isNot?: Prisma.VocabWhereInput;
+};
+export type VocabCreateNestedManyWithoutUserInput = {
+    create?: Prisma.XOR<Prisma.VocabCreateWithoutUserInput, Prisma.VocabUncheckedCreateWithoutUserInput> | Prisma.VocabCreateWithoutUserInput[] | Prisma.VocabUncheckedCreateWithoutUserInput[];
+    connectOrCreate?: Prisma.VocabCreateOrConnectWithoutUserInput | Prisma.VocabCreateOrConnectWithoutUserInput[];
+    createMany?: Prisma.VocabCreateManyUserInputEnvelope;
+    connect?: Prisma.VocabWhereUniqueInput | Prisma.VocabWhereUniqueInput[];
+};
+export type VocabUncheckedCreateNestedManyWithoutUserInput = {
+    create?: Prisma.XOR<Prisma.VocabCreateWithoutUserInput, Prisma.VocabUncheckedCreateWithoutUserInput> | Prisma.VocabCreateWithoutUserInput[] | Prisma.VocabUncheckedCreateWithoutUserInput[];
+    connectOrCreate?: Prisma.VocabCreateOrConnectWithoutUserInput | Prisma.VocabCreateOrConnectWithoutUserInput[];
+    createMany?: Prisma.VocabCreateManyUserInputEnvelope;
+    connect?: Prisma.VocabWhereUniqueInput | Prisma.VocabWhereUniqueInput[];
+};
+export type VocabUpdateManyWithoutUserNestedInput = {
+    create?: Prisma.XOR<Prisma.VocabCreateWithoutUserInput, Prisma.VocabUncheckedCreateWithoutUserInput> | Prisma.VocabCreateWithoutUserInput[] | Prisma.VocabUncheckedCreateWithoutUserInput[];
+    connectOrCreate?: Prisma.VocabCreateOrConnectWithoutUserInput | Prisma.VocabCreateOrConnectWithoutUserInput[];
+    upsert?: Prisma.VocabUpsertWithWhereUniqueWithoutUserInput | Prisma.VocabUpsertWithWhereUniqueWithoutUserInput[];
+    createMany?: Prisma.VocabCreateManyUserInputEnvelope;
+    set?: Prisma.VocabWhereUniqueInput | Prisma.VocabWhereUniqueInput[];
+    disconnect?: Prisma.VocabWhereUniqueInput | Prisma.VocabWhereUniqueInput[];
+    delete?: Prisma.VocabWhereUniqueInput | Prisma.VocabWhereUniqueInput[];
+    connect?: Prisma.VocabWhereUniqueInput | Prisma.VocabWhereUniqueInput[];
+    update?: Prisma.VocabUpdateWithWhereUniqueWithoutUserInput | Prisma.VocabUpdateWithWhereUniqueWithoutUserInput[];
+    updateMany?: Prisma.VocabUpdateManyWithWhereWithoutUserInput | Prisma.VocabUpdateManyWithWhereWithoutUserInput[];
+    deleteMany?: Prisma.VocabScalarWhereInput | Prisma.VocabScalarWhereInput[];
+};
+export type VocabUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: Prisma.XOR<Prisma.VocabCreateWithoutUserInput, Prisma.VocabUncheckedCreateWithoutUserInput> | Prisma.VocabCreateWithoutUserInput[] | Prisma.VocabUncheckedCreateWithoutUserInput[];
+    connectOrCreate?: Prisma.VocabCreateOrConnectWithoutUserInput | Prisma.VocabCreateOrConnectWithoutUserInput[];
+    upsert?: Prisma.VocabUpsertWithWhereUniqueWithoutUserInput | Prisma.VocabUpsertWithWhereUniqueWithoutUserInput[];
+    createMany?: Prisma.VocabCreateManyUserInputEnvelope;
+    set?: Prisma.VocabWhereUniqueInput | Prisma.VocabWhereUniqueInput[];
+    disconnect?: Prisma.VocabWhereUniqueInput | Prisma.VocabWhereUniqueInput[];
+    delete?: Prisma.VocabWhereUniqueInput | Prisma.VocabWhereUniqueInput[];
+    connect?: Prisma.VocabWhereUniqueInput | Prisma.VocabWhereUniqueInput[];
+    update?: Prisma.VocabUpdateWithWhereUniqueWithoutUserInput | Prisma.VocabUpdateWithWhereUniqueWithoutUserInput[];
+    updateMany?: Prisma.VocabUpdateManyWithWhereWithoutUserInput | Prisma.VocabUpdateManyWithWhereWithoutUserInput[];
+    deleteMany?: Prisma.VocabScalarWhereInput | Prisma.VocabScalarWhereInput[];
+};
+export type VocabCreateNestedManyWithoutListInput = {
+    create?: Prisma.XOR<Prisma.VocabCreateWithoutListInput, Prisma.VocabUncheckedCreateWithoutListInput> | Prisma.VocabCreateWithoutListInput[] | Prisma.VocabUncheckedCreateWithoutListInput[];
+    connectOrCreate?: Prisma.VocabCreateOrConnectWithoutListInput | Prisma.VocabCreateOrConnectWithoutListInput[];
+    createMany?: Prisma.VocabCreateManyListInputEnvelope;
+    connect?: Prisma.VocabWhereUniqueInput | Prisma.VocabWhereUniqueInput[];
+};
+export type VocabUncheckedCreateNestedManyWithoutListInput = {
+    create?: Prisma.XOR<Prisma.VocabCreateWithoutListInput, Prisma.VocabUncheckedCreateWithoutListInput> | Prisma.VocabCreateWithoutListInput[] | Prisma.VocabUncheckedCreateWithoutListInput[];
+    connectOrCreate?: Prisma.VocabCreateOrConnectWithoutListInput | Prisma.VocabCreateOrConnectWithoutListInput[];
+    createMany?: Prisma.VocabCreateManyListInputEnvelope;
+    connect?: Prisma.VocabWhereUniqueInput | Prisma.VocabWhereUniqueInput[];
+};
+export type VocabUpdateManyWithoutListNestedInput = {
+    create?: Prisma.XOR<Prisma.VocabCreateWithoutListInput, Prisma.VocabUncheckedCreateWithoutListInput> | Prisma.VocabCreateWithoutListInput[] | Prisma.VocabUncheckedCreateWithoutListInput[];
+    connectOrCreate?: Prisma.VocabCreateOrConnectWithoutListInput | Prisma.VocabCreateOrConnectWithoutListInput[];
+    upsert?: Prisma.VocabUpsertWithWhereUniqueWithoutListInput | Prisma.VocabUpsertWithWhereUniqueWithoutListInput[];
+    createMany?: Prisma.VocabCreateManyListInputEnvelope;
+    set?: Prisma.VocabWhereUniqueInput | Prisma.VocabWhereUniqueInput[];
+    disconnect?: Prisma.VocabWhereUniqueInput | Prisma.VocabWhereUniqueInput[];
+    delete?: Prisma.VocabWhereUniqueInput | Prisma.VocabWhereUniqueInput[];
+    connect?: Prisma.VocabWhereUniqueInput | Prisma.VocabWhereUniqueInput[];
+    update?: Prisma.VocabUpdateWithWhereUniqueWithoutListInput | Prisma.VocabUpdateWithWhereUniqueWithoutListInput[];
+    updateMany?: Prisma.VocabUpdateManyWithWhereWithoutListInput | Prisma.VocabUpdateManyWithWhereWithoutListInput[];
+    deleteMany?: Prisma.VocabScalarWhereInput | Prisma.VocabScalarWhereInput[];
+};
+export type VocabUncheckedUpdateManyWithoutListNestedInput = {
+    create?: Prisma.XOR<Prisma.VocabCreateWithoutListInput, Prisma.VocabUncheckedCreateWithoutListInput> | Prisma.VocabCreateWithoutListInput[] | Prisma.VocabUncheckedCreateWithoutListInput[];
+    connectOrCreate?: Prisma.VocabCreateOrConnectWithoutListInput | Prisma.VocabCreateOrConnectWithoutListInput[];
+    upsert?: Prisma.VocabUpsertWithWhereUniqueWithoutListInput | Prisma.VocabUpsertWithWhereUniqueWithoutListInput[];
+    createMany?: Prisma.VocabCreateManyListInputEnvelope;
+    set?: Prisma.VocabWhereUniqueInput | Prisma.VocabWhereUniqueInput[];
+    disconnect?: Prisma.VocabWhereUniqueInput | Prisma.VocabWhereUniqueInput[];
+    delete?: Prisma.VocabWhereUniqueInput | Prisma.VocabWhereUniqueInput[];
+    connect?: Prisma.VocabWhereUniqueInput | Prisma.VocabWhereUniqueInput[];
+    update?: Prisma.VocabUpdateWithWhereUniqueWithoutListInput | Prisma.VocabUpdateWithWhereUniqueWithoutListInput[];
+    updateMany?: Prisma.VocabUpdateManyWithWhereWithoutListInput | Prisma.VocabUpdateManyWithWhereWithoutListInput[];
+    deleteMany?: Prisma.VocabScalarWhereInput | Prisma.VocabScalarWhereInput[];
+};
+export type VocabCreateNestedOneWithoutExamplesInput = {
+    create?: Prisma.XOR<Prisma.VocabCreateWithoutExamplesInput, Prisma.VocabUncheckedCreateWithoutExamplesInput>;
+    connectOrCreate?: Prisma.VocabCreateOrConnectWithoutExamplesInput;
+    connect?: Prisma.VocabWhereUniqueInput;
+};
+export type VocabUpdateOneRequiredWithoutExamplesNestedInput = {
+    create?: Prisma.XOR<Prisma.VocabCreateWithoutExamplesInput, Prisma.VocabUncheckedCreateWithoutExamplesInput>;
+    connectOrCreate?: Prisma.VocabCreateOrConnectWithoutExamplesInput;
+    upsert?: Prisma.VocabUpsertWithoutExamplesInput;
+    connect?: Prisma.VocabWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.VocabUpdateToOneWithWhereWithoutExamplesInput, Prisma.VocabUpdateWithoutExamplesInput>, Prisma.VocabUncheckedUpdateWithoutExamplesInput>;
+};
+export type VocabCreateNestedOneWithoutNotesInput = {
+    create?: Prisma.XOR<Prisma.VocabCreateWithoutNotesInput, Prisma.VocabUncheckedCreateWithoutNotesInput>;
+    connectOrCreate?: Prisma.VocabCreateOrConnectWithoutNotesInput;
+    connect?: Prisma.VocabWhereUniqueInput;
+};
+export type VocabUpdateOneRequiredWithoutNotesNestedInput = {
+    create?: Prisma.XOR<Prisma.VocabCreateWithoutNotesInput, Prisma.VocabUncheckedCreateWithoutNotesInput>;
+    connectOrCreate?: Prisma.VocabCreateOrConnectWithoutNotesInput;
+    upsert?: Prisma.VocabUpsertWithoutNotesInput;
+    connect?: Prisma.VocabWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.VocabUpdateToOneWithWhereWithoutNotesInput, Prisma.VocabUpdateWithoutNotesInput>, Prisma.VocabUncheckedUpdateWithoutNotesInput>;
+};
+export type VocabCreateNestedOneWithoutReviewsInput = {
+    create?: Prisma.XOR<Prisma.VocabCreateWithoutReviewsInput, Prisma.VocabUncheckedCreateWithoutReviewsInput>;
+    connectOrCreate?: Prisma.VocabCreateOrConnectWithoutReviewsInput;
+    connect?: Prisma.VocabWhereUniqueInput;
+};
+export type VocabUpdateOneRequiredWithoutReviewsNestedInput = {
+    create?: Prisma.XOR<Prisma.VocabCreateWithoutReviewsInput, Prisma.VocabUncheckedCreateWithoutReviewsInput>;
+    connectOrCreate?: Prisma.VocabCreateOrConnectWithoutReviewsInput;
+    upsert?: Prisma.VocabUpsertWithoutReviewsInput;
+    connect?: Prisma.VocabWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.VocabUpdateToOneWithWhereWithoutReviewsInput, Prisma.VocabUpdateWithoutReviewsInput>, Prisma.VocabUncheckedUpdateWithoutReviewsInput>;
+};
+export type VocabCreateNestedOneWithoutProgressesInput = {
+    create?: Prisma.XOR<Prisma.VocabCreateWithoutProgressesInput, Prisma.VocabUncheckedCreateWithoutProgressesInput>;
+    connectOrCreate?: Prisma.VocabCreateOrConnectWithoutProgressesInput;
+    connect?: Prisma.VocabWhereUniqueInput;
+};
+export type VocabUpdateOneRequiredWithoutProgressesNestedInput = {
+    create?: Prisma.XOR<Prisma.VocabCreateWithoutProgressesInput, Prisma.VocabUncheckedCreateWithoutProgressesInput>;
+    connectOrCreate?: Prisma.VocabCreateOrConnectWithoutProgressesInput;
+    upsert?: Prisma.VocabUpsertWithoutProgressesInput;
+    connect?: Prisma.VocabWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.VocabUpdateToOneWithWhereWithoutProgressesInput, Prisma.VocabUpdateWithoutProgressesInput>, Prisma.VocabUncheckedUpdateWithoutProgressesInput>;
+};
+export type VocabCreateNestedOneWithoutStudyExercisesInput = {
+    create?: Prisma.XOR<Prisma.VocabCreateWithoutStudyExercisesInput, Prisma.VocabUncheckedCreateWithoutStudyExercisesInput>;
+    connectOrCreate?: Prisma.VocabCreateOrConnectWithoutStudyExercisesInput;
+    connect?: Prisma.VocabWhereUniqueInput;
+};
+export type VocabUpdateOneRequiredWithoutStudyExercisesNestedInput = {
+    create?: Prisma.XOR<Prisma.VocabCreateWithoutStudyExercisesInput, Prisma.VocabUncheckedCreateWithoutStudyExercisesInput>;
+    connectOrCreate?: Prisma.VocabCreateOrConnectWithoutStudyExercisesInput;
+    upsert?: Prisma.VocabUpsertWithoutStudyExercisesInput;
+    connect?: Prisma.VocabWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.VocabUpdateToOneWithWhereWithoutStudyExercisesInput, Prisma.VocabUpdateWithoutStudyExercisesInput>, Prisma.VocabUncheckedUpdateWithoutStudyExercisesInput>;
+};
+export type VocabCreateWithoutUserInput = {
+    id?: string;
+    word: string;
+    translation?: string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    wordNormalized: string;
+    list: Prisma.VocabListCreateNestedOneWithoutVocabsInput;
+    examples?: Prisma.VocabExampleCreateNestedManyWithoutVocabInput;
+    notes?: Prisma.VocabNoteCreateNestedManyWithoutVocabInput;
+    reviews?: Prisma.VocabReviewCreateNestedManyWithoutVocabInput;
+    progresses?: Prisma.VocabProgressCreateNestedManyWithoutVocabInput;
+    studyExercises?: Prisma.StudyExerciseCreateNestedManyWithoutVocabInput;
+};
+export type VocabUncheckedCreateWithoutUserInput = {
+    id?: string;
+    listId: string;
+    word: string;
+    translation?: string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    wordNormalized: string;
+    examples?: Prisma.VocabExampleUncheckedCreateNestedManyWithoutVocabInput;
+    notes?: Prisma.VocabNoteUncheckedCreateNestedManyWithoutVocabInput;
+    reviews?: Prisma.VocabReviewUncheckedCreateNestedManyWithoutVocabInput;
+    progresses?: Prisma.VocabProgressUncheckedCreateNestedManyWithoutVocabInput;
+    studyExercises?: Prisma.StudyExerciseUncheckedCreateNestedManyWithoutVocabInput;
+};
+export type VocabCreateOrConnectWithoutUserInput = {
+    where: Prisma.VocabWhereUniqueInput;
+    create: Prisma.XOR<Prisma.VocabCreateWithoutUserInput, Prisma.VocabUncheckedCreateWithoutUserInput>;
+};
+export type VocabCreateManyUserInputEnvelope = {
+    data: Prisma.VocabCreateManyUserInput | Prisma.VocabCreateManyUserInput[];
+    skipDuplicates?: boolean;
+};
+export type VocabUpsertWithWhereUniqueWithoutUserInput = {
+    where: Prisma.VocabWhereUniqueInput;
+    update: Prisma.XOR<Prisma.VocabUpdateWithoutUserInput, Prisma.VocabUncheckedUpdateWithoutUserInput>;
+    create: Prisma.XOR<Prisma.VocabCreateWithoutUserInput, Prisma.VocabUncheckedCreateWithoutUserInput>;
+};
+export type VocabUpdateWithWhereUniqueWithoutUserInput = {
+    where: Prisma.VocabWhereUniqueInput;
+    data: Prisma.XOR<Prisma.VocabUpdateWithoutUserInput, Prisma.VocabUncheckedUpdateWithoutUserInput>;
+};
+export type VocabUpdateManyWithWhereWithoutUserInput = {
+    where: Prisma.VocabScalarWhereInput;
+    data: Prisma.XOR<Prisma.VocabUpdateManyMutationInput, Prisma.VocabUncheckedUpdateManyWithoutUserInput>;
+};
+export type VocabScalarWhereInput = {
+    AND?: Prisma.VocabScalarWhereInput | Prisma.VocabScalarWhereInput[];
+    OR?: Prisma.VocabScalarWhereInput[];
+    NOT?: Prisma.VocabScalarWhereInput | Prisma.VocabScalarWhereInput[];
+    id?: Prisma.StringFilter<"Vocab"> | string;
+    userId?: Prisma.StringFilter<"Vocab"> | string;
+    listId?: Prisma.StringFilter<"Vocab"> | string;
+    word?: Prisma.StringFilter<"Vocab"> | string;
+    translation?: Prisma.StringNullableFilter<"Vocab"> | string | null;
+    createdAt?: Prisma.DateTimeFilter<"Vocab"> | Date | string;
+    updatedAt?: Prisma.DateTimeFilter<"Vocab"> | Date | string;
+    wordNormalized?: Prisma.StringFilter<"Vocab"> | string;
+};
+export type VocabCreateWithoutListInput = {
+    id?: string;
+    word: string;
+    translation?: string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    wordNormalized: string;
+    user: Prisma.UserCreateNestedOneWithoutVocabsInput;
+    examples?: Prisma.VocabExampleCreateNestedManyWithoutVocabInput;
+    notes?: Prisma.VocabNoteCreateNestedManyWithoutVocabInput;
+    reviews?: Prisma.VocabReviewCreateNestedManyWithoutVocabInput;
+    progresses?: Prisma.VocabProgressCreateNestedManyWithoutVocabInput;
+    studyExercises?: Prisma.StudyExerciseCreateNestedManyWithoutVocabInput;
+};
+export type VocabUncheckedCreateWithoutListInput = {
+    id?: string;
+    userId: string;
+    word: string;
+    translation?: string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    wordNormalized: string;
+    examples?: Prisma.VocabExampleUncheckedCreateNestedManyWithoutVocabInput;
+    notes?: Prisma.VocabNoteUncheckedCreateNestedManyWithoutVocabInput;
+    reviews?: Prisma.VocabReviewUncheckedCreateNestedManyWithoutVocabInput;
+    progresses?: Prisma.VocabProgressUncheckedCreateNestedManyWithoutVocabInput;
+    studyExercises?: Prisma.StudyExerciseUncheckedCreateNestedManyWithoutVocabInput;
+};
+export type VocabCreateOrConnectWithoutListInput = {
+    where: Prisma.VocabWhereUniqueInput;
+    create: Prisma.XOR<Prisma.VocabCreateWithoutListInput, Prisma.VocabUncheckedCreateWithoutListInput>;
+};
+export type VocabCreateManyListInputEnvelope = {
+    data: Prisma.VocabCreateManyListInput | Prisma.VocabCreateManyListInput[];
+    skipDuplicates?: boolean;
+};
+export type VocabUpsertWithWhereUniqueWithoutListInput = {
+    where: Prisma.VocabWhereUniqueInput;
+    update: Prisma.XOR<Prisma.VocabUpdateWithoutListInput, Prisma.VocabUncheckedUpdateWithoutListInput>;
+    create: Prisma.XOR<Prisma.VocabCreateWithoutListInput, Prisma.VocabUncheckedCreateWithoutListInput>;
+};
+export type VocabUpdateWithWhereUniqueWithoutListInput = {
+    where: Prisma.VocabWhereUniqueInput;
+    data: Prisma.XOR<Prisma.VocabUpdateWithoutListInput, Prisma.VocabUncheckedUpdateWithoutListInput>;
+};
+export type VocabUpdateManyWithWhereWithoutListInput = {
+    where: Prisma.VocabScalarWhereInput;
+    data: Prisma.XOR<Prisma.VocabUpdateManyMutationInput, Prisma.VocabUncheckedUpdateManyWithoutListInput>;
+};
+export type VocabCreateWithoutExamplesInput = {
+    id?: string;
+    word: string;
+    translation?: string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    wordNormalized: string;
+    user: Prisma.UserCreateNestedOneWithoutVocabsInput;
+    list: Prisma.VocabListCreateNestedOneWithoutVocabsInput;
+    notes?: Prisma.VocabNoteCreateNestedManyWithoutVocabInput;
+    reviews?: Prisma.VocabReviewCreateNestedManyWithoutVocabInput;
+    progresses?: Prisma.VocabProgressCreateNestedManyWithoutVocabInput;
+    studyExercises?: Prisma.StudyExerciseCreateNestedManyWithoutVocabInput;
+};
+export type VocabUncheckedCreateWithoutExamplesInput = {
+    id?: string;
+    userId: string;
+    listId: string;
+    word: string;
+    translation?: string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    wordNormalized: string;
+    notes?: Prisma.VocabNoteUncheckedCreateNestedManyWithoutVocabInput;
+    reviews?: Prisma.VocabReviewUncheckedCreateNestedManyWithoutVocabInput;
+    progresses?: Prisma.VocabProgressUncheckedCreateNestedManyWithoutVocabInput;
+    studyExercises?: Prisma.StudyExerciseUncheckedCreateNestedManyWithoutVocabInput;
+};
+export type VocabCreateOrConnectWithoutExamplesInput = {
+    where: Prisma.VocabWhereUniqueInput;
+    create: Prisma.XOR<Prisma.VocabCreateWithoutExamplesInput, Prisma.VocabUncheckedCreateWithoutExamplesInput>;
+};
+export type VocabUpsertWithoutExamplesInput = {
+    update: Prisma.XOR<Prisma.VocabUpdateWithoutExamplesInput, Prisma.VocabUncheckedUpdateWithoutExamplesInput>;
+    create: Prisma.XOR<Prisma.VocabCreateWithoutExamplesInput, Prisma.VocabUncheckedCreateWithoutExamplesInput>;
+    where?: Prisma.VocabWhereInput;
+};
+export type VocabUpdateToOneWithWhereWithoutExamplesInput = {
+    where?: Prisma.VocabWhereInput;
+    data: Prisma.XOR<Prisma.VocabUpdateWithoutExamplesInput, Prisma.VocabUncheckedUpdateWithoutExamplesInput>;
+};
+export type VocabUpdateWithoutExamplesInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    word?: Prisma.StringFieldUpdateOperationsInput | string;
+    translation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    wordNormalized?: Prisma.StringFieldUpdateOperationsInput | string;
+    user?: Prisma.UserUpdateOneRequiredWithoutVocabsNestedInput;
+    list?: Prisma.VocabListUpdateOneRequiredWithoutVocabsNestedInput;
+    notes?: Prisma.VocabNoteUpdateManyWithoutVocabNestedInput;
+    reviews?: Prisma.VocabReviewUpdateManyWithoutVocabNestedInput;
+    progresses?: Prisma.VocabProgressUpdateManyWithoutVocabNestedInput;
+    studyExercises?: Prisma.StudyExerciseUpdateManyWithoutVocabNestedInput;
+};
+export type VocabUncheckedUpdateWithoutExamplesInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    userId?: Prisma.StringFieldUpdateOperationsInput | string;
+    listId?: Prisma.StringFieldUpdateOperationsInput | string;
+    word?: Prisma.StringFieldUpdateOperationsInput | string;
+    translation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    wordNormalized?: Prisma.StringFieldUpdateOperationsInput | string;
+    notes?: Prisma.VocabNoteUncheckedUpdateManyWithoutVocabNestedInput;
+    reviews?: Prisma.VocabReviewUncheckedUpdateManyWithoutVocabNestedInput;
+    progresses?: Prisma.VocabProgressUncheckedUpdateManyWithoutVocabNestedInput;
+    studyExercises?: Prisma.StudyExerciseUncheckedUpdateManyWithoutVocabNestedInput;
+};
+export type VocabCreateWithoutNotesInput = {
+    id?: string;
+    word: string;
+    translation?: string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    wordNormalized: string;
+    user: Prisma.UserCreateNestedOneWithoutVocabsInput;
+    list: Prisma.VocabListCreateNestedOneWithoutVocabsInput;
+    examples?: Prisma.VocabExampleCreateNestedManyWithoutVocabInput;
+    reviews?: Prisma.VocabReviewCreateNestedManyWithoutVocabInput;
+    progresses?: Prisma.VocabProgressCreateNestedManyWithoutVocabInput;
+    studyExercises?: Prisma.StudyExerciseCreateNestedManyWithoutVocabInput;
+};
+export type VocabUncheckedCreateWithoutNotesInput = {
+    id?: string;
+    userId: string;
+    listId: string;
+    word: string;
+    translation?: string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    wordNormalized: string;
+    examples?: Prisma.VocabExampleUncheckedCreateNestedManyWithoutVocabInput;
+    reviews?: Prisma.VocabReviewUncheckedCreateNestedManyWithoutVocabInput;
+    progresses?: Prisma.VocabProgressUncheckedCreateNestedManyWithoutVocabInput;
+    studyExercises?: Prisma.StudyExerciseUncheckedCreateNestedManyWithoutVocabInput;
+};
+export type VocabCreateOrConnectWithoutNotesInput = {
+    where: Prisma.VocabWhereUniqueInput;
+    create: Prisma.XOR<Prisma.VocabCreateWithoutNotesInput, Prisma.VocabUncheckedCreateWithoutNotesInput>;
+};
+export type VocabUpsertWithoutNotesInput = {
+    update: Prisma.XOR<Prisma.VocabUpdateWithoutNotesInput, Prisma.VocabUncheckedUpdateWithoutNotesInput>;
+    create: Prisma.XOR<Prisma.VocabCreateWithoutNotesInput, Prisma.VocabUncheckedCreateWithoutNotesInput>;
+    where?: Prisma.VocabWhereInput;
+};
+export type VocabUpdateToOneWithWhereWithoutNotesInput = {
+    where?: Prisma.VocabWhereInput;
+    data: Prisma.XOR<Prisma.VocabUpdateWithoutNotesInput, Prisma.VocabUncheckedUpdateWithoutNotesInput>;
+};
+export type VocabUpdateWithoutNotesInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    word?: Prisma.StringFieldUpdateOperationsInput | string;
+    translation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    wordNormalized?: Prisma.StringFieldUpdateOperationsInput | string;
+    user?: Prisma.UserUpdateOneRequiredWithoutVocabsNestedInput;
+    list?: Prisma.VocabListUpdateOneRequiredWithoutVocabsNestedInput;
+    examples?: Prisma.VocabExampleUpdateManyWithoutVocabNestedInput;
+    reviews?: Prisma.VocabReviewUpdateManyWithoutVocabNestedInput;
+    progresses?: Prisma.VocabProgressUpdateManyWithoutVocabNestedInput;
+    studyExercises?: Prisma.StudyExerciseUpdateManyWithoutVocabNestedInput;
+};
+export type VocabUncheckedUpdateWithoutNotesInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    userId?: Prisma.StringFieldUpdateOperationsInput | string;
+    listId?: Prisma.StringFieldUpdateOperationsInput | string;
+    word?: Prisma.StringFieldUpdateOperationsInput | string;
+    translation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    wordNormalized?: Prisma.StringFieldUpdateOperationsInput | string;
+    examples?: Prisma.VocabExampleUncheckedUpdateManyWithoutVocabNestedInput;
+    reviews?: Prisma.VocabReviewUncheckedUpdateManyWithoutVocabNestedInput;
+    progresses?: Prisma.VocabProgressUncheckedUpdateManyWithoutVocabNestedInput;
+    studyExercises?: Prisma.StudyExerciseUncheckedUpdateManyWithoutVocabNestedInput;
+};
+export type VocabCreateWithoutReviewsInput = {
+    id?: string;
+    word: string;
+    translation?: string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    wordNormalized: string;
+    user: Prisma.UserCreateNestedOneWithoutVocabsInput;
+    list: Prisma.VocabListCreateNestedOneWithoutVocabsInput;
+    examples?: Prisma.VocabExampleCreateNestedManyWithoutVocabInput;
+    notes?: Prisma.VocabNoteCreateNestedManyWithoutVocabInput;
+    progresses?: Prisma.VocabProgressCreateNestedManyWithoutVocabInput;
+    studyExercises?: Prisma.StudyExerciseCreateNestedManyWithoutVocabInput;
+};
+export type VocabUncheckedCreateWithoutReviewsInput = {
+    id?: string;
+    userId: string;
+    listId: string;
+    word: string;
+    translation?: string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    wordNormalized: string;
+    examples?: Prisma.VocabExampleUncheckedCreateNestedManyWithoutVocabInput;
+    notes?: Prisma.VocabNoteUncheckedCreateNestedManyWithoutVocabInput;
+    progresses?: Prisma.VocabProgressUncheckedCreateNestedManyWithoutVocabInput;
+    studyExercises?: Prisma.StudyExerciseUncheckedCreateNestedManyWithoutVocabInput;
+};
+export type VocabCreateOrConnectWithoutReviewsInput = {
+    where: Prisma.VocabWhereUniqueInput;
+    create: Prisma.XOR<Prisma.VocabCreateWithoutReviewsInput, Prisma.VocabUncheckedCreateWithoutReviewsInput>;
+};
+export type VocabUpsertWithoutReviewsInput = {
+    update: Prisma.XOR<Prisma.VocabUpdateWithoutReviewsInput, Prisma.VocabUncheckedUpdateWithoutReviewsInput>;
+    create: Prisma.XOR<Prisma.VocabCreateWithoutReviewsInput, Prisma.VocabUncheckedCreateWithoutReviewsInput>;
+    where?: Prisma.VocabWhereInput;
+};
+export type VocabUpdateToOneWithWhereWithoutReviewsInput = {
+    where?: Prisma.VocabWhereInput;
+    data: Prisma.XOR<Prisma.VocabUpdateWithoutReviewsInput, Prisma.VocabUncheckedUpdateWithoutReviewsInput>;
+};
+export type VocabUpdateWithoutReviewsInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    word?: Prisma.StringFieldUpdateOperationsInput | string;
+    translation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    wordNormalized?: Prisma.StringFieldUpdateOperationsInput | string;
+    user?: Prisma.UserUpdateOneRequiredWithoutVocabsNestedInput;
+    list?: Prisma.VocabListUpdateOneRequiredWithoutVocabsNestedInput;
+    examples?: Prisma.VocabExampleUpdateManyWithoutVocabNestedInput;
+    notes?: Prisma.VocabNoteUpdateManyWithoutVocabNestedInput;
+    progresses?: Prisma.VocabProgressUpdateManyWithoutVocabNestedInput;
+    studyExercises?: Prisma.StudyExerciseUpdateManyWithoutVocabNestedInput;
+};
+export type VocabUncheckedUpdateWithoutReviewsInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    userId?: Prisma.StringFieldUpdateOperationsInput | string;
+    listId?: Prisma.StringFieldUpdateOperationsInput | string;
+    word?: Prisma.StringFieldUpdateOperationsInput | string;
+    translation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    wordNormalized?: Prisma.StringFieldUpdateOperationsInput | string;
+    examples?: Prisma.VocabExampleUncheckedUpdateManyWithoutVocabNestedInput;
+    notes?: Prisma.VocabNoteUncheckedUpdateManyWithoutVocabNestedInput;
+    progresses?: Prisma.VocabProgressUncheckedUpdateManyWithoutVocabNestedInput;
+    studyExercises?: Prisma.StudyExerciseUncheckedUpdateManyWithoutVocabNestedInput;
+};
+export type VocabCreateWithoutProgressesInput = {
+    id?: string;
+    word: string;
+    translation?: string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    wordNormalized: string;
+    user: Prisma.UserCreateNestedOneWithoutVocabsInput;
+    list: Prisma.VocabListCreateNestedOneWithoutVocabsInput;
+    examples?: Prisma.VocabExampleCreateNestedManyWithoutVocabInput;
+    notes?: Prisma.VocabNoteCreateNestedManyWithoutVocabInput;
+    reviews?: Prisma.VocabReviewCreateNestedManyWithoutVocabInput;
+    studyExercises?: Prisma.StudyExerciseCreateNestedManyWithoutVocabInput;
+};
+export type VocabUncheckedCreateWithoutProgressesInput = {
+    id?: string;
+    userId: string;
+    listId: string;
+    word: string;
+    translation?: string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    wordNormalized: string;
+    examples?: Prisma.VocabExampleUncheckedCreateNestedManyWithoutVocabInput;
+    notes?: Prisma.VocabNoteUncheckedCreateNestedManyWithoutVocabInput;
+    reviews?: Prisma.VocabReviewUncheckedCreateNestedManyWithoutVocabInput;
+    studyExercises?: Prisma.StudyExerciseUncheckedCreateNestedManyWithoutVocabInput;
+};
+export type VocabCreateOrConnectWithoutProgressesInput = {
+    where: Prisma.VocabWhereUniqueInput;
+    create: Prisma.XOR<Prisma.VocabCreateWithoutProgressesInput, Prisma.VocabUncheckedCreateWithoutProgressesInput>;
+};
+export type VocabUpsertWithoutProgressesInput = {
+    update: Prisma.XOR<Prisma.VocabUpdateWithoutProgressesInput, Prisma.VocabUncheckedUpdateWithoutProgressesInput>;
+    create: Prisma.XOR<Prisma.VocabCreateWithoutProgressesInput, Prisma.VocabUncheckedCreateWithoutProgressesInput>;
+    where?: Prisma.VocabWhereInput;
+};
+export type VocabUpdateToOneWithWhereWithoutProgressesInput = {
+    where?: Prisma.VocabWhereInput;
+    data: Prisma.XOR<Prisma.VocabUpdateWithoutProgressesInput, Prisma.VocabUncheckedUpdateWithoutProgressesInput>;
+};
+export type VocabUpdateWithoutProgressesInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    word?: Prisma.StringFieldUpdateOperationsInput | string;
+    translation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    wordNormalized?: Prisma.StringFieldUpdateOperationsInput | string;
+    user?: Prisma.UserUpdateOneRequiredWithoutVocabsNestedInput;
+    list?: Prisma.VocabListUpdateOneRequiredWithoutVocabsNestedInput;
+    examples?: Prisma.VocabExampleUpdateManyWithoutVocabNestedInput;
+    notes?: Prisma.VocabNoteUpdateManyWithoutVocabNestedInput;
+    reviews?: Prisma.VocabReviewUpdateManyWithoutVocabNestedInput;
+    studyExercises?: Prisma.StudyExerciseUpdateManyWithoutVocabNestedInput;
+};
+export type VocabUncheckedUpdateWithoutProgressesInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    userId?: Prisma.StringFieldUpdateOperationsInput | string;
+    listId?: Prisma.StringFieldUpdateOperationsInput | string;
+    word?: Prisma.StringFieldUpdateOperationsInput | string;
+    translation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    wordNormalized?: Prisma.StringFieldUpdateOperationsInput | string;
+    examples?: Prisma.VocabExampleUncheckedUpdateManyWithoutVocabNestedInput;
+    notes?: Prisma.VocabNoteUncheckedUpdateManyWithoutVocabNestedInput;
+    reviews?: Prisma.VocabReviewUncheckedUpdateManyWithoutVocabNestedInput;
+    studyExercises?: Prisma.StudyExerciseUncheckedUpdateManyWithoutVocabNestedInput;
+};
+export type VocabCreateWithoutStudyExercisesInput = {
+    id?: string;
+    word: string;
+    translation?: string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    wordNormalized: string;
+    user: Prisma.UserCreateNestedOneWithoutVocabsInput;
+    list: Prisma.VocabListCreateNestedOneWithoutVocabsInput;
+    examples?: Prisma.VocabExampleCreateNestedManyWithoutVocabInput;
+    notes?: Prisma.VocabNoteCreateNestedManyWithoutVocabInput;
+    reviews?: Prisma.VocabReviewCreateNestedManyWithoutVocabInput;
+    progresses?: Prisma.VocabProgressCreateNestedManyWithoutVocabInput;
+};
+export type VocabUncheckedCreateWithoutStudyExercisesInput = {
+    id?: string;
+    userId: string;
+    listId: string;
+    word: string;
+    translation?: string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    wordNormalized: string;
+    examples?: Prisma.VocabExampleUncheckedCreateNestedManyWithoutVocabInput;
+    notes?: Prisma.VocabNoteUncheckedCreateNestedManyWithoutVocabInput;
+    reviews?: Prisma.VocabReviewUncheckedCreateNestedManyWithoutVocabInput;
+    progresses?: Prisma.VocabProgressUncheckedCreateNestedManyWithoutVocabInput;
+};
+export type VocabCreateOrConnectWithoutStudyExercisesInput = {
+    where: Prisma.VocabWhereUniqueInput;
+    create: Prisma.XOR<Prisma.VocabCreateWithoutStudyExercisesInput, Prisma.VocabUncheckedCreateWithoutStudyExercisesInput>;
+};
+export type VocabUpsertWithoutStudyExercisesInput = {
+    update: Prisma.XOR<Prisma.VocabUpdateWithoutStudyExercisesInput, Prisma.VocabUncheckedUpdateWithoutStudyExercisesInput>;
+    create: Prisma.XOR<Prisma.VocabCreateWithoutStudyExercisesInput, Prisma.VocabUncheckedCreateWithoutStudyExercisesInput>;
+    where?: Prisma.VocabWhereInput;
+};
+export type VocabUpdateToOneWithWhereWithoutStudyExercisesInput = {
+    where?: Prisma.VocabWhereInput;
+    data: Prisma.XOR<Prisma.VocabUpdateWithoutStudyExercisesInput, Prisma.VocabUncheckedUpdateWithoutStudyExercisesInput>;
+};
+export type VocabUpdateWithoutStudyExercisesInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    word?: Prisma.StringFieldUpdateOperationsInput | string;
+    translation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    wordNormalized?: Prisma.StringFieldUpdateOperationsInput | string;
+    user?: Prisma.UserUpdateOneRequiredWithoutVocabsNestedInput;
+    list?: Prisma.VocabListUpdateOneRequiredWithoutVocabsNestedInput;
+    examples?: Prisma.VocabExampleUpdateManyWithoutVocabNestedInput;
+    notes?: Prisma.VocabNoteUpdateManyWithoutVocabNestedInput;
+    reviews?: Prisma.VocabReviewUpdateManyWithoutVocabNestedInput;
+    progresses?: Prisma.VocabProgressUpdateManyWithoutVocabNestedInput;
+};
+export type VocabUncheckedUpdateWithoutStudyExercisesInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    userId?: Prisma.StringFieldUpdateOperationsInput | string;
+    listId?: Prisma.StringFieldUpdateOperationsInput | string;
+    word?: Prisma.StringFieldUpdateOperationsInput | string;
+    translation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    wordNormalized?: Prisma.StringFieldUpdateOperationsInput | string;
+    examples?: Prisma.VocabExampleUncheckedUpdateManyWithoutVocabNestedInput;
+    notes?: Prisma.VocabNoteUncheckedUpdateManyWithoutVocabNestedInput;
+    reviews?: Prisma.VocabReviewUncheckedUpdateManyWithoutVocabNestedInput;
+    progresses?: Prisma.VocabProgressUncheckedUpdateManyWithoutVocabNestedInput;
+};
+export type VocabCreateManyUserInput = {
+    id?: string;
+    listId: string;
+    word: string;
+    translation?: string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    wordNormalized: string;
+};
+export type VocabUpdateWithoutUserInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    word?: Prisma.StringFieldUpdateOperationsInput | string;
+    translation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    wordNormalized?: Prisma.StringFieldUpdateOperationsInput | string;
+    list?: Prisma.VocabListUpdateOneRequiredWithoutVocabsNestedInput;
+    examples?: Prisma.VocabExampleUpdateManyWithoutVocabNestedInput;
+    notes?: Prisma.VocabNoteUpdateManyWithoutVocabNestedInput;
+    reviews?: Prisma.VocabReviewUpdateManyWithoutVocabNestedInput;
+    progresses?: Prisma.VocabProgressUpdateManyWithoutVocabNestedInput;
+    studyExercises?: Prisma.StudyExerciseUpdateManyWithoutVocabNestedInput;
+};
+export type VocabUncheckedUpdateWithoutUserInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    listId?: Prisma.StringFieldUpdateOperationsInput | string;
+    word?: Prisma.StringFieldUpdateOperationsInput | string;
+    translation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    wordNormalized?: Prisma.StringFieldUpdateOperationsInput | string;
+    examples?: Prisma.VocabExampleUncheckedUpdateManyWithoutVocabNestedInput;
+    notes?: Prisma.VocabNoteUncheckedUpdateManyWithoutVocabNestedInput;
+    reviews?: Prisma.VocabReviewUncheckedUpdateManyWithoutVocabNestedInput;
+    progresses?: Prisma.VocabProgressUncheckedUpdateManyWithoutVocabNestedInput;
+    studyExercises?: Prisma.StudyExerciseUncheckedUpdateManyWithoutVocabNestedInput;
+};
+export type VocabUncheckedUpdateManyWithoutUserInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    listId?: Prisma.StringFieldUpdateOperationsInput | string;
+    word?: Prisma.StringFieldUpdateOperationsInput | string;
+    translation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    wordNormalized?: Prisma.StringFieldUpdateOperationsInput | string;
+};
+export type VocabCreateManyListInput = {
+    id?: string;
+    userId: string;
+    word: string;
+    translation?: string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    wordNormalized: string;
+};
+export type VocabUpdateWithoutListInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    word?: Prisma.StringFieldUpdateOperationsInput | string;
+    translation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    wordNormalized?: Prisma.StringFieldUpdateOperationsInput | string;
+    user?: Prisma.UserUpdateOneRequiredWithoutVocabsNestedInput;
+    examples?: Prisma.VocabExampleUpdateManyWithoutVocabNestedInput;
+    notes?: Prisma.VocabNoteUpdateManyWithoutVocabNestedInput;
+    reviews?: Prisma.VocabReviewUpdateManyWithoutVocabNestedInput;
+    progresses?: Prisma.VocabProgressUpdateManyWithoutVocabNestedInput;
+    studyExercises?: Prisma.StudyExerciseUpdateManyWithoutVocabNestedInput;
+};
+export type VocabUncheckedUpdateWithoutListInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    userId?: Prisma.StringFieldUpdateOperationsInput | string;
+    word?: Prisma.StringFieldUpdateOperationsInput | string;
+    translation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    wordNormalized?: Prisma.StringFieldUpdateOperationsInput | string;
+    examples?: Prisma.VocabExampleUncheckedUpdateManyWithoutVocabNestedInput;
+    notes?: Prisma.VocabNoteUncheckedUpdateManyWithoutVocabNestedInput;
+    reviews?: Prisma.VocabReviewUncheckedUpdateManyWithoutVocabNestedInput;
+    progresses?: Prisma.VocabProgressUncheckedUpdateManyWithoutVocabNestedInput;
+    studyExercises?: Prisma.StudyExerciseUncheckedUpdateManyWithoutVocabNestedInput;
+};
+export type VocabUncheckedUpdateManyWithoutListInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    userId?: Prisma.StringFieldUpdateOperationsInput | string;
+    word?: Prisma.StringFieldUpdateOperationsInput | string;
+    translation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    wordNormalized?: Prisma.StringFieldUpdateOperationsInput | string;
+};
+/**
+ * Count Type VocabCountOutputType
+ */
+export type VocabCountOutputType = {
+    examples: number;
+    notes: number;
+    reviews: number;
+    progresses: number;
+    studyExercises: number;
+};
+export type VocabCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    examples?: boolean | VocabCountOutputTypeCountExamplesArgs;
+    notes?: boolean | VocabCountOutputTypeCountNotesArgs;
+    reviews?: boolean | VocabCountOutputTypeCountReviewsArgs;
+    progresses?: boolean | VocabCountOutputTypeCountProgressesArgs;
+    studyExercises?: boolean | VocabCountOutputTypeCountStudyExercisesArgs;
+};
+/**
+ * VocabCountOutputType without action
+ */
+export type VocabCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VocabCountOutputType
+     */
+    select?: Prisma.VocabCountOutputTypeSelect<ExtArgs> | null;
+};
+/**
+ * VocabCountOutputType without action
+ */
+export type VocabCountOutputTypeCountExamplesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.VocabExampleWhereInput;
+};
+/**
+ * VocabCountOutputType without action
+ */
+export type VocabCountOutputTypeCountNotesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.VocabNoteWhereInput;
+};
+/**
+ * VocabCountOutputType without action
+ */
+export type VocabCountOutputTypeCountReviewsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.VocabReviewWhereInput;
+};
+/**
+ * VocabCountOutputType without action
+ */
+export type VocabCountOutputTypeCountProgressesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.VocabProgressWhereInput;
+};
+/**
+ * VocabCountOutputType without action
+ */
+export type VocabCountOutputTypeCountStudyExercisesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.StudyExerciseWhereInput;
+};
+export type VocabSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+    id?: boolean;
+    userId?: boolean;
+    listId?: boolean;
+    word?: boolean;
+    translation?: boolean;
+    createdAt?: boolean;
+    updatedAt?: boolean;
+    wordNormalized?: boolean;
+    user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+    list?: boolean | Prisma.VocabListDefaultArgs<ExtArgs>;
+    examples?: boolean | Prisma.Vocab$examplesArgs<ExtArgs>;
+    notes?: boolean | Prisma.Vocab$notesArgs<ExtArgs>;
+    reviews?: boolean | Prisma.Vocab$reviewsArgs<ExtArgs>;
+    progresses?: boolean | Prisma.Vocab$progressesArgs<ExtArgs>;
+    studyExercises?: boolean | Prisma.Vocab$studyExercisesArgs<ExtArgs>;
+    _count?: boolean | Prisma.VocabCountOutputTypeDefaultArgs<ExtArgs>;
+}, ExtArgs["result"]["vocab"]>;
+export type VocabSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+    id?: boolean;
+    userId?: boolean;
+    listId?: boolean;
+    word?: boolean;
+    translation?: boolean;
+    createdAt?: boolean;
+    updatedAt?: boolean;
+    wordNormalized?: boolean;
+    user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+    list?: boolean | Prisma.VocabListDefaultArgs<ExtArgs>;
+}, ExtArgs["result"]["vocab"]>;
+export type VocabSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+    id?: boolean;
+    userId?: boolean;
+    listId?: boolean;
+    word?: boolean;
+    translation?: boolean;
+    createdAt?: boolean;
+    updatedAt?: boolean;
+    wordNormalized?: boolean;
+    user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+    list?: boolean | Prisma.VocabListDefaultArgs<ExtArgs>;
+}, ExtArgs["result"]["vocab"]>;
+export type VocabSelectScalar = {
+    id?: boolean;
+    userId?: boolean;
+    listId?: boolean;
+    word?: boolean;
+    translation?: boolean;
+    createdAt?: boolean;
+    updatedAt?: boolean;
+    wordNormalized?: boolean;
+};
+export type VocabOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "listId" | "word" | "translation" | "createdAt" | "updatedAt" | "wordNormalized", ExtArgs["result"]["vocab"]>;
+export type VocabInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+    list?: boolean | Prisma.VocabListDefaultArgs<ExtArgs>;
+    examples?: boolean | Prisma.Vocab$examplesArgs<ExtArgs>;
+    notes?: boolean | Prisma.Vocab$notesArgs<ExtArgs>;
+    reviews?: boolean | Prisma.Vocab$reviewsArgs<ExtArgs>;
+    progresses?: boolean | Prisma.Vocab$progressesArgs<ExtArgs>;
+    studyExercises?: boolean | Prisma.Vocab$studyExercisesArgs<ExtArgs>;
+    _count?: boolean | Prisma.VocabCountOutputTypeDefaultArgs<ExtArgs>;
+};
+export type VocabIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+    list?: boolean | Prisma.VocabListDefaultArgs<ExtArgs>;
+};
+export type VocabIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+    list?: boolean | Prisma.VocabListDefaultArgs<ExtArgs>;
+};
+export type $VocabPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    name: "Vocab";
+    objects: {
+        user: Prisma.$UserPayload<ExtArgs>;
+        list: Prisma.$VocabListPayload<ExtArgs>;
+        examples: Prisma.$VocabExamplePayload<ExtArgs>[];
+        notes: Prisma.$VocabNotePayload<ExtArgs>[];
+        reviews: Prisma.$VocabReviewPayload<ExtArgs>[];
+        progresses: Prisma.$VocabProgressPayload<ExtArgs>[];
+        studyExercises: Prisma.$StudyExercisePayload<ExtArgs>[];
+    };
+    scalars: runtime.Types.Extensions.GetPayloadResult<{
+        id: string;
+        userId: string;
+        listId: string;
+        word: string;
+        translation: string | null;
+        createdAt: Date;
+        updatedAt: Date;
+        wordNormalized: string;
+    }, ExtArgs["result"]["vocab"]>;
+    composites: {};
+};
+export type VocabGetPayload<S extends boolean | null | undefined | VocabDefaultArgs> = runtime.Types.Result.GetResult<Prisma.$VocabPayload, S>;
+export type VocabCountArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = Omit<VocabFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+    select?: VocabCountAggregateInputType | true;
+};
+export interface VocabDelegate<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: {
+        types: Prisma.TypeMap<ExtArgs>['model']['Vocab'];
+        meta: {
+            name: 'Vocab';
+        };
+    };
+    /**
+     * Find zero or one Vocab that matches the filter.
+     * @param {VocabFindUniqueArgs} args - Arguments to find a Vocab
+     * @example
+     * // Get one Vocab
+     * const vocab = await prisma.vocab.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends VocabFindUniqueArgs>(args: Prisma.SelectSubset<T, VocabFindUniqueArgs<ExtArgs>>): Prisma.Prisma__VocabClient<runtime.Types.Result.GetResult<Prisma.$VocabPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Find one Vocab that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {VocabFindUniqueOrThrowArgs} args - Arguments to find a Vocab
+     * @example
+     * // Get one Vocab
+     * const vocab = await prisma.vocab.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends VocabFindUniqueOrThrowArgs>(args: Prisma.SelectSubset<T, VocabFindUniqueOrThrowArgs<ExtArgs>>): Prisma.Prisma__VocabClient<runtime.Types.Result.GetResult<Prisma.$VocabPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Find the first Vocab that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VocabFindFirstArgs} args - Arguments to find a Vocab
+     * @example
+     * // Get one Vocab
+     * const vocab = await prisma.vocab.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends VocabFindFirstArgs>(args?: Prisma.SelectSubset<T, VocabFindFirstArgs<ExtArgs>>): Prisma.Prisma__VocabClient<runtime.Types.Result.GetResult<Prisma.$VocabPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Find the first Vocab that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VocabFindFirstOrThrowArgs} args - Arguments to find a Vocab
+     * @example
+     * // Get one Vocab
+     * const vocab = await prisma.vocab.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends VocabFindFirstOrThrowArgs>(args?: Prisma.SelectSubset<T, VocabFindFirstOrThrowArgs<ExtArgs>>): Prisma.Prisma__VocabClient<runtime.Types.Result.GetResult<Prisma.$VocabPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Find zero or more Vocabs that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VocabFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Vocabs
+     * const vocabs = await prisma.vocab.findMany()
+     *
+     * // Get first 10 Vocabs
+     * const vocabs = await prisma.vocab.findMany({ take: 10 })
+     *
+     * // Only select the `id`
+     * const vocabWithIdOnly = await prisma.vocab.findMany({ select: { id: true } })
+     *
+     */
+    findMany<T extends VocabFindManyArgs>(args?: Prisma.SelectSubset<T, VocabFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VocabPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>;
+    /**
+     * Create a Vocab.
+     * @param {VocabCreateArgs} args - Arguments to create a Vocab.
+     * @example
+     * // Create one Vocab
+     * const Vocab = await prisma.vocab.create({
+     *   data: {
+     *     // ... data to create a Vocab
+     *   }
+     * })
+     *
+     */
+    create<T extends VocabCreateArgs>(args: Prisma.SelectSubset<T, VocabCreateArgs<ExtArgs>>): Prisma.Prisma__VocabClient<runtime.Types.Result.GetResult<Prisma.$VocabPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Create many Vocabs.
+     * @param {VocabCreateManyArgs} args - Arguments to create many Vocabs.
+     * @example
+     * // Create many Vocabs
+     * const vocab = await prisma.vocab.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     */
+    createMany<T extends VocabCreateManyArgs>(args?: Prisma.SelectSubset<T, VocabCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>;
+    /**
+     * Create many Vocabs and returns the data saved in the database.
+     * @param {VocabCreateManyAndReturnArgs} args - Arguments to create many Vocabs.
+     * @example
+     * // Create many Vocabs
+     * const vocab = await prisma.vocab.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     * // Create many Vocabs and only return the `id`
+     * const vocabWithIdOnly = await prisma.vocab.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     *
+     */
+    createManyAndReturn<T extends VocabCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, VocabCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VocabPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>;
+    /**
+     * Delete a Vocab.
+     * @param {VocabDeleteArgs} args - Arguments to delete one Vocab.
+     * @example
+     * // Delete one Vocab
+     * const Vocab = await prisma.vocab.delete({
+     *   where: {
+     *     // ... filter to delete one Vocab
+     *   }
+     * })
+     *
+     */
+    delete<T extends VocabDeleteArgs>(args: Prisma.SelectSubset<T, VocabDeleteArgs<ExtArgs>>): Prisma.Prisma__VocabClient<runtime.Types.Result.GetResult<Prisma.$VocabPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Update one Vocab.
+     * @param {VocabUpdateArgs} args - Arguments to update one Vocab.
+     * @example
+     * // Update one Vocab
+     * const vocab = await prisma.vocab.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     *
+     */
+    update<T extends VocabUpdateArgs>(args: Prisma.SelectSubset<T, VocabUpdateArgs<ExtArgs>>): Prisma.Prisma__VocabClient<runtime.Types.Result.GetResult<Prisma.$VocabPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Delete zero or more Vocabs.
+     * @param {VocabDeleteManyArgs} args - Arguments to filter Vocabs to delete.
+     * @example
+     * // Delete a few Vocabs
+     * const { count } = await prisma.vocab.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     *
+     */
+    deleteMany<T extends VocabDeleteManyArgs>(args?: Prisma.SelectSubset<T, VocabDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>;
+    /**
+     * Update zero or more Vocabs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VocabUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Vocabs
+     * const vocab = await prisma.vocab.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     *
+     */
+    updateMany<T extends VocabUpdateManyArgs>(args: Prisma.SelectSubset<T, VocabUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>;
+    /**
+     * Update zero or more Vocabs and returns the data updated in the database.
+     * @param {VocabUpdateManyAndReturnArgs} args - Arguments to update many Vocabs.
+     * @example
+     * // Update many Vocabs
+     * const vocab = await prisma.vocab.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     * // Update zero or more Vocabs and only return the `id`
+     * const vocabWithIdOnly = await prisma.vocab.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     *
+     */
+    updateManyAndReturn<T extends VocabUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, VocabUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VocabPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>;
+    /**
+     * Create or update one Vocab.
+     * @param {VocabUpsertArgs} args - Arguments to update or create a Vocab.
+     * @example
+     * // Update or create a Vocab
+     * const vocab = await prisma.vocab.upsert({
+     *   create: {
+     *     // ... data to create a Vocab
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Vocab we want to update
+     *   }
+     * })
+     */
+    upsert<T extends VocabUpsertArgs>(args: Prisma.SelectSubset<T, VocabUpsertArgs<ExtArgs>>): Prisma.Prisma__VocabClient<runtime.Types.Result.GetResult<Prisma.$VocabPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Count the number of Vocabs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VocabCountArgs} args - Arguments to filter Vocabs to count.
+     * @example
+     * // Count the number of Vocabs
+     * const count = await prisma.vocab.count({
+     *   where: {
+     *     // ... the filter for the Vocabs we want to count
+     *   }
+     * })
+    **/
+    count<T extends VocabCountArgs>(args?: Prisma.Subset<T, VocabCountArgs>): Prisma.PrismaPromise<T extends runtime.Types.Utils.Record<'select', any> ? T['select'] extends true ? number : Prisma.GetScalarType<T['select'], VocabCountAggregateOutputType> : number>;
+    /**
+     * Allows you to perform aggregations operations on a Vocab.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VocabAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends VocabAggregateArgs>(args: Prisma.Subset<T, VocabAggregateArgs>): Prisma.PrismaPromise<GetVocabAggregateType<T>>;
+    /**
+     * Group by Vocab.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VocabGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     *
+    **/
+    groupBy<T extends VocabGroupByArgs, HasSelectOrTake extends Prisma.Or<Prisma.Extends<'skip', Prisma.Keys<T>>, Prisma.Extends<'take', Prisma.Keys<T>>>, OrderByArg extends Prisma.True extends HasSelectOrTake ? {
+        orderBy: VocabGroupByArgs['orderBy'];
+    } : {
+        orderBy?: VocabGroupByArgs['orderBy'];
+    }, OrderFields extends Prisma.ExcludeUnderscoreKeys<Prisma.Keys<Prisma.MaybeTupleToUnion<T['orderBy']>>>, ByFields extends Prisma.MaybeTupleToUnion<T['by']>, ByValid extends Prisma.Has<ByFields, OrderFields>, HavingFields extends Prisma.GetHavingFields<T['having']>, HavingValid extends Prisma.Has<ByFields, HavingFields>, ByEmpty extends T['by'] extends never[] ? Prisma.True : Prisma.False, InputErrors extends ByEmpty extends Prisma.True ? `Error: "by" must not be empty.` : HavingValid extends Prisma.False ? {
+        [P in HavingFields]: P extends ByFields ? never : P extends string ? `Error: Field "${P}" used in "having" needs to be provided in "by".` : [
+            Error,
+            'Field ',
+            P,
+            ` in "having" needs to be provided in "by"`
+        ];
+    }[HavingFields] : 'take' extends Prisma.Keys<T> ? 'orderBy' extends Prisma.Keys<T> ? ByValid extends Prisma.True ? {} : {
+        [P in OrderFields]: P extends ByFields ? never : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+    }[OrderFields] : 'Error: If you provide "take", you also need to provide "orderBy"' : 'skip' extends Prisma.Keys<T> ? 'orderBy' extends Prisma.Keys<T> ? ByValid extends Prisma.True ? {} : {
+        [P in OrderFields]: P extends ByFields ? never : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+    }[OrderFields] : 'Error: If you provide "skip", you also need to provide "orderBy"' : ByValid extends Prisma.True ? {} : {
+        [P in OrderFields]: P extends ByFields ? never : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+    }[OrderFields]>(args: Prisma.SubsetIntersection<T, VocabGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetVocabGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>;
+    /**
+     * Fields of the Vocab model
+     */
+    readonly fields: VocabFieldRefs;
+}
+/**
+ * The delegate class that acts as a "Promise-like" for Vocab.
+ * Why is this prefixed with `Prisma__`?
+ * Because we want to prevent naming conflicts as mentioned in
+ * https://github.com/prisma/prisma-client-js/issues/707
+ */
+export interface Prisma__VocabClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise";
+    user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>;
+    list<T extends Prisma.VocabListDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.VocabListDefaultArgs<ExtArgs>>): Prisma.Prisma__VocabListClient<runtime.Types.Result.GetResult<Prisma.$VocabListPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>;
+    examples<T extends Prisma.Vocab$examplesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Vocab$examplesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VocabExamplePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    notes<T extends Prisma.Vocab$notesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Vocab$notesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VocabNotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    reviews<T extends Prisma.Vocab$reviewsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Vocab$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VocabReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    progresses<T extends Prisma.Vocab$progressesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Vocab$progressesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VocabProgressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    studyExercises<T extends Prisma.Vocab$studyExercisesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Vocab$studyExercisesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StudyExercisePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): runtime.Types.Utils.JsPromise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): runtime.Types.Utils.JsPromise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): runtime.Types.Utils.JsPromise<T>;
+}
+/**
+ * Fields of the Vocab model
+ */
+export interface VocabFieldRefs {
+    readonly id: Prisma.FieldRef<"Vocab", 'String'>;
+    readonly userId: Prisma.FieldRef<"Vocab", 'String'>;
+    readonly listId: Prisma.FieldRef<"Vocab", 'String'>;
+    readonly word: Prisma.FieldRef<"Vocab", 'String'>;
+    readonly translation: Prisma.FieldRef<"Vocab", 'String'>;
+    readonly createdAt: Prisma.FieldRef<"Vocab", 'DateTime'>;
+    readonly updatedAt: Prisma.FieldRef<"Vocab", 'DateTime'>;
+    readonly wordNormalized: Prisma.FieldRef<"Vocab", 'String'>;
+}
+/**
+ * Vocab findUnique
+ */
+export type VocabFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vocab
+     */
+    select?: Prisma.VocabSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Vocab
+     */
+    omit?: Prisma.VocabOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.VocabInclude<ExtArgs> | null;
+    /**
+     * Filter, which Vocab to fetch.
+     */
+    where: Prisma.VocabWhereUniqueInput;
+};
+/**
+ * Vocab findUniqueOrThrow
+ */
+export type VocabFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vocab
+     */
+    select?: Prisma.VocabSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Vocab
+     */
+    omit?: Prisma.VocabOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.VocabInclude<ExtArgs> | null;
+    /**
+     * Filter, which Vocab to fetch.
+     */
+    where: Prisma.VocabWhereUniqueInput;
+};
+/**
+ * Vocab findFirst
+ */
+export type VocabFindFirstArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vocab
+     */
+    select?: Prisma.VocabSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Vocab
+     */
+    omit?: Prisma.VocabOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.VocabInclude<ExtArgs> | null;
+    /**
+     * Filter, which Vocab to fetch.
+     */
+    where?: Prisma.VocabWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of Vocabs to fetch.
+     */
+    orderBy?: Prisma.VocabOrderByWithRelationInput | Prisma.VocabOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for searching for Vocabs.
+     */
+    cursor?: Prisma.VocabWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` Vocabs from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` Vocabs.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of Vocabs.
+     */
+    distinct?: Prisma.VocabScalarFieldEnum | Prisma.VocabScalarFieldEnum[];
+};
+/**
+ * Vocab findFirstOrThrow
+ */
+export type VocabFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vocab
+     */
+    select?: Prisma.VocabSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Vocab
+     */
+    omit?: Prisma.VocabOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.VocabInclude<ExtArgs> | null;
+    /**
+     * Filter, which Vocab to fetch.
+     */
+    where?: Prisma.VocabWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of Vocabs to fetch.
+     */
+    orderBy?: Prisma.VocabOrderByWithRelationInput | Prisma.VocabOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for searching for Vocabs.
+     */
+    cursor?: Prisma.VocabWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` Vocabs from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` Vocabs.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of Vocabs.
+     */
+    distinct?: Prisma.VocabScalarFieldEnum | Prisma.VocabScalarFieldEnum[];
+};
+/**
+ * Vocab findMany
+ */
+export type VocabFindManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vocab
+     */
+    select?: Prisma.VocabSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Vocab
+     */
+    omit?: Prisma.VocabOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.VocabInclude<ExtArgs> | null;
+    /**
+     * Filter, which Vocabs to fetch.
+     */
+    where?: Prisma.VocabWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of Vocabs to fetch.
+     */
+    orderBy?: Prisma.VocabOrderByWithRelationInput | Prisma.VocabOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for listing Vocabs.
+     */
+    cursor?: Prisma.VocabWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` Vocabs from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` Vocabs.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of Vocabs.
+     */
+    distinct?: Prisma.VocabScalarFieldEnum | Prisma.VocabScalarFieldEnum[];
+};
+/**
+ * Vocab create
+ */
+export type VocabCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vocab
+     */
+    select?: Prisma.VocabSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Vocab
+     */
+    omit?: Prisma.VocabOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.VocabInclude<ExtArgs> | null;
+    /**
+     * The data needed to create a Vocab.
+     */
+    data: Prisma.XOR<Prisma.VocabCreateInput, Prisma.VocabUncheckedCreateInput>;
+};
+/**
+ * Vocab createMany
+ */
+export type VocabCreateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Vocabs.
+     */
+    data: Prisma.VocabCreateManyInput | Prisma.VocabCreateManyInput[];
+    skipDuplicates?: boolean;
+};
+/**
+ * Vocab createManyAndReturn
+ */
+export type VocabCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vocab
+     */
+    select?: Prisma.VocabSelectCreateManyAndReturn<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Vocab
+     */
+    omit?: Prisma.VocabOmit<ExtArgs> | null;
+    /**
+     * The data used to create many Vocabs.
+     */
+    data: Prisma.VocabCreateManyInput | Prisma.VocabCreateManyInput[];
+    skipDuplicates?: boolean;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.VocabIncludeCreateManyAndReturn<ExtArgs> | null;
+};
+/**
+ * Vocab update
+ */
+export type VocabUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vocab
+     */
+    select?: Prisma.VocabSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Vocab
+     */
+    omit?: Prisma.VocabOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.VocabInclude<ExtArgs> | null;
+    /**
+     * The data needed to update a Vocab.
+     */
+    data: Prisma.XOR<Prisma.VocabUpdateInput, Prisma.VocabUncheckedUpdateInput>;
+    /**
+     * Choose, which Vocab to update.
+     */
+    where: Prisma.VocabWhereUniqueInput;
+};
+/**
+ * Vocab updateMany
+ */
+export type VocabUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Vocabs.
+     */
+    data: Prisma.XOR<Prisma.VocabUpdateManyMutationInput, Prisma.VocabUncheckedUpdateManyInput>;
+    /**
+     * Filter which Vocabs to update
+     */
+    where?: Prisma.VocabWhereInput;
+    /**
+     * Limit how many Vocabs to update.
+     */
+    limit?: number;
+};
+/**
+ * Vocab updateManyAndReturn
+ */
+export type VocabUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vocab
+     */
+    select?: Prisma.VocabSelectUpdateManyAndReturn<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Vocab
+     */
+    omit?: Prisma.VocabOmit<ExtArgs> | null;
+    /**
+     * The data used to update Vocabs.
+     */
+    data: Prisma.XOR<Prisma.VocabUpdateManyMutationInput, Prisma.VocabUncheckedUpdateManyInput>;
+    /**
+     * Filter which Vocabs to update
+     */
+    where?: Prisma.VocabWhereInput;
+    /**
+     * Limit how many Vocabs to update.
+     */
+    limit?: number;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.VocabIncludeUpdateManyAndReturn<ExtArgs> | null;
+};
+/**
+ * Vocab upsert
+ */
+export type VocabUpsertArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vocab
+     */
+    select?: Prisma.VocabSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Vocab
+     */
+    omit?: Prisma.VocabOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.VocabInclude<ExtArgs> | null;
+    /**
+     * The filter to search for the Vocab to update in case it exists.
+     */
+    where: Prisma.VocabWhereUniqueInput;
+    /**
+     * In case the Vocab found by the `where` argument doesn't exist, create a new Vocab with this data.
+     */
+    create: Prisma.XOR<Prisma.VocabCreateInput, Prisma.VocabUncheckedCreateInput>;
+    /**
+     * In case the Vocab was found with the provided `where` argument, update it with this data.
+     */
+    update: Prisma.XOR<Prisma.VocabUpdateInput, Prisma.VocabUncheckedUpdateInput>;
+};
+/**
+ * Vocab delete
+ */
+export type VocabDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vocab
+     */
+    select?: Prisma.VocabSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Vocab
+     */
+    omit?: Prisma.VocabOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.VocabInclude<ExtArgs> | null;
+    /**
+     * Filter which Vocab to delete.
+     */
+    where: Prisma.VocabWhereUniqueInput;
+};
+/**
+ * Vocab deleteMany
+ */
+export type VocabDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Filter which Vocabs to delete
+     */
+    where?: Prisma.VocabWhereInput;
+    /**
+     * Limit how many Vocabs to delete.
+     */
+    limit?: number;
+};
+/**
+ * Vocab.examples
+ */
+export type Vocab$examplesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VocabExample
+     */
+    select?: Prisma.VocabExampleSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the VocabExample
+     */
+    omit?: Prisma.VocabExampleOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.VocabExampleInclude<ExtArgs> | null;
+    where?: Prisma.VocabExampleWhereInput;
+    orderBy?: Prisma.VocabExampleOrderByWithRelationInput | Prisma.VocabExampleOrderByWithRelationInput[];
+    cursor?: Prisma.VocabExampleWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.VocabExampleScalarFieldEnum | Prisma.VocabExampleScalarFieldEnum[];
+};
+/**
+ * Vocab.notes
+ */
+export type Vocab$notesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VocabNote
+     */
+    select?: Prisma.VocabNoteSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the VocabNote
+     */
+    omit?: Prisma.VocabNoteOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.VocabNoteInclude<ExtArgs> | null;
+    where?: Prisma.VocabNoteWhereInput;
+    orderBy?: Prisma.VocabNoteOrderByWithRelationInput | Prisma.VocabNoteOrderByWithRelationInput[];
+    cursor?: Prisma.VocabNoteWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.VocabNoteScalarFieldEnum | Prisma.VocabNoteScalarFieldEnum[];
+};
+/**
+ * Vocab.reviews
+ */
+export type Vocab$reviewsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VocabReview
+     */
+    select?: Prisma.VocabReviewSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the VocabReview
+     */
+    omit?: Prisma.VocabReviewOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.VocabReviewInclude<ExtArgs> | null;
+    where?: Prisma.VocabReviewWhereInput;
+    orderBy?: Prisma.VocabReviewOrderByWithRelationInput | Prisma.VocabReviewOrderByWithRelationInput[];
+    cursor?: Prisma.VocabReviewWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.VocabReviewScalarFieldEnum | Prisma.VocabReviewScalarFieldEnum[];
+};
+/**
+ * Vocab.progresses
+ */
+export type Vocab$progressesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VocabProgress
+     */
+    select?: Prisma.VocabProgressSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the VocabProgress
+     */
+    omit?: Prisma.VocabProgressOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.VocabProgressInclude<ExtArgs> | null;
+    where?: Prisma.VocabProgressWhereInput;
+    orderBy?: Prisma.VocabProgressOrderByWithRelationInput | Prisma.VocabProgressOrderByWithRelationInput[];
+    cursor?: Prisma.VocabProgressWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.VocabProgressScalarFieldEnum | Prisma.VocabProgressScalarFieldEnum[];
+};
+/**
+ * Vocab.studyExercises
+ */
+export type Vocab$studyExercisesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudyExercise
+     */
+    select?: Prisma.StudyExerciseSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the StudyExercise
+     */
+    omit?: Prisma.StudyExerciseOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.StudyExerciseInclude<ExtArgs> | null;
+    where?: Prisma.StudyExerciseWhereInput;
+    orderBy?: Prisma.StudyExerciseOrderByWithRelationInput | Prisma.StudyExerciseOrderByWithRelationInput[];
+    cursor?: Prisma.StudyExerciseWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.StudyExerciseScalarFieldEnum | Prisma.StudyExerciseScalarFieldEnum[];
+};
+/**
+ * Vocab without action
+ */
+export type VocabDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vocab
+     */
+    select?: Prisma.VocabSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Vocab
+     */
+    omit?: Prisma.VocabOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.VocabInclude<ExtArgs> | null;
+};
+//# sourceMappingURL=Vocab.d.ts.map

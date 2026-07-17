@@ -1,0 +1,24 @@
+{
+  "name": "@vocabxpert/worker",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/worker.ts",
+    "build": "tsc",
+    "lint": "echo \"(worker) add eslint later\"",
+    "typecheck": "tsc --noEmit",
+    "enqueue": "tsx src/enqueue.ts"
+  },
+  "dependencies": {
+    "@prisma/client": "7.8.0",
+    "bullmq": "^5.12.0",
+    "dotenv": "^16.4.5",
+    "ioredis": "^5.4.1"
+  },
+  "devDependencies": {
+    "prisma": "7.8.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.6.3"
+  }
+}

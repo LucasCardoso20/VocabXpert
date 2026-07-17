@@ -1,0 +1,2242 @@
+import type * as runtime from "@prisma/client/runtime/client";
+import type * as $Enums from "../enums.js";
+import type * as Prisma from "../internal/prismaNamespace.js";
+/**
+ * Model User
+ *
+ */
+export type UserModel = runtime.Types.Result.DefaultSelection<Prisma.$UserPayload>;
+export type AggregateUser = {
+    _count: UserCountAggregateOutputType | null;
+    _min: UserMinAggregateOutputType | null;
+    _max: UserMaxAggregateOutputType | null;
+};
+export type UserMinAggregateOutputType = {
+    id: string | null;
+    email: string | null;
+    passwordHash: string | null;
+    nativeLanguage: string | null;
+    targetLanguage: string | null;
+    level: $Enums.TargetLevel | null;
+    createdAt: Date | null;
+    updatedAt: Date | null;
+};
+export type UserMaxAggregateOutputType = {
+    id: string | null;
+    email: string | null;
+    passwordHash: string | null;
+    nativeLanguage: string | null;
+    targetLanguage: string | null;
+    level: $Enums.TargetLevel | null;
+    createdAt: Date | null;
+    updatedAt: Date | null;
+};
+export type UserCountAggregateOutputType = {
+    id: number;
+    email: number;
+    passwordHash: number;
+    nativeLanguage: number;
+    targetLanguage: number;
+    level: number;
+    createdAt: number;
+    updatedAt: number;
+    _all: number;
+};
+export type UserMinAggregateInputType = {
+    id?: true;
+    email?: true;
+    passwordHash?: true;
+    nativeLanguage?: true;
+    targetLanguage?: true;
+    level?: true;
+    createdAt?: true;
+    updatedAt?: true;
+};
+export type UserMaxAggregateInputType = {
+    id?: true;
+    email?: true;
+    passwordHash?: true;
+    nativeLanguage?: true;
+    targetLanguage?: true;
+    level?: true;
+    createdAt?: true;
+    updatedAt?: true;
+};
+export type UserCountAggregateInputType = {
+    id?: true;
+    email?: true;
+    passwordHash?: true;
+    nativeLanguage?: true;
+    targetLanguage?: true;
+    level?: true;
+    createdAt?: true;
+    updatedAt?: true;
+    _all?: true;
+};
+export type UserAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Filter which User to aggregate.
+     */
+    where?: Prisma.UserWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of Users to fetch.
+     */
+    orderBy?: Prisma.UserOrderByWithRelationInput | Prisma.UserOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the start position
+     */
+    cursor?: Prisma.UserWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` Users from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` Users.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Count returned Users
+    **/
+    _count?: true | UserCountAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to find the minimum value
+    **/
+    _min?: UserMinAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to find the maximum value
+    **/
+    _max?: UserMaxAggregateInputType;
+};
+export type GetUserAggregateType<T extends UserAggregateArgs> = {
+    [P in keyof T & keyof AggregateUser]: P extends '_count' | 'count' ? T[P] extends true ? number : Prisma.GetScalarType<T[P], AggregateUser[P]> : Prisma.GetScalarType<T[P], AggregateUser[P]>;
+};
+export type UserGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.UserWhereInput;
+    orderBy?: Prisma.UserOrderByWithAggregationInput | Prisma.UserOrderByWithAggregationInput[];
+    by: Prisma.UserScalarFieldEnum[] | Prisma.UserScalarFieldEnum;
+    having?: Prisma.UserScalarWhereWithAggregatesInput;
+    take?: number;
+    skip?: number;
+    _count?: UserCountAggregateInputType | true;
+    _min?: UserMinAggregateInputType;
+    _max?: UserMaxAggregateInputType;
+};
+export type UserGroupByOutputType = {
+    id: string;
+    email: string | null;
+    passwordHash: string | null;
+    nativeLanguage: string;
+    targetLanguage: string;
+    level: $Enums.TargetLevel;
+    createdAt: Date;
+    updatedAt: Date;
+    _count: UserCountAggregateOutputType | null;
+    _min: UserMinAggregateOutputType | null;
+    _max: UserMaxAggregateOutputType | null;
+};
+export type GetUserGroupByPayload<T extends UserGroupByArgs> = Prisma.PrismaPromise<Array<Prisma.PickEnumerable<UserGroupByOutputType, T['by']> & {
+    [P in ((keyof T) & (keyof UserGroupByOutputType))]: P extends '_count' ? T[P] extends boolean ? number : Prisma.GetScalarType<T[P], UserGroupByOutputType[P]> : Prisma.GetScalarType<T[P], UserGroupByOutputType[P]>;
+}>>;
+export type UserWhereInput = {
+    AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[];
+    OR?: Prisma.UserWhereInput[];
+    NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[];
+    id?: Prisma.StringFilter<"User"> | string;
+    email?: Prisma.StringNullableFilter<"User"> | string | null;
+    passwordHash?: Prisma.StringNullableFilter<"User"> | string | null;
+    nativeLanguage?: Prisma.StringFilter<"User"> | string;
+    targetLanguage?: Prisma.StringFilter<"User"> | string;
+    level?: Prisma.EnumTargetLevelFilter<"User"> | $Enums.TargetLevel;
+    createdAt?: Prisma.DateTimeFilter<"User"> | Date | string;
+    updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string;
+    interests?: Prisma.UserInterestListRelationFilter;
+    lists?: Prisma.VocabListListRelationFilter;
+    vocabs?: Prisma.VocabListRelationFilter;
+    reviews?: Prisma.VocabReviewListRelationFilter;
+    progresses?: Prisma.VocabProgressListRelationFilter;
+    studySessions?: Prisma.StudySessionListRelationFilter;
+    studyExercises?: Prisma.StudyExerciseListRelationFilter;
+    studyAttempts?: Prisma.StudyAttemptListRelationFilter;
+};
+export type UserOrderByWithRelationInput = {
+    id?: Prisma.SortOrder;
+    email?: Prisma.SortOrderInput | Prisma.SortOrder;
+    passwordHash?: Prisma.SortOrderInput | Prisma.SortOrder;
+    nativeLanguage?: Prisma.SortOrder;
+    targetLanguage?: Prisma.SortOrder;
+    level?: Prisma.SortOrder;
+    createdAt?: Prisma.SortOrder;
+    updatedAt?: Prisma.SortOrder;
+    interests?: Prisma.UserInterestOrderByRelationAggregateInput;
+    lists?: Prisma.VocabListOrderByRelationAggregateInput;
+    vocabs?: Prisma.VocabOrderByRelationAggregateInput;
+    reviews?: Prisma.VocabReviewOrderByRelationAggregateInput;
+    progresses?: Prisma.VocabProgressOrderByRelationAggregateInput;
+    studySessions?: Prisma.StudySessionOrderByRelationAggregateInput;
+    studyExercises?: Prisma.StudyExerciseOrderByRelationAggregateInput;
+    studyAttempts?: Prisma.StudyAttemptOrderByRelationAggregateInput;
+};
+export type UserWhereUniqueInput = Prisma.AtLeast<{
+    id?: string;
+    email?: string;
+    AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[];
+    OR?: Prisma.UserWhereInput[];
+    NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[];
+    passwordHash?: Prisma.StringNullableFilter<"User"> | string | null;
+    nativeLanguage?: Prisma.StringFilter<"User"> | string;
+    targetLanguage?: Prisma.StringFilter<"User"> | string;
+    level?: Prisma.EnumTargetLevelFilter<"User"> | $Enums.TargetLevel;
+    createdAt?: Prisma.DateTimeFilter<"User"> | Date | string;
+    updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string;
+    interests?: Prisma.UserInterestListRelationFilter;
+    lists?: Prisma.VocabListListRelationFilter;
+    vocabs?: Prisma.VocabListRelationFilter;
+    reviews?: Prisma.VocabReviewListRelationFilter;
+    progresses?: Prisma.VocabProgressListRelationFilter;
+    studySessions?: Prisma.StudySessionListRelationFilter;
+    studyExercises?: Prisma.StudyExerciseListRelationFilter;
+    studyAttempts?: Prisma.StudyAttemptListRelationFilter;
+}, "id" | "email">;
+export type UserOrderByWithAggregationInput = {
+    id?: Prisma.SortOrder;
+    email?: Prisma.SortOrderInput | Prisma.SortOrder;
+    passwordHash?: Prisma.SortOrderInput | Prisma.SortOrder;
+    nativeLanguage?: Prisma.SortOrder;
+    targetLanguage?: Prisma.SortOrder;
+    level?: Prisma.SortOrder;
+    createdAt?: Prisma.SortOrder;
+    updatedAt?: Prisma.SortOrder;
+    _count?: Prisma.UserCountOrderByAggregateInput;
+    _max?: Prisma.UserMaxOrderByAggregateInput;
+    _min?: Prisma.UserMinOrderByAggregateInput;
+};
+export type UserScalarWhereWithAggregatesInput = {
+    AND?: Prisma.UserScalarWhereWithAggregatesInput | Prisma.UserScalarWhereWithAggregatesInput[];
+    OR?: Prisma.UserScalarWhereWithAggregatesInput[];
+    NOT?: Prisma.UserScalarWhereWithAggregatesInput | Prisma.UserScalarWhereWithAggregatesInput[];
+    id?: Prisma.StringWithAggregatesFilter<"User"> | string;
+    email?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null;
+    passwordHash?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null;
+    nativeLanguage?: Prisma.StringWithAggregatesFilter<"User"> | string;
+    targetLanguage?: Prisma.StringWithAggregatesFilter<"User"> | string;
+    level?: Prisma.EnumTargetLevelWithAggregatesFilter<"User"> | $Enums.TargetLevel;
+    createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string;
+    updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string;
+};
+export type UserCreateInput = {
+    id?: string;
+    email?: string | null;
+    passwordHash?: string | null;
+    nativeLanguage: string;
+    targetLanguage: string;
+    level: $Enums.TargetLevel;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    interests?: Prisma.UserInterestCreateNestedManyWithoutUserInput;
+    lists?: Prisma.VocabListCreateNestedManyWithoutUserInput;
+    vocabs?: Prisma.VocabCreateNestedManyWithoutUserInput;
+    reviews?: Prisma.VocabReviewCreateNestedManyWithoutUserInput;
+    progresses?: Prisma.VocabProgressCreateNestedManyWithoutUserInput;
+    studySessions?: Prisma.StudySessionCreateNestedManyWithoutUserInput;
+    studyExercises?: Prisma.StudyExerciseCreateNestedManyWithoutUserInput;
+    studyAttempts?: Prisma.StudyAttemptCreateNestedManyWithoutUserInput;
+};
+export type UserUncheckedCreateInput = {
+    id?: string;
+    email?: string | null;
+    passwordHash?: string | null;
+    nativeLanguage: string;
+    targetLanguage: string;
+    level: $Enums.TargetLevel;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    interests?: Prisma.UserInterestUncheckedCreateNestedManyWithoutUserInput;
+    lists?: Prisma.VocabListUncheckedCreateNestedManyWithoutUserInput;
+    vocabs?: Prisma.VocabUncheckedCreateNestedManyWithoutUserInput;
+    reviews?: Prisma.VocabReviewUncheckedCreateNestedManyWithoutUserInput;
+    progresses?: Prisma.VocabProgressUncheckedCreateNestedManyWithoutUserInput;
+    studySessions?: Prisma.StudySessionUncheckedCreateNestedManyWithoutUserInput;
+    studyExercises?: Prisma.StudyExerciseUncheckedCreateNestedManyWithoutUserInput;
+    studyAttempts?: Prisma.StudyAttemptUncheckedCreateNestedManyWithoutUserInput;
+};
+export type UserUpdateInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    nativeLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
+    targetLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
+    level?: Prisma.EnumTargetLevelFieldUpdateOperationsInput | $Enums.TargetLevel;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    interests?: Prisma.UserInterestUpdateManyWithoutUserNestedInput;
+    lists?: Prisma.VocabListUpdateManyWithoutUserNestedInput;
+    vocabs?: Prisma.VocabUpdateManyWithoutUserNestedInput;
+    reviews?: Prisma.VocabReviewUpdateManyWithoutUserNestedInput;
+    progresses?: Prisma.VocabProgressUpdateManyWithoutUserNestedInput;
+    studySessions?: Prisma.StudySessionUpdateManyWithoutUserNestedInput;
+    studyExercises?: Prisma.StudyExerciseUpdateManyWithoutUserNestedInput;
+    studyAttempts?: Prisma.StudyAttemptUpdateManyWithoutUserNestedInput;
+};
+export type UserUncheckedUpdateInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    nativeLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
+    targetLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
+    level?: Prisma.EnumTargetLevelFieldUpdateOperationsInput | $Enums.TargetLevel;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    interests?: Prisma.UserInterestUncheckedUpdateManyWithoutUserNestedInput;
+    lists?: Prisma.VocabListUncheckedUpdateManyWithoutUserNestedInput;
+    vocabs?: Prisma.VocabUncheckedUpdateManyWithoutUserNestedInput;
+    reviews?: Prisma.VocabReviewUncheckedUpdateManyWithoutUserNestedInput;
+    progresses?: Prisma.VocabProgressUncheckedUpdateManyWithoutUserNestedInput;
+    studySessions?: Prisma.StudySessionUncheckedUpdateManyWithoutUserNestedInput;
+    studyExercises?: Prisma.StudyExerciseUncheckedUpdateManyWithoutUserNestedInput;
+    studyAttempts?: Prisma.StudyAttemptUncheckedUpdateManyWithoutUserNestedInput;
+};
+export type UserCreateManyInput = {
+    id?: string;
+    email?: string | null;
+    passwordHash?: string | null;
+    nativeLanguage: string;
+    targetLanguage: string;
+    level: $Enums.TargetLevel;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+};
+export type UserUpdateManyMutationInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    nativeLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
+    targetLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
+    level?: Prisma.EnumTargetLevelFieldUpdateOperationsInput | $Enums.TargetLevel;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+};
+export type UserUncheckedUpdateManyInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    nativeLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
+    targetLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
+    level?: Prisma.EnumTargetLevelFieldUpdateOperationsInput | $Enums.TargetLevel;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+};
+export type UserCountOrderByAggregateInput = {
+    id?: Prisma.SortOrder;
+    email?: Prisma.SortOrder;
+    passwordHash?: Prisma.SortOrder;
+    nativeLanguage?: Prisma.SortOrder;
+    targetLanguage?: Prisma.SortOrder;
+    level?: Prisma.SortOrder;
+    createdAt?: Prisma.SortOrder;
+    updatedAt?: Prisma.SortOrder;
+};
+export type UserMaxOrderByAggregateInput = {
+    id?: Prisma.SortOrder;
+    email?: Prisma.SortOrder;
+    passwordHash?: Prisma.SortOrder;
+    nativeLanguage?: Prisma.SortOrder;
+    targetLanguage?: Prisma.SortOrder;
+    level?: Prisma.SortOrder;
+    createdAt?: Prisma.SortOrder;
+    updatedAt?: Prisma.SortOrder;
+};
+export type UserMinOrderByAggregateInput = {
+    id?: Prisma.SortOrder;
+    email?: Prisma.SortOrder;
+    passwordHash?: Prisma.SortOrder;
+    nativeLanguage?: Prisma.SortOrder;
+    targetLanguage?: Prisma.SortOrder;
+    level?: Prisma.SortOrder;
+    createdAt?: Prisma.SortOrder;
+    updatedAt?: Prisma.SortOrder;
+};
+export type UserScalarRelationFilter = {
+    is?: Prisma.UserWhereInput;
+    isNot?: Prisma.UserWhereInput;
+};
+export type StringFieldUpdateOperationsInput = {
+    set?: string;
+};
+export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null;
+};
+export type EnumTargetLevelFieldUpdateOperationsInput = {
+    set?: $Enums.TargetLevel;
+};
+export type DateTimeFieldUpdateOperationsInput = {
+    set?: Date | string;
+};
+export type UserCreateNestedOneWithoutInterestsInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutInterestsInput, Prisma.UserUncheckedCreateWithoutInterestsInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutInterestsInput;
+    connect?: Prisma.UserWhereUniqueInput;
+};
+export type UserUpdateOneRequiredWithoutInterestsNestedInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutInterestsInput, Prisma.UserUncheckedCreateWithoutInterestsInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutInterestsInput;
+    upsert?: Prisma.UserUpsertWithoutInterestsInput;
+    connect?: Prisma.UserWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutInterestsInput, Prisma.UserUpdateWithoutInterestsInput>, Prisma.UserUncheckedUpdateWithoutInterestsInput>;
+};
+export type UserCreateNestedOneWithoutListsInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutListsInput, Prisma.UserUncheckedCreateWithoutListsInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutListsInput;
+    connect?: Prisma.UserWhereUniqueInput;
+};
+export type UserUpdateOneRequiredWithoutListsNestedInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutListsInput, Prisma.UserUncheckedCreateWithoutListsInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutListsInput;
+    upsert?: Prisma.UserUpsertWithoutListsInput;
+    connect?: Prisma.UserWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutListsInput, Prisma.UserUpdateWithoutListsInput>, Prisma.UserUncheckedUpdateWithoutListsInput>;
+};
+export type UserCreateNestedOneWithoutVocabsInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutVocabsInput, Prisma.UserUncheckedCreateWithoutVocabsInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutVocabsInput;
+    connect?: Prisma.UserWhereUniqueInput;
+};
+export type UserUpdateOneRequiredWithoutVocabsNestedInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutVocabsInput, Prisma.UserUncheckedCreateWithoutVocabsInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutVocabsInput;
+    upsert?: Prisma.UserUpsertWithoutVocabsInput;
+    connect?: Prisma.UserWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutVocabsInput, Prisma.UserUpdateWithoutVocabsInput>, Prisma.UserUncheckedUpdateWithoutVocabsInput>;
+};
+export type UserCreateNestedOneWithoutReviewsInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutReviewsInput, Prisma.UserUncheckedCreateWithoutReviewsInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutReviewsInput;
+    connect?: Prisma.UserWhereUniqueInput;
+};
+export type UserUpdateOneRequiredWithoutReviewsNestedInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutReviewsInput, Prisma.UserUncheckedCreateWithoutReviewsInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutReviewsInput;
+    upsert?: Prisma.UserUpsertWithoutReviewsInput;
+    connect?: Prisma.UserWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutReviewsInput, Prisma.UserUpdateWithoutReviewsInput>, Prisma.UserUncheckedUpdateWithoutReviewsInput>;
+};
+export type UserCreateNestedOneWithoutProgressesInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutProgressesInput, Prisma.UserUncheckedCreateWithoutProgressesInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutProgressesInput;
+    connect?: Prisma.UserWhereUniqueInput;
+};
+export type UserUpdateOneRequiredWithoutProgressesNestedInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutProgressesInput, Prisma.UserUncheckedCreateWithoutProgressesInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutProgressesInput;
+    upsert?: Prisma.UserUpsertWithoutProgressesInput;
+    connect?: Prisma.UserWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutProgressesInput, Prisma.UserUpdateWithoutProgressesInput>, Prisma.UserUncheckedUpdateWithoutProgressesInput>;
+};
+export type UserCreateNestedOneWithoutStudySessionsInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutStudySessionsInput, Prisma.UserUncheckedCreateWithoutStudySessionsInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutStudySessionsInput;
+    connect?: Prisma.UserWhereUniqueInput;
+};
+export type UserUpdateOneRequiredWithoutStudySessionsNestedInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutStudySessionsInput, Prisma.UserUncheckedCreateWithoutStudySessionsInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutStudySessionsInput;
+    upsert?: Prisma.UserUpsertWithoutStudySessionsInput;
+    connect?: Prisma.UserWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutStudySessionsInput, Prisma.UserUpdateWithoutStudySessionsInput>, Prisma.UserUncheckedUpdateWithoutStudySessionsInput>;
+};
+export type UserCreateNestedOneWithoutStudyExercisesInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutStudyExercisesInput, Prisma.UserUncheckedCreateWithoutStudyExercisesInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutStudyExercisesInput;
+    connect?: Prisma.UserWhereUniqueInput;
+};
+export type UserUpdateOneRequiredWithoutStudyExercisesNestedInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutStudyExercisesInput, Prisma.UserUncheckedCreateWithoutStudyExercisesInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutStudyExercisesInput;
+    upsert?: Prisma.UserUpsertWithoutStudyExercisesInput;
+    connect?: Prisma.UserWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutStudyExercisesInput, Prisma.UserUpdateWithoutStudyExercisesInput>, Prisma.UserUncheckedUpdateWithoutStudyExercisesInput>;
+};
+export type UserCreateNestedOneWithoutStudyAttemptsInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutStudyAttemptsInput, Prisma.UserUncheckedCreateWithoutStudyAttemptsInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutStudyAttemptsInput;
+    connect?: Prisma.UserWhereUniqueInput;
+};
+export type UserUpdateOneRequiredWithoutStudyAttemptsNestedInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutStudyAttemptsInput, Prisma.UserUncheckedCreateWithoutStudyAttemptsInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutStudyAttemptsInput;
+    upsert?: Prisma.UserUpsertWithoutStudyAttemptsInput;
+    connect?: Prisma.UserWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutStudyAttemptsInput, Prisma.UserUpdateWithoutStudyAttemptsInput>, Prisma.UserUncheckedUpdateWithoutStudyAttemptsInput>;
+};
+export type UserCreateWithoutInterestsInput = {
+    id?: string;
+    email?: string | null;
+    passwordHash?: string | null;
+    nativeLanguage: string;
+    targetLanguage: string;
+    level: $Enums.TargetLevel;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    lists?: Prisma.VocabListCreateNestedManyWithoutUserInput;
+    vocabs?: Prisma.VocabCreateNestedManyWithoutUserInput;
+    reviews?: Prisma.VocabReviewCreateNestedManyWithoutUserInput;
+    progresses?: Prisma.VocabProgressCreateNestedManyWithoutUserInput;
+    studySessions?: Prisma.StudySessionCreateNestedManyWithoutUserInput;
+    studyExercises?: Prisma.StudyExerciseCreateNestedManyWithoutUserInput;
+    studyAttempts?: Prisma.StudyAttemptCreateNestedManyWithoutUserInput;
+};
+export type UserUncheckedCreateWithoutInterestsInput = {
+    id?: string;
+    email?: string | null;
+    passwordHash?: string | null;
+    nativeLanguage: string;
+    targetLanguage: string;
+    level: $Enums.TargetLevel;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    lists?: Prisma.VocabListUncheckedCreateNestedManyWithoutUserInput;
+    vocabs?: Prisma.VocabUncheckedCreateNestedManyWithoutUserInput;
+    reviews?: Prisma.VocabReviewUncheckedCreateNestedManyWithoutUserInput;
+    progresses?: Prisma.VocabProgressUncheckedCreateNestedManyWithoutUserInput;
+    studySessions?: Prisma.StudySessionUncheckedCreateNestedManyWithoutUserInput;
+    studyExercises?: Prisma.StudyExerciseUncheckedCreateNestedManyWithoutUserInput;
+    studyAttempts?: Prisma.StudyAttemptUncheckedCreateNestedManyWithoutUserInput;
+};
+export type UserCreateOrConnectWithoutInterestsInput = {
+    where: Prisma.UserWhereUniqueInput;
+    create: Prisma.XOR<Prisma.UserCreateWithoutInterestsInput, Prisma.UserUncheckedCreateWithoutInterestsInput>;
+};
+export type UserUpsertWithoutInterestsInput = {
+    update: Prisma.XOR<Prisma.UserUpdateWithoutInterestsInput, Prisma.UserUncheckedUpdateWithoutInterestsInput>;
+    create: Prisma.XOR<Prisma.UserCreateWithoutInterestsInput, Prisma.UserUncheckedCreateWithoutInterestsInput>;
+    where?: Prisma.UserWhereInput;
+};
+export type UserUpdateToOneWithWhereWithoutInterestsInput = {
+    where?: Prisma.UserWhereInput;
+    data: Prisma.XOR<Prisma.UserUpdateWithoutInterestsInput, Prisma.UserUncheckedUpdateWithoutInterestsInput>;
+};
+export type UserUpdateWithoutInterestsInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    nativeLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
+    targetLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
+    level?: Prisma.EnumTargetLevelFieldUpdateOperationsInput | $Enums.TargetLevel;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    lists?: Prisma.VocabListUpdateManyWithoutUserNestedInput;
+    vocabs?: Prisma.VocabUpdateManyWithoutUserNestedInput;
+    reviews?: Prisma.VocabReviewUpdateManyWithoutUserNestedInput;
+    progresses?: Prisma.VocabProgressUpdateManyWithoutUserNestedInput;
+    studySessions?: Prisma.StudySessionUpdateManyWithoutUserNestedInput;
+    studyExercises?: Prisma.StudyExerciseUpdateManyWithoutUserNestedInput;
+    studyAttempts?: Prisma.StudyAttemptUpdateManyWithoutUserNestedInput;
+};
+export type UserUncheckedUpdateWithoutInterestsInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    nativeLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
+    targetLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
+    level?: Prisma.EnumTargetLevelFieldUpdateOperationsInput | $Enums.TargetLevel;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    lists?: Prisma.VocabListUncheckedUpdateManyWithoutUserNestedInput;
+    vocabs?: Prisma.VocabUncheckedUpdateManyWithoutUserNestedInput;
+    reviews?: Prisma.VocabReviewUncheckedUpdateManyWithoutUserNestedInput;
+    progresses?: Prisma.VocabProgressUncheckedUpdateManyWithoutUserNestedInput;
+    studySessions?: Prisma.StudySessionUncheckedUpdateManyWithoutUserNestedInput;
+    studyExercises?: Prisma.StudyExerciseUncheckedUpdateManyWithoutUserNestedInput;
+    studyAttempts?: Prisma.StudyAttemptUncheckedUpdateManyWithoutUserNestedInput;
+};
+export type UserCreateWithoutListsInput = {
+    id?: string;
+    email?: string | null;
+    passwordHash?: string | null;
+    nativeLanguage: string;
+    targetLanguage: string;
+    level: $Enums.TargetLevel;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    interests?: Prisma.UserInterestCreateNestedManyWithoutUserInput;
+    vocabs?: Prisma.VocabCreateNestedManyWithoutUserInput;
+    reviews?: Prisma.VocabReviewCreateNestedManyWithoutUserInput;
+    progresses?: Prisma.VocabProgressCreateNestedManyWithoutUserInput;
+    studySessions?: Prisma.StudySessionCreateNestedManyWithoutUserInput;
+    studyExercises?: Prisma.StudyExerciseCreateNestedManyWithoutUserInput;
+    studyAttempts?: Prisma.StudyAttemptCreateNestedManyWithoutUserInput;
+};
+export type UserUncheckedCreateWithoutListsInput = {
+    id?: string;
+    email?: string | null;
+    passwordHash?: string | null;
+    nativeLanguage: string;
+    targetLanguage: string;
+    level: $Enums.TargetLevel;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    interests?: Prisma.UserInterestUncheckedCreateNestedManyWithoutUserInput;
+    vocabs?: Prisma.VocabUncheckedCreateNestedManyWithoutUserInput;
+    reviews?: Prisma.VocabReviewUncheckedCreateNestedManyWithoutUserInput;
+    progresses?: Prisma.VocabProgressUncheckedCreateNestedManyWithoutUserInput;
+    studySessions?: Prisma.StudySessionUncheckedCreateNestedManyWithoutUserInput;
+    studyExercises?: Prisma.StudyExerciseUncheckedCreateNestedManyWithoutUserInput;
+    studyAttempts?: Prisma.StudyAttemptUncheckedCreateNestedManyWithoutUserInput;
+};
+export type UserCreateOrConnectWithoutListsInput = {
+    where: Prisma.UserWhereUniqueInput;
+    create: Prisma.XOR<Prisma.UserCreateWithoutListsInput, Prisma.UserUncheckedCreateWithoutListsInput>;
+};
+export type UserUpsertWithoutListsInput = {
+    update: Prisma.XOR<Prisma.UserUpdateWithoutListsInput, Prisma.UserUncheckedUpdateWithoutListsInput>;
+    create: Prisma.XOR<Prisma.UserCreateWithoutListsInput, Prisma.UserUncheckedCreateWithoutListsInput>;
+    where?: Prisma.UserWhereInput;
+};
+export type UserUpdateToOneWithWhereWithoutListsInput = {
+    where?: Prisma.UserWhereInput;
+    data: Prisma.XOR<Prisma.UserUpdateWithoutListsInput, Prisma.UserUncheckedUpdateWithoutListsInput>;
+};
+export type UserUpdateWithoutListsInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    nativeLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
+    targetLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
+    level?: Prisma.EnumTargetLevelFieldUpdateOperationsInput | $Enums.TargetLevel;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    interests?: Prisma.UserInterestUpdateManyWithoutUserNestedInput;
+    vocabs?: Prisma.VocabUpdateManyWithoutUserNestedInput;
+    reviews?: Prisma.VocabReviewUpdateManyWithoutUserNestedInput;
+    progresses?: Prisma.VocabProgressUpdateManyWithoutUserNestedInput;
+    studySessions?: Prisma.StudySessionUpdateManyWithoutUserNestedInput;
+    studyExercises?: Prisma.StudyExerciseUpdateManyWithoutUserNestedInput;
+    studyAttempts?: Prisma.StudyAttemptUpdateManyWithoutUserNestedInput;
+};
+export type UserUncheckedUpdateWithoutListsInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    nativeLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
+    targetLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
+    level?: Prisma.EnumTargetLevelFieldUpdateOperationsInput | $Enums.TargetLevel;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    interests?: Prisma.UserInterestUncheckedUpdateManyWithoutUserNestedInput;
+    vocabs?: Prisma.VocabUncheckedUpdateManyWithoutUserNestedInput;
+    reviews?: Prisma.VocabReviewUncheckedUpdateManyWithoutUserNestedInput;
+    progresses?: Prisma.VocabProgressUncheckedUpdateManyWithoutUserNestedInput;
+    studySessions?: Prisma.StudySessionUncheckedUpdateManyWithoutUserNestedInput;
+    studyExercises?: Prisma.StudyExerciseUncheckedUpdateManyWithoutUserNestedInput;
+    studyAttempts?: Prisma.StudyAttemptUncheckedUpdateManyWithoutUserNestedInput;
+};
+export type UserCreateWithoutVocabsInput = {
+    id?: string;
+    email?: string | null;
+    passwordHash?: string | null;
+    nativeLanguage: string;
+    targetLanguage: string;
+    level: $Enums.TargetLevel;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    interests?: Prisma.UserInterestCreateNestedManyWithoutUserInput;
+    lists?: Prisma.VocabListCreateNestedManyWithoutUserInput;
+    reviews?: Prisma.VocabReviewCreateNestedManyWithoutUserInput;
+    progresses?: Prisma.VocabProgressCreateNestedManyWithoutUserInput;
+    studySessions?: Prisma.StudySessionCreateNestedManyWithoutUserInput;
+    studyExercises?: Prisma.StudyExerciseCreateNestedManyWithoutUserInput;
+    studyAttempts?: Prisma.StudyAttemptCreateNestedManyWithoutUserInput;
+};
+export type UserUncheckedCreateWithoutVocabsInput = {
+    id?: string;
+    email?: string | null;
+    passwordHash?: string | null;
+    nativeLanguage: string;
+    targetLanguage: string;
+    level: $Enums.TargetLevel;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    interests?: Prisma.UserInterestUncheckedCreateNestedManyWithoutUserInput;
+    lists?: Prisma.VocabListUncheckedCreateNestedManyWithoutUserInput;
+    reviews?: Prisma.VocabReviewUncheckedCreateNestedManyWithoutUserInput;
+    progresses?: Prisma.VocabProgressUncheckedCreateNestedManyWithoutUserInput;
+    studySessions?: Prisma.StudySessionUncheckedCreateNestedManyWithoutUserInput;
+    studyExercises?: Prisma.StudyExerciseUncheckedCreateNestedManyWithoutUserInput;
+    studyAttempts?: Prisma.StudyAttemptUncheckedCreateNestedManyWithoutUserInput;
+};
+export type UserCreateOrConnectWithoutVocabsInput = {
+    where: Prisma.UserWhereUniqueInput;
+    create: Prisma.XOR<Prisma.UserCreateWithoutVocabsInput, Prisma.UserUncheckedCreateWithoutVocabsInput>;
+};
+export type UserUpsertWithoutVocabsInput = {
+    update: Prisma.XOR<Prisma.UserUpdateWithoutVocabsInput, Prisma.UserUncheckedUpdateWithoutVocabsInput>;
+    create: Prisma.XOR<Prisma.UserCreateWithoutVocabsInput, Prisma.UserUncheckedCreateWithoutVocabsInput>;
+    where?: Prisma.UserWhereInput;
+};
+export type UserUpdateToOneWithWhereWithoutVocabsInput = {
+    where?: Prisma.UserWhereInput;
+    data: Prisma.XOR<Prisma.UserUpdateWithoutVocabsInput, Prisma.UserUncheckedUpdateWithoutVocabsInput>;
+};
+export type UserUpdateWithoutVocabsInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    nativeLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
+    targetLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
+    level?: Prisma.EnumTargetLevelFieldUpdateOperationsInput | $Enums.TargetLevel;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    interests?: Prisma.UserInterestUpdateManyWithoutUserNestedInput;
+    lists?: Prisma.VocabListUpdateManyWithoutUserNestedInput;
+    reviews?: Prisma.VocabReviewUpdateManyWithoutUserNestedInput;
+    progresses?: Prisma.VocabProgressUpdateManyWithoutUserNestedInput;
+    studySessions?: Prisma.StudySessionUpdateManyWithoutUserNestedInput;
+    studyExercises?: Prisma.StudyExerciseUpdateManyWithoutUserNestedInput;
+    studyAttempts?: Prisma.StudyAttemptUpdateManyWithoutUserNestedInput;
+};
+export type UserUncheckedUpdateWithoutVocabsInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    nativeLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
+    targetLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
+    level?: Prisma.EnumTargetLevelFieldUpdateOperationsInput | $Enums.TargetLevel;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    interests?: Prisma.UserInterestUncheckedUpdateManyWithoutUserNestedInput;
+    lists?: Prisma.VocabListUncheckedUpdateManyWithoutUserNestedInput;
+    reviews?: Prisma.VocabReviewUncheckedUpdateManyWithoutUserNestedInput;
+    progresses?: Prisma.VocabProgressUncheckedUpdateManyWithoutUserNestedInput;
+    studySessions?: Prisma.StudySessionUncheckedUpdateManyWithoutUserNestedInput;
+    studyExercises?: Prisma.StudyExerciseUncheckedUpdateManyWithoutUserNestedInput;
+    studyAttempts?: Prisma.StudyAttemptUncheckedUpdateManyWithoutUserNestedInput;
+};
+export type UserCreateWithoutReviewsInput = {
+    id?: string;
+    email?: string | null;
+    passwordHash?: string | null;
+    nativeLanguage: string;
+    targetLanguage: string;
+    level: $Enums.TargetLevel;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    interests?: Prisma.UserInterestCreateNestedManyWithoutUserInput;
+    lists?: Prisma.VocabListCreateNestedManyWithoutUserInput;
+    vocabs?: Prisma.VocabCreateNestedManyWithoutUserInput;
+    progresses?: Prisma.VocabProgressCreateNestedManyWithoutUserInput;
+    studySessions?: Prisma.StudySessionCreateNestedManyWithoutUserInput;
+    studyExercises?: Prisma.StudyExerciseCreateNestedManyWithoutUserInput;
+    studyAttempts?: Prisma.StudyAttemptCreateNestedManyWithoutUserInput;
+};
+export type UserUncheckedCreateWithoutReviewsInput = {
+    id?: string;
+    email?: string | null;
+    passwordHash?: string | null;
+    nativeLanguage: string;
+    targetLanguage: string;
+    level: $Enums.TargetLevel;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    interests?: Prisma.UserInterestUncheckedCreateNestedManyWithoutUserInput;
+    lists?: Prisma.VocabListUncheckedCreateNestedManyWithoutUserInput;
+    vocabs?: Prisma.VocabUncheckedCreateNestedManyWithoutUserInput;
+    progresses?: Prisma.VocabProgressUncheckedCreateNestedManyWithoutUserInput;
+    studySessions?: Prisma.StudySessionUncheckedCreateNestedManyWithoutUserInput;
+    studyExercises?: Prisma.StudyExerciseUncheckedCreateNestedManyWithoutUserInput;
+    studyAttempts?: Prisma.StudyAttemptUncheckedCreateNestedManyWithoutUserInput;
+};
+export type UserCreateOrConnectWithoutReviewsInput = {
+    where: Prisma.UserWhereUniqueInput;
+    create: Prisma.XOR<Prisma.UserCreateWithoutReviewsInput, Prisma.UserUncheckedCreateWithoutReviewsInput>;
+};
+export type UserUpsertWithoutReviewsInput = {
+    update: Prisma.XOR<Prisma.UserUpdateWithoutReviewsInput, Prisma.UserUncheckedUpdateWithoutReviewsInput>;
+    create: Prisma.XOR<Prisma.UserCreateWithoutReviewsInput, Prisma.UserUncheckedCreateWithoutReviewsInput>;
+    where?: Prisma.UserWhereInput;
+};
+export type UserUpdateToOneWithWhereWithoutReviewsInput = {
+    where?: Prisma.UserWhereInput;
+    data: Prisma.XOR<Prisma.UserUpdateWithoutReviewsInput, Prisma.UserUncheckedUpdateWithoutReviewsInput>;
+};
+export type UserUpdateWithoutReviewsInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    nativeLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
+    targetLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
+    level?: Prisma.EnumTargetLevelFieldUpdateOperationsInput | $Enums.TargetLevel;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    interests?: Prisma.UserInterestUpdateManyWithoutUserNestedInput;
+    lists?: Prisma.VocabListUpdateManyWithoutUserNestedInput;
+    vocabs?: Prisma.VocabUpdateManyWithoutUserNestedInput;
+    progresses?: Prisma.VocabProgressUpdateManyWithoutUserNestedInput;
+    studySessions?: Prisma.StudySessionUpdateManyWithoutUserNestedInput;
+    studyExercises?: Prisma.StudyExerciseUpdateManyWithoutUserNestedInput;
+    studyAttempts?: Prisma.StudyAttemptUpdateManyWithoutUserNestedInput;
+};
+export type UserUncheckedUpdateWithoutReviewsInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    nativeLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
+    targetLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
+    level?: Prisma.EnumTargetLevelFieldUpdateOperationsInput | $Enums.TargetLevel;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    interests?: Prisma.UserInterestUncheckedUpdateManyWithoutUserNestedInput;
+    lists?: Prisma.VocabListUncheckedUpdateManyWithoutUserNestedInput;
+    vocabs?: Prisma.VocabUncheckedUpdateManyWithoutUserNestedInput;
+    progresses?: Prisma.VocabProgressUncheckedUpdateManyWithoutUserNestedInput;
+    studySessions?: Prisma.StudySessionUncheckedUpdateManyWithoutUserNestedInput;
+    studyExercises?: Prisma.StudyExerciseUncheckedUpdateManyWithoutUserNestedInput;
+    studyAttempts?: Prisma.StudyAttemptUncheckedUpdateManyWithoutUserNestedInput;
+};
+export type UserCreateWithoutProgressesInput = {
+    id?: string;
+    email?: string | null;
+    passwordHash?: string | null;
+    nativeLanguage: string;
+    targetLanguage: string;
+    level: $Enums.TargetLevel;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    interests?: Prisma.UserInterestCreateNestedManyWithoutUserInput;
+    lists?: Prisma.VocabListCreateNestedManyWithoutUserInput;
+    vocabs?: Prisma.VocabCreateNestedManyWithoutUserInput;
+    reviews?: Prisma.VocabReviewCreateNestedManyWithoutUserInput;
+    studySessions?: Prisma.StudySessionCreateNestedManyWithoutUserInput;
+    studyExercises?: Prisma.StudyExerciseCreateNestedManyWithoutUserInput;
+    studyAttempts?: Prisma.StudyAttemptCreateNestedManyWithoutUserInput;
+};
+export type UserUncheckedCreateWithoutProgressesInput = {
+    id?: string;
+    email?: string | null;
+    passwordHash?: string | null;
+    nativeLanguage: string;
+    targetLanguage: string;
+    level: $Enums.TargetLevel;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    interests?: Prisma.UserInterestUncheckedCreateNestedManyWithoutUserInput;
+    lists?: Prisma.VocabListUncheckedCreateNestedManyWithoutUserInput;
+    vocabs?: Prisma.VocabUncheckedCreateNestedManyWithoutUserInput;
+    reviews?: Prisma.VocabReviewUncheckedCreateNestedManyWithoutUserInput;
+    studySessions?: Prisma.StudySessionUncheckedCreateNestedManyWithoutUserInput;
+    studyExercises?: Prisma.StudyExerciseUncheckedCreateNestedManyWithoutUserInput;
+    studyAttempts?: Prisma.StudyAttemptUncheckedCreateNestedManyWithoutUserInput;
+};
+export type UserCreateOrConnectWithoutProgressesInput = {
+    where: Prisma.UserWhereUniqueInput;
+    create: Prisma.XOR<Prisma.UserCreateWithoutProgressesInput, Prisma.UserUncheckedCreateWithoutProgressesInput>;
+};
+export type UserUpsertWithoutProgressesInput = {
+    update: Prisma.XOR<Prisma.UserUpdateWithoutProgressesInput, Prisma.UserUncheckedUpdateWithoutProgressesInput>;
+    create: Prisma.XOR<Prisma.UserCreateWithoutProgressesInput, Prisma.UserUncheckedCreateWithoutProgressesInput>;
+    where?: Prisma.UserWhereInput;
+};
+export type UserUpdateToOneWithWhereWithoutProgressesInput = {
+    where?: Prisma.UserWhereInput;
+    data: Prisma.XOR<Prisma.UserUpdateWithoutProgressesInput, Prisma.UserUncheckedUpdateWithoutProgressesInput>;
+};
+export type UserUpdateWithoutProgressesInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    nativeLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
+    targetLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
+    level?: Prisma.EnumTargetLevelFieldUpdateOperationsInput | $Enums.TargetLevel;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    interests?: Prisma.UserInterestUpdateManyWithoutUserNestedInput;
+    lists?: Prisma.VocabListUpdateManyWithoutUserNestedInput;
+    vocabs?: Prisma.VocabUpdateManyWithoutUserNestedInput;
+    reviews?: Prisma.VocabReviewUpdateManyWithoutUserNestedInput;
+    studySessions?: Prisma.StudySessionUpdateManyWithoutUserNestedInput;
+    studyExercises?: Prisma.StudyExerciseUpdateManyWithoutUserNestedInput;
+    studyAttempts?: Prisma.StudyAttemptUpdateManyWithoutUserNestedInput;
+};
+export type UserUncheckedUpdateWithoutProgressesInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    nativeLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
+    targetLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
+    level?: Prisma.EnumTargetLevelFieldUpdateOperationsInput | $Enums.TargetLevel;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    interests?: Prisma.UserInterestUncheckedUpdateManyWithoutUserNestedInput;
+    lists?: Prisma.VocabListUncheckedUpdateManyWithoutUserNestedInput;
+    vocabs?: Prisma.VocabUncheckedUpdateManyWithoutUserNestedInput;
+    reviews?: Prisma.VocabReviewUncheckedUpdateManyWithoutUserNestedInput;
+    studySessions?: Prisma.StudySessionUncheckedUpdateManyWithoutUserNestedInput;
+    studyExercises?: Prisma.StudyExerciseUncheckedUpdateManyWithoutUserNestedInput;
+    studyAttempts?: Prisma.StudyAttemptUncheckedUpdateManyWithoutUserNestedInput;
+};
+export type UserCreateWithoutStudySessionsInput = {
+    id?: string;
+    email?: string | null;
+    passwordHash?: string | null;
+    nativeLanguage: string;
+    targetLanguage: string;
+    level: $Enums.TargetLevel;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    interests?: Prisma.UserInterestCreateNestedManyWithoutUserInput;
+    lists?: Prisma.VocabListCreateNestedManyWithoutUserInput;
+    vocabs?: Prisma.VocabCreateNestedManyWithoutUserInput;
+    reviews?: Prisma.VocabReviewCreateNestedManyWithoutUserInput;
+    progresses?: Prisma.VocabProgressCreateNestedManyWithoutUserInput;
+    studyExercises?: Prisma.StudyExerciseCreateNestedManyWithoutUserInput;
+    studyAttempts?: Prisma.StudyAttemptCreateNestedManyWithoutUserInput;
+};
+export type UserUncheckedCreateWithoutStudySessionsInput = {
+    id?: string;
+    email?: string | null;
+    passwordHash?: string | null;
+    nativeLanguage: string;
+    targetLanguage: string;
+    level: $Enums.TargetLevel;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    interests?: Prisma.UserInterestUncheckedCreateNestedManyWithoutUserInput;
+    lists?: Prisma.VocabListUncheckedCreateNestedManyWithoutUserInput;
+    vocabs?: Prisma.VocabUncheckedCreateNestedManyWithoutUserInput;
+    reviews?: Prisma.VocabReviewUncheckedCreateNestedManyWithoutUserInput;
+    progresses?: Prisma.VocabProgressUncheckedCreateNestedManyWithoutUserInput;
+    studyExercises?: Prisma.StudyExerciseUncheckedCreateNestedManyWithoutUserInput;
+    studyAttempts?: Prisma.StudyAttemptUncheckedCreateNestedManyWithoutUserInput;
+};
+export type UserCreateOrConnectWithoutStudySessionsInput = {
+    where: Prisma.UserWhereUniqueInput;
+    create: Prisma.XOR<Prisma.UserCreateWithoutStudySessionsInput, Prisma.UserUncheckedCreateWithoutStudySessionsInput>;
+};
+export type UserUpsertWithoutStudySessionsInput = {
+    update: Prisma.XOR<Prisma.UserUpdateWithoutStudySessionsInput, Prisma.UserUncheckedUpdateWithoutStudySessionsInput>;
+    create: Prisma.XOR<Prisma.UserCreateWithoutStudySessionsInput, Prisma.UserUncheckedCreateWithoutStudySessionsInput>;
+    where?: Prisma.UserWhereInput;
+};
+export type UserUpdateToOneWithWhereWithoutStudySessionsInput = {
+    where?: Prisma.UserWhereInput;
+    data: Prisma.XOR<Prisma.UserUpdateWithoutStudySessionsInput, Prisma.UserUncheckedUpdateWithoutStudySessionsInput>;
+};
+export type UserUpdateWithoutStudySessionsInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    nativeLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
+    targetLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
+    level?: Prisma.EnumTargetLevelFieldUpdateOperationsInput | $Enums.TargetLevel;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    interests?: Prisma.UserInterestUpdateManyWithoutUserNestedInput;
+    lists?: Prisma.VocabListUpdateManyWithoutUserNestedInput;
+    vocabs?: Prisma.VocabUpdateManyWithoutUserNestedInput;
+    reviews?: Prisma.VocabReviewUpdateManyWithoutUserNestedInput;
+    progresses?: Prisma.VocabProgressUpdateManyWithoutUserNestedInput;
+    studyExercises?: Prisma.StudyExerciseUpdateManyWithoutUserNestedInput;
+    studyAttempts?: Prisma.StudyAttemptUpdateManyWithoutUserNestedInput;
+};
+export type UserUncheckedUpdateWithoutStudySessionsInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    nativeLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
+    targetLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
+    level?: Prisma.EnumTargetLevelFieldUpdateOperationsInput | $Enums.TargetLevel;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    interests?: Prisma.UserInterestUncheckedUpdateManyWithoutUserNestedInput;
+    lists?: Prisma.VocabListUncheckedUpdateManyWithoutUserNestedInput;
+    vocabs?: Prisma.VocabUncheckedUpdateManyWithoutUserNestedInput;
+    reviews?: Prisma.VocabReviewUncheckedUpdateManyWithoutUserNestedInput;
+    progresses?: Prisma.VocabProgressUncheckedUpdateManyWithoutUserNestedInput;
+    studyExercises?: Prisma.StudyExerciseUncheckedUpdateManyWithoutUserNestedInput;
+    studyAttempts?: Prisma.StudyAttemptUncheckedUpdateManyWithoutUserNestedInput;
+};
+export type UserCreateWithoutStudyExercisesInput = {
+    id?: string;
+    email?: string | null;
+    passwordHash?: string | null;
+    nativeLanguage: string;
+    targetLanguage: string;
+    level: $Enums.TargetLevel;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    interests?: Prisma.UserInterestCreateNestedManyWithoutUserInput;
+    lists?: Prisma.VocabListCreateNestedManyWithoutUserInput;
+    vocabs?: Prisma.VocabCreateNestedManyWithoutUserInput;
+    reviews?: Prisma.VocabReviewCreateNestedManyWithoutUserInput;
+    progresses?: Prisma.VocabProgressCreateNestedManyWithoutUserInput;
+    studySessions?: Prisma.StudySessionCreateNestedManyWithoutUserInput;
+    studyAttempts?: Prisma.StudyAttemptCreateNestedManyWithoutUserInput;
+};
+export type UserUncheckedCreateWithoutStudyExercisesInput = {
+    id?: string;
+    email?: string | null;
+    passwordHash?: string | null;
+    nativeLanguage: string;
+    targetLanguage: string;
+    level: $Enums.TargetLevel;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    interests?: Prisma.UserInterestUncheckedCreateNestedManyWithoutUserInput;
+    lists?: Prisma.VocabListUncheckedCreateNestedManyWithoutUserInput;
+    vocabs?: Prisma.VocabUncheckedCreateNestedManyWithoutUserInput;
+    reviews?: Prisma.VocabReviewUncheckedCreateNestedManyWithoutUserInput;
+    progresses?: Prisma.VocabProgressUncheckedCreateNestedManyWithoutUserInput;
+    studySessions?: Prisma.StudySessionUncheckedCreateNestedManyWithoutUserInput;
+    studyAttempts?: Prisma.StudyAttemptUncheckedCreateNestedManyWithoutUserInput;
+};
+export type UserCreateOrConnectWithoutStudyExercisesInput = {
+    where: Prisma.UserWhereUniqueInput;
+    create: Prisma.XOR<Prisma.UserCreateWithoutStudyExercisesInput, Prisma.UserUncheckedCreateWithoutStudyExercisesInput>;
+};
+export type UserUpsertWithoutStudyExercisesInput = {
+    update: Prisma.XOR<Prisma.UserUpdateWithoutStudyExercisesInput, Prisma.UserUncheckedUpdateWithoutStudyExercisesInput>;
+    create: Prisma.XOR<Prisma.UserCreateWithoutStudyExercisesInput, Prisma.UserUncheckedCreateWithoutStudyExercisesInput>;
+    where?: Prisma.UserWhereInput;
+};
+export type UserUpdateToOneWithWhereWithoutStudyExercisesInput = {
+    where?: Prisma.UserWhereInput;
+    data: Prisma.XOR<Prisma.UserUpdateWithoutStudyExercisesInput, Prisma.UserUncheckedUpdateWithoutStudyExercisesInput>;
+};
+export type UserUpdateWithoutStudyExercisesInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    nativeLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
+    targetLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
+    level?: Prisma.EnumTargetLevelFieldUpdateOperationsInput | $Enums.TargetLevel;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    interests?: Prisma.UserInterestUpdateManyWithoutUserNestedInput;
+    lists?: Prisma.VocabListUpdateManyWithoutUserNestedInput;
+    vocabs?: Prisma.VocabUpdateManyWithoutUserNestedInput;
+    reviews?: Prisma.VocabReviewUpdateManyWithoutUserNestedInput;
+    progresses?: Prisma.VocabProgressUpdateManyWithoutUserNestedInput;
+    studySessions?: Prisma.StudySessionUpdateManyWithoutUserNestedInput;
+    studyAttempts?: Prisma.StudyAttemptUpdateManyWithoutUserNestedInput;
+};
+export type UserUncheckedUpdateWithoutStudyExercisesInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    nativeLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
+    targetLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
+    level?: Prisma.EnumTargetLevelFieldUpdateOperationsInput | $Enums.TargetLevel;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    interests?: Prisma.UserInterestUncheckedUpdateManyWithoutUserNestedInput;
+    lists?: Prisma.VocabListUncheckedUpdateManyWithoutUserNestedInput;
+    vocabs?: Prisma.VocabUncheckedUpdateManyWithoutUserNestedInput;
+    reviews?: Prisma.VocabReviewUncheckedUpdateManyWithoutUserNestedInput;
+    progresses?: Prisma.VocabProgressUncheckedUpdateManyWithoutUserNestedInput;
+    studySessions?: Prisma.StudySessionUncheckedUpdateManyWithoutUserNestedInput;
+    studyAttempts?: Prisma.StudyAttemptUncheckedUpdateManyWithoutUserNestedInput;
+};
+export type UserCreateWithoutStudyAttemptsInput = {
+    id?: string;
+    email?: string | null;
+    passwordHash?: string | null;
+    nativeLanguage: string;
+    targetLanguage: string;
+    level: $Enums.TargetLevel;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    interests?: Prisma.UserInterestCreateNestedManyWithoutUserInput;
+    lists?: Prisma.VocabListCreateNestedManyWithoutUserInput;
+    vocabs?: Prisma.VocabCreateNestedManyWithoutUserInput;
+    reviews?: Prisma.VocabReviewCreateNestedManyWithoutUserInput;
+    progresses?: Prisma.VocabProgressCreateNestedManyWithoutUserInput;
+    studySessions?: Prisma.StudySessionCreateNestedManyWithoutUserInput;
+    studyExercises?: Prisma.StudyExerciseCreateNestedManyWithoutUserInput;
+};
+export type UserUncheckedCreateWithoutStudyAttemptsInput = {
+    id?: string;
+    email?: string | null;
+    passwordHash?: string | null;
+    nativeLanguage: string;
+    targetLanguage: string;
+    level: $Enums.TargetLevel;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    interests?: Prisma.UserInterestUncheckedCreateNestedManyWithoutUserInput;
+    lists?: Prisma.VocabListUncheckedCreateNestedManyWithoutUserInput;
+    vocabs?: Prisma.VocabUncheckedCreateNestedManyWithoutUserInput;
+    reviews?: Prisma.VocabReviewUncheckedCreateNestedManyWithoutUserInput;
+    progresses?: Prisma.VocabProgressUncheckedCreateNestedManyWithoutUserInput;
+    studySessions?: Prisma.StudySessionUncheckedCreateNestedManyWithoutUserInput;
+    studyExercises?: Prisma.StudyExerciseUncheckedCreateNestedManyWithoutUserInput;
+};
+export type UserCreateOrConnectWithoutStudyAttemptsInput = {
+    where: Prisma.UserWhereUniqueInput;
+    create: Prisma.XOR<Prisma.UserCreateWithoutStudyAttemptsInput, Prisma.UserUncheckedCreateWithoutStudyAttemptsInput>;
+};
+export type UserUpsertWithoutStudyAttemptsInput = {
+    update: Prisma.XOR<Prisma.UserUpdateWithoutStudyAttemptsInput, Prisma.UserUncheckedUpdateWithoutStudyAttemptsInput>;
+    create: Prisma.XOR<Prisma.UserCreateWithoutStudyAttemptsInput, Prisma.UserUncheckedCreateWithoutStudyAttemptsInput>;
+    where?: Prisma.UserWhereInput;
+};
+export type UserUpdateToOneWithWhereWithoutStudyAttemptsInput = {
+    where?: Prisma.UserWhereInput;
+    data: Prisma.XOR<Prisma.UserUpdateWithoutStudyAttemptsInput, Prisma.UserUncheckedUpdateWithoutStudyAttemptsInput>;
+};
+export type UserUpdateWithoutStudyAttemptsInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    nativeLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
+    targetLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
+    level?: Prisma.EnumTargetLevelFieldUpdateOperationsInput | $Enums.TargetLevel;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    interests?: Prisma.UserInterestUpdateManyWithoutUserNestedInput;
+    lists?: Prisma.VocabListUpdateManyWithoutUserNestedInput;
+    vocabs?: Prisma.VocabUpdateManyWithoutUserNestedInput;
+    reviews?: Prisma.VocabReviewUpdateManyWithoutUserNestedInput;
+    progresses?: Prisma.VocabProgressUpdateManyWithoutUserNestedInput;
+    studySessions?: Prisma.StudySessionUpdateManyWithoutUserNestedInput;
+    studyExercises?: Prisma.StudyExerciseUpdateManyWithoutUserNestedInput;
+};
+export type UserUncheckedUpdateWithoutStudyAttemptsInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    nativeLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
+    targetLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
+    level?: Prisma.EnumTargetLevelFieldUpdateOperationsInput | $Enums.TargetLevel;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    interests?: Prisma.UserInterestUncheckedUpdateManyWithoutUserNestedInput;
+    lists?: Prisma.VocabListUncheckedUpdateManyWithoutUserNestedInput;
+    vocabs?: Prisma.VocabUncheckedUpdateManyWithoutUserNestedInput;
+    reviews?: Prisma.VocabReviewUncheckedUpdateManyWithoutUserNestedInput;
+    progresses?: Prisma.VocabProgressUncheckedUpdateManyWithoutUserNestedInput;
+    studySessions?: Prisma.StudySessionUncheckedUpdateManyWithoutUserNestedInput;
+    studyExercises?: Prisma.StudyExerciseUncheckedUpdateManyWithoutUserNestedInput;
+};
+/**
+ * Count Type UserCountOutputType
+ */
+export type UserCountOutputType = {
+    interests: number;
+    lists: number;
+    vocabs: number;
+    reviews: number;
+    progresses: number;
+    studySessions: number;
+    studyExercises: number;
+    studyAttempts: number;
+};
+export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    interests?: boolean | UserCountOutputTypeCountInterestsArgs;
+    lists?: boolean | UserCountOutputTypeCountListsArgs;
+    vocabs?: boolean | UserCountOutputTypeCountVocabsArgs;
+    reviews?: boolean | UserCountOutputTypeCountReviewsArgs;
+    progresses?: boolean | UserCountOutputTypeCountProgressesArgs;
+    studySessions?: boolean | UserCountOutputTypeCountStudySessionsArgs;
+    studyExercises?: boolean | UserCountOutputTypeCountStudyExercisesArgs;
+    studyAttempts?: boolean | UserCountOutputTypeCountStudyAttemptsArgs;
+};
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserCountOutputType
+     */
+    select?: Prisma.UserCountOutputTypeSelect<ExtArgs> | null;
+};
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountInterestsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.UserInterestWhereInput;
+};
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountListsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.VocabListWhereInput;
+};
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountVocabsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.VocabWhereInput;
+};
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountReviewsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.VocabReviewWhereInput;
+};
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountProgressesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.VocabProgressWhereInput;
+};
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountStudySessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.StudySessionWhereInput;
+};
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountStudyExercisesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.StudyExerciseWhereInput;
+};
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountStudyAttemptsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.StudyAttemptWhereInput;
+};
+export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+    id?: boolean;
+    email?: boolean;
+    passwordHash?: boolean;
+    nativeLanguage?: boolean;
+    targetLanguage?: boolean;
+    level?: boolean;
+    createdAt?: boolean;
+    updatedAt?: boolean;
+    interests?: boolean | Prisma.User$interestsArgs<ExtArgs>;
+    lists?: boolean | Prisma.User$listsArgs<ExtArgs>;
+    vocabs?: boolean | Prisma.User$vocabsArgs<ExtArgs>;
+    reviews?: boolean | Prisma.User$reviewsArgs<ExtArgs>;
+    progresses?: boolean | Prisma.User$progressesArgs<ExtArgs>;
+    studySessions?: boolean | Prisma.User$studySessionsArgs<ExtArgs>;
+    studyExercises?: boolean | Prisma.User$studyExercisesArgs<ExtArgs>;
+    studyAttempts?: boolean | Prisma.User$studyAttemptsArgs<ExtArgs>;
+    _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>;
+}, ExtArgs["result"]["user"]>;
+export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+    id?: boolean;
+    email?: boolean;
+    passwordHash?: boolean;
+    nativeLanguage?: boolean;
+    targetLanguage?: boolean;
+    level?: boolean;
+    createdAt?: boolean;
+    updatedAt?: boolean;
+}, ExtArgs["result"]["user"]>;
+export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+    id?: boolean;
+    email?: boolean;
+    passwordHash?: boolean;
+    nativeLanguage?: boolean;
+    targetLanguage?: boolean;
+    level?: boolean;
+    createdAt?: boolean;
+    updatedAt?: boolean;
+}, ExtArgs["result"]["user"]>;
+export type UserSelectScalar = {
+    id?: boolean;
+    email?: boolean;
+    passwordHash?: boolean;
+    nativeLanguage?: boolean;
+    targetLanguage?: boolean;
+    level?: boolean;
+    createdAt?: boolean;
+    updatedAt?: boolean;
+};
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "passwordHash" | "nativeLanguage" | "targetLanguage" | "level" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>;
+export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    interests?: boolean | Prisma.User$interestsArgs<ExtArgs>;
+    lists?: boolean | Prisma.User$listsArgs<ExtArgs>;
+    vocabs?: boolean | Prisma.User$vocabsArgs<ExtArgs>;
+    reviews?: boolean | Prisma.User$reviewsArgs<ExtArgs>;
+    progresses?: boolean | Prisma.User$progressesArgs<ExtArgs>;
+    studySessions?: boolean | Prisma.User$studySessionsArgs<ExtArgs>;
+    studyExercises?: boolean | Prisma.User$studyExercisesArgs<ExtArgs>;
+    studyAttempts?: boolean | Prisma.User$studyAttemptsArgs<ExtArgs>;
+    _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>;
+};
+export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {};
+export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {};
+export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    name: "User";
+    objects: {
+        interests: Prisma.$UserInterestPayload<ExtArgs>[];
+        lists: Prisma.$VocabListPayload<ExtArgs>[];
+        vocabs: Prisma.$VocabPayload<ExtArgs>[];
+        reviews: Prisma.$VocabReviewPayload<ExtArgs>[];
+        progresses: Prisma.$VocabProgressPayload<ExtArgs>[];
+        studySessions: Prisma.$StudySessionPayload<ExtArgs>[];
+        studyExercises: Prisma.$StudyExercisePayload<ExtArgs>[];
+        studyAttempts: Prisma.$StudyAttemptPayload<ExtArgs>[];
+    };
+    scalars: runtime.Types.Extensions.GetPayloadResult<{
+        id: string;
+        email: string | null;
+        passwordHash: string | null;
+        nativeLanguage: string;
+        targetLanguage: string;
+        level: $Enums.TargetLevel;
+        createdAt: Date;
+        updatedAt: Date;
+    }, ExtArgs["result"]["user"]>;
+    composites: {};
+};
+export type UserGetPayload<S extends boolean | null | undefined | UserDefaultArgs> = runtime.Types.Result.GetResult<Prisma.$UserPayload, S>;
+export type UserCountArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = Omit<UserFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+    select?: UserCountAggregateInputType | true;
+};
+export interface UserDelegate<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: {
+        types: Prisma.TypeMap<ExtArgs>['model']['User'];
+        meta: {
+            name: 'User';
+        };
+    };
+    /**
+     * Find zero or one User that matches the filter.
+     * @param {UserFindUniqueArgs} args - Arguments to find a User
+     * @example
+     * // Get one User
+     * const user = await prisma.user.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends UserFindUniqueArgs>(args: Prisma.SelectSubset<T, UserFindUniqueArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Find one User that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {UserFindUniqueOrThrowArgs} args - Arguments to find a User
+     * @example
+     * // Get one User
+     * const user = await prisma.user.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends UserFindUniqueOrThrowArgs>(args: Prisma.SelectSubset<T, UserFindUniqueOrThrowArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Find the first User that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserFindFirstArgs} args - Arguments to find a User
+     * @example
+     * // Get one User
+     * const user = await prisma.user.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends UserFindFirstArgs>(args?: Prisma.SelectSubset<T, UserFindFirstArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Find the first User that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserFindFirstOrThrowArgs} args - Arguments to find a User
+     * @example
+     * // Get one User
+     * const user = await prisma.user.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends UserFindFirstOrThrowArgs>(args?: Prisma.SelectSubset<T, UserFindFirstOrThrowArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Find zero or more Users that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Users
+     * const users = await prisma.user.findMany()
+     *
+     * // Get first 10 Users
+     * const users = await prisma.user.findMany({ take: 10 })
+     *
+     * // Only select the `id`
+     * const userWithIdOnly = await prisma.user.findMany({ select: { id: true } })
+     *
+     */
+    findMany<T extends UserFindManyArgs>(args?: Prisma.SelectSubset<T, UserFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>;
+    /**
+     * Create a User.
+     * @param {UserCreateArgs} args - Arguments to create a User.
+     * @example
+     * // Create one User
+     * const User = await prisma.user.create({
+     *   data: {
+     *     // ... data to create a User
+     *   }
+     * })
+     *
+     */
+    create<T extends UserCreateArgs>(args: Prisma.SelectSubset<T, UserCreateArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Create many Users.
+     * @param {UserCreateManyArgs} args - Arguments to create many Users.
+     * @example
+     * // Create many Users
+     * const user = await prisma.user.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     */
+    createMany<T extends UserCreateManyArgs>(args?: Prisma.SelectSubset<T, UserCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>;
+    /**
+     * Create many Users and returns the data saved in the database.
+     * @param {UserCreateManyAndReturnArgs} args - Arguments to create many Users.
+     * @example
+     * // Create many Users
+     * const user = await prisma.user.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     * // Create many Users and only return the `id`
+     * const userWithIdOnly = await prisma.user.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     *
+     */
+    createManyAndReturn<T extends UserCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, UserCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>;
+    /**
+     * Delete a User.
+     * @param {UserDeleteArgs} args - Arguments to delete one User.
+     * @example
+     * // Delete one User
+     * const User = await prisma.user.delete({
+     *   where: {
+     *     // ... filter to delete one User
+     *   }
+     * })
+     *
+     */
+    delete<T extends UserDeleteArgs>(args: Prisma.SelectSubset<T, UserDeleteArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Update one User.
+     * @param {UserUpdateArgs} args - Arguments to update one User.
+     * @example
+     * // Update one User
+     * const user = await prisma.user.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     *
+     */
+    update<T extends UserUpdateArgs>(args: Prisma.SelectSubset<T, UserUpdateArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Delete zero or more Users.
+     * @param {UserDeleteManyArgs} args - Arguments to filter Users to delete.
+     * @example
+     * // Delete a few Users
+     * const { count } = await prisma.user.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     *
+     */
+    deleteMany<T extends UserDeleteManyArgs>(args?: Prisma.SelectSubset<T, UserDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>;
+    /**
+     * Update zero or more Users.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Users
+     * const user = await prisma.user.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     *
+     */
+    updateMany<T extends UserUpdateManyArgs>(args: Prisma.SelectSubset<T, UserUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>;
+    /**
+     * Update zero or more Users and returns the data updated in the database.
+     * @param {UserUpdateManyAndReturnArgs} args - Arguments to update many Users.
+     * @example
+     * // Update many Users
+     * const user = await prisma.user.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     * // Update zero or more Users and only return the `id`
+     * const userWithIdOnly = await prisma.user.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     *
+     */
+    updateManyAndReturn<T extends UserUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, UserUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>;
+    /**
+     * Create or update one User.
+     * @param {UserUpsertArgs} args - Arguments to update or create a User.
+     * @example
+     * // Update or create a User
+     * const user = await prisma.user.upsert({
+     *   create: {
+     *     // ... data to create a User
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the User we want to update
+     *   }
+     * })
+     */
+    upsert<T extends UserUpsertArgs>(args: Prisma.SelectSubset<T, UserUpsertArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Count the number of Users.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserCountArgs} args - Arguments to filter Users to count.
+     * @example
+     * // Count the number of Users
+     * const count = await prisma.user.count({
+     *   where: {
+     *     // ... the filter for the Users we want to count
+     *   }
+     * })
+    **/
+    count<T extends UserCountArgs>(args?: Prisma.Subset<T, UserCountArgs>): Prisma.PrismaPromise<T extends runtime.Types.Utils.Record<'select', any> ? T['select'] extends true ? number : Prisma.GetScalarType<T['select'], UserCountAggregateOutputType> : number>;
+    /**
+     * Allows you to perform aggregations operations on a User.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UserAggregateArgs>(args: Prisma.Subset<T, UserAggregateArgs>): Prisma.PrismaPromise<GetUserAggregateType<T>>;
+    /**
+     * Group by User.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     *
+    **/
+    groupBy<T extends UserGroupByArgs, HasSelectOrTake extends Prisma.Or<Prisma.Extends<'skip', Prisma.Keys<T>>, Prisma.Extends<'take', Prisma.Keys<T>>>, OrderByArg extends Prisma.True extends HasSelectOrTake ? {
+        orderBy: UserGroupByArgs['orderBy'];
+    } : {
+        orderBy?: UserGroupByArgs['orderBy'];
+    }, OrderFields extends Prisma.ExcludeUnderscoreKeys<Prisma.Keys<Prisma.MaybeTupleToUnion<T['orderBy']>>>, ByFields extends Prisma.MaybeTupleToUnion<T['by']>, ByValid extends Prisma.Has<ByFields, OrderFields>, HavingFields extends Prisma.GetHavingFields<T['having']>, HavingValid extends Prisma.Has<ByFields, HavingFields>, ByEmpty extends T['by'] extends never[] ? Prisma.True : Prisma.False, InputErrors extends ByEmpty extends Prisma.True ? `Error: "by" must not be empty.` : HavingValid extends Prisma.False ? {
+        [P in HavingFields]: P extends ByFields ? never : P extends string ? `Error: Field "${P}" used in "having" needs to be provided in "by".` : [
+            Error,
+            'Field ',
+            P,
+            ` in "having" needs to be provided in "by"`
+        ];
+    }[HavingFields] : 'take' extends Prisma.Keys<T> ? 'orderBy' extends Prisma.Keys<T> ? ByValid extends Prisma.True ? {} : {
+        [P in OrderFields]: P extends ByFields ? never : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+    }[OrderFields] : 'Error: If you provide "take", you also need to provide "orderBy"' : 'skip' extends Prisma.Keys<T> ? 'orderBy' extends Prisma.Keys<T> ? ByValid extends Prisma.True ? {} : {
+        [P in OrderFields]: P extends ByFields ? never : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+    }[OrderFields] : 'Error: If you provide "skip", you also need to provide "orderBy"' : ByValid extends Prisma.True ? {} : {
+        [P in OrderFields]: P extends ByFields ? never : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+    }[OrderFields]>(args: Prisma.SubsetIntersection<T, UserGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>;
+    /**
+     * Fields of the User model
+     */
+    readonly fields: UserFieldRefs;
+}
+/**
+ * The delegate class that acts as a "Promise-like" for User.
+ * Why is this prefixed with `Prisma__`?
+ * Because we want to prevent naming conflicts as mentioned in
+ * https://github.com/prisma/prisma-client-js/issues/707
+ */
+export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise";
+    interests<T extends Prisma.User$interestsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$interestsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserInterestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    lists<T extends Prisma.User$listsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$listsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VocabListPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    vocabs<T extends Prisma.User$vocabsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$vocabsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VocabPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    reviews<T extends Prisma.User$reviewsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VocabReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    progresses<T extends Prisma.User$progressesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$progressesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VocabProgressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    studySessions<T extends Prisma.User$studySessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$studySessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StudySessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    studyExercises<T extends Prisma.User$studyExercisesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$studyExercisesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StudyExercisePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    studyAttempts<T extends Prisma.User$studyAttemptsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$studyAttemptsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StudyAttemptPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): runtime.Types.Utils.JsPromise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): runtime.Types.Utils.JsPromise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): runtime.Types.Utils.JsPromise<T>;
+}
+/**
+ * Fields of the User model
+ */
+export interface UserFieldRefs {
+    readonly id: Prisma.FieldRef<"User", 'String'>;
+    readonly email: Prisma.FieldRef<"User", 'String'>;
+    readonly passwordHash: Prisma.FieldRef<"User", 'String'>;
+    readonly nativeLanguage: Prisma.FieldRef<"User", 'String'>;
+    readonly targetLanguage: Prisma.FieldRef<"User", 'String'>;
+    readonly level: Prisma.FieldRef<"User", 'TargetLevel'>;
+    readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>;
+    readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>;
+}
+/**
+ * User findUnique
+ */
+export type UserFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: Prisma.UserSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: Prisma.UserOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.UserInclude<ExtArgs> | null;
+    /**
+     * Filter, which User to fetch.
+     */
+    where: Prisma.UserWhereUniqueInput;
+};
+/**
+ * User findUniqueOrThrow
+ */
+export type UserFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: Prisma.UserSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: Prisma.UserOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.UserInclude<ExtArgs> | null;
+    /**
+     * Filter, which User to fetch.
+     */
+    where: Prisma.UserWhereUniqueInput;
+};
+/**
+ * User findFirst
+ */
+export type UserFindFirstArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: Prisma.UserSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: Prisma.UserOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.UserInclude<ExtArgs> | null;
+    /**
+     * Filter, which User to fetch.
+     */
+    where?: Prisma.UserWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of Users to fetch.
+     */
+    orderBy?: Prisma.UserOrderByWithRelationInput | Prisma.UserOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for searching for Users.
+     */
+    cursor?: Prisma.UserWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` Users from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` Users.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of Users.
+     */
+    distinct?: Prisma.UserScalarFieldEnum | Prisma.UserScalarFieldEnum[];
+};
+/**
+ * User findFirstOrThrow
+ */
+export type UserFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: Prisma.UserSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: Prisma.UserOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.UserInclude<ExtArgs> | null;
+    /**
+     * Filter, which User to fetch.
+     */
+    where?: Prisma.UserWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of Users to fetch.
+     */
+    orderBy?: Prisma.UserOrderByWithRelationInput | Prisma.UserOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for searching for Users.
+     */
+    cursor?: Prisma.UserWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` Users from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` Users.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of Users.
+     */
+    distinct?: Prisma.UserScalarFieldEnum | Prisma.UserScalarFieldEnum[];
+};
+/**
+ * User findMany
+ */
+export type UserFindManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: Prisma.UserSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: Prisma.UserOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.UserInclude<ExtArgs> | null;
+    /**
+     * Filter, which Users to fetch.
+     */
+    where?: Prisma.UserWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of Users to fetch.
+     */
+    orderBy?: Prisma.UserOrderByWithRelationInput | Prisma.UserOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for listing Users.
+     */
+    cursor?: Prisma.UserWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` Users from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` Users.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of Users.
+     */
+    distinct?: Prisma.UserScalarFieldEnum | Prisma.UserScalarFieldEnum[];
+};
+/**
+ * User create
+ */
+export type UserCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: Prisma.UserSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: Prisma.UserOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.UserInclude<ExtArgs> | null;
+    /**
+     * The data needed to create a User.
+     */
+    data: Prisma.XOR<Prisma.UserCreateInput, Prisma.UserUncheckedCreateInput>;
+};
+/**
+ * User createMany
+ */
+export type UserCreateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Users.
+     */
+    data: Prisma.UserCreateManyInput | Prisma.UserCreateManyInput[];
+    skipDuplicates?: boolean;
+};
+/**
+ * User createManyAndReturn
+ */
+export type UserCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: Prisma.UserSelectCreateManyAndReturn<ExtArgs> | null;
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: Prisma.UserOmit<ExtArgs> | null;
+    /**
+     * The data used to create many Users.
+     */
+    data: Prisma.UserCreateManyInput | Prisma.UserCreateManyInput[];
+    skipDuplicates?: boolean;
+};
+/**
+ * User update
+ */
+export type UserUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: Prisma.UserSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: Prisma.UserOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.UserInclude<ExtArgs> | null;
+    /**
+     * The data needed to update a User.
+     */
+    data: Prisma.XOR<Prisma.UserUpdateInput, Prisma.UserUncheckedUpdateInput>;
+    /**
+     * Choose, which User to update.
+     */
+    where: Prisma.UserWhereUniqueInput;
+};
+/**
+ * User updateMany
+ */
+export type UserUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Users.
+     */
+    data: Prisma.XOR<Prisma.UserUpdateManyMutationInput, Prisma.UserUncheckedUpdateManyInput>;
+    /**
+     * Filter which Users to update
+     */
+    where?: Prisma.UserWhereInput;
+    /**
+     * Limit how many Users to update.
+     */
+    limit?: number;
+};
+/**
+ * User updateManyAndReturn
+ */
+export type UserUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: Prisma.UserSelectUpdateManyAndReturn<ExtArgs> | null;
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: Prisma.UserOmit<ExtArgs> | null;
+    /**
+     * The data used to update Users.
+     */
+    data: Prisma.XOR<Prisma.UserUpdateManyMutationInput, Prisma.UserUncheckedUpdateManyInput>;
+    /**
+     * Filter which Users to update
+     */
+    where?: Prisma.UserWhereInput;
+    /**
+     * Limit how many Users to update.
+     */
+    limit?: number;
+};
+/**
+ * User upsert
+ */
+export type UserUpsertArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: Prisma.UserSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: Prisma.UserOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.UserInclude<ExtArgs> | null;
+    /**
+     * The filter to search for the User to update in case it exists.
+     */
+    where: Prisma.UserWhereUniqueInput;
+    /**
+     * In case the User found by the `where` argument doesn't exist, create a new User with this data.
+     */
+    create: Prisma.XOR<Prisma.UserCreateInput, Prisma.UserUncheckedCreateInput>;
+    /**
+     * In case the User was found with the provided `where` argument, update it with this data.
+     */
+    update: Prisma.XOR<Prisma.UserUpdateInput, Prisma.UserUncheckedUpdateInput>;
+};
+/**
+ * User delete
+ */
+export type UserDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: Prisma.UserSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: Prisma.UserOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.UserInclude<ExtArgs> | null;
+    /**
+     * Filter which User to delete.
+     */
+    where: Prisma.UserWhereUniqueInput;
+};
+/**
+ * User deleteMany
+ */
+export type UserDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Filter which Users to delete
+     */
+    where?: Prisma.UserWhereInput;
+    /**
+     * Limit how many Users to delete.
+     */
+    limit?: number;
+};
+/**
+ * User.interests
+ */
+export type User$interestsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserInterest
+     */
+    select?: Prisma.UserInterestSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the UserInterest
+     */
+    omit?: Prisma.UserInterestOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.UserInterestInclude<ExtArgs> | null;
+    where?: Prisma.UserInterestWhereInput;
+    orderBy?: Prisma.UserInterestOrderByWithRelationInput | Prisma.UserInterestOrderByWithRelationInput[];
+    cursor?: Prisma.UserInterestWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.UserInterestScalarFieldEnum | Prisma.UserInterestScalarFieldEnum[];
+};
+/**
+ * User.lists
+ */
+export type User$listsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VocabList
+     */
+    select?: Prisma.VocabListSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the VocabList
+     */
+    omit?: Prisma.VocabListOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.VocabListInclude<ExtArgs> | null;
+    where?: Prisma.VocabListWhereInput;
+    orderBy?: Prisma.VocabListOrderByWithRelationInput | Prisma.VocabListOrderByWithRelationInput[];
+    cursor?: Prisma.VocabListWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.VocabListScalarFieldEnum | Prisma.VocabListScalarFieldEnum[];
+};
+/**
+ * User.vocabs
+ */
+export type User$vocabsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vocab
+     */
+    select?: Prisma.VocabSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Vocab
+     */
+    omit?: Prisma.VocabOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.VocabInclude<ExtArgs> | null;
+    where?: Prisma.VocabWhereInput;
+    orderBy?: Prisma.VocabOrderByWithRelationInput | Prisma.VocabOrderByWithRelationInput[];
+    cursor?: Prisma.VocabWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.VocabScalarFieldEnum | Prisma.VocabScalarFieldEnum[];
+};
+/**
+ * User.reviews
+ */
+export type User$reviewsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VocabReview
+     */
+    select?: Prisma.VocabReviewSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the VocabReview
+     */
+    omit?: Prisma.VocabReviewOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.VocabReviewInclude<ExtArgs> | null;
+    where?: Prisma.VocabReviewWhereInput;
+    orderBy?: Prisma.VocabReviewOrderByWithRelationInput | Prisma.VocabReviewOrderByWithRelationInput[];
+    cursor?: Prisma.VocabReviewWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.VocabReviewScalarFieldEnum | Prisma.VocabReviewScalarFieldEnum[];
+};
+/**
+ * User.progresses
+ */
+export type User$progressesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VocabProgress
+     */
+    select?: Prisma.VocabProgressSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the VocabProgress
+     */
+    omit?: Prisma.VocabProgressOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.VocabProgressInclude<ExtArgs> | null;
+    where?: Prisma.VocabProgressWhereInput;
+    orderBy?: Prisma.VocabProgressOrderByWithRelationInput | Prisma.VocabProgressOrderByWithRelationInput[];
+    cursor?: Prisma.VocabProgressWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.VocabProgressScalarFieldEnum | Prisma.VocabProgressScalarFieldEnum[];
+};
+/**
+ * User.studySessions
+ */
+export type User$studySessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudySession
+     */
+    select?: Prisma.StudySessionSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the StudySession
+     */
+    omit?: Prisma.StudySessionOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.StudySessionInclude<ExtArgs> | null;
+    where?: Prisma.StudySessionWhereInput;
+    orderBy?: Prisma.StudySessionOrderByWithRelationInput | Prisma.StudySessionOrderByWithRelationInput[];
+    cursor?: Prisma.StudySessionWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.StudySessionScalarFieldEnum | Prisma.StudySessionScalarFieldEnum[];
+};
+/**
+ * User.studyExercises
+ */
+export type User$studyExercisesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudyExercise
+     */
+    select?: Prisma.StudyExerciseSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the StudyExercise
+     */
+    omit?: Prisma.StudyExerciseOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.StudyExerciseInclude<ExtArgs> | null;
+    where?: Prisma.StudyExerciseWhereInput;
+    orderBy?: Prisma.StudyExerciseOrderByWithRelationInput | Prisma.StudyExerciseOrderByWithRelationInput[];
+    cursor?: Prisma.StudyExerciseWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.StudyExerciseScalarFieldEnum | Prisma.StudyExerciseScalarFieldEnum[];
+};
+/**
+ * User.studyAttempts
+ */
+export type User$studyAttemptsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudyAttempt
+     */
+    select?: Prisma.StudyAttemptSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the StudyAttempt
+     */
+    omit?: Prisma.StudyAttemptOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.StudyAttemptInclude<ExtArgs> | null;
+    where?: Prisma.StudyAttemptWhereInput;
+    orderBy?: Prisma.StudyAttemptOrderByWithRelationInput | Prisma.StudyAttemptOrderByWithRelationInput[];
+    cursor?: Prisma.StudyAttemptWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.StudyAttemptScalarFieldEnum | Prisma.StudyAttemptScalarFieldEnum[];
+};
+/**
+ * User without action
+ */
+export type UserDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: Prisma.UserSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: Prisma.UserOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.UserInclude<ExtArgs> | null;
+};
+//# sourceMappingURL=User.d.ts.map

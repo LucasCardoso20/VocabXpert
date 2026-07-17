@@ -1,0 +1,1285 @@
+import type * as runtime from "@prisma/client/runtime/client";
+import type * as $Enums from "../enums.js";
+import type * as Prisma from "../internal/prismaNamespace.js";
+/**
+ * Model VocabReview
+ *
+ */
+export type VocabReviewModel = runtime.Types.Result.DefaultSelection<Prisma.$VocabReviewPayload>;
+export type AggregateVocabReview = {
+    _count: VocabReviewCountAggregateOutputType | null;
+    _min: VocabReviewMinAggregateOutputType | null;
+    _max: VocabReviewMaxAggregateOutputType | null;
+};
+export type VocabReviewMinAggregateOutputType = {
+    id: string | null;
+    userId: string | null;
+    vocabId: string | null;
+    outcome: $Enums.ReviewOutcome | null;
+    createdAt: Date | null;
+};
+export type VocabReviewMaxAggregateOutputType = {
+    id: string | null;
+    userId: string | null;
+    vocabId: string | null;
+    outcome: $Enums.ReviewOutcome | null;
+    createdAt: Date | null;
+};
+export type VocabReviewCountAggregateOutputType = {
+    id: number;
+    userId: number;
+    vocabId: number;
+    outcome: number;
+    createdAt: number;
+    _all: number;
+};
+export type VocabReviewMinAggregateInputType = {
+    id?: true;
+    userId?: true;
+    vocabId?: true;
+    outcome?: true;
+    createdAt?: true;
+};
+export type VocabReviewMaxAggregateInputType = {
+    id?: true;
+    userId?: true;
+    vocabId?: true;
+    outcome?: true;
+    createdAt?: true;
+};
+export type VocabReviewCountAggregateInputType = {
+    id?: true;
+    userId?: true;
+    vocabId?: true;
+    outcome?: true;
+    createdAt?: true;
+    _all?: true;
+};
+export type VocabReviewAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Filter which VocabReview to aggregate.
+     */
+    where?: Prisma.VocabReviewWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of VocabReviews to fetch.
+     */
+    orderBy?: Prisma.VocabReviewOrderByWithRelationInput | Prisma.VocabReviewOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the start position
+     */
+    cursor?: Prisma.VocabReviewWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` VocabReviews from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` VocabReviews.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Count returned VocabReviews
+    **/
+    _count?: true | VocabReviewCountAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to find the minimum value
+    **/
+    _min?: VocabReviewMinAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to find the maximum value
+    **/
+    _max?: VocabReviewMaxAggregateInputType;
+};
+export type GetVocabReviewAggregateType<T extends VocabReviewAggregateArgs> = {
+    [P in keyof T & keyof AggregateVocabReview]: P extends '_count' | 'count' ? T[P] extends true ? number : Prisma.GetScalarType<T[P], AggregateVocabReview[P]> : Prisma.GetScalarType<T[P], AggregateVocabReview[P]>;
+};
+export type VocabReviewGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.VocabReviewWhereInput;
+    orderBy?: Prisma.VocabReviewOrderByWithAggregationInput | Prisma.VocabReviewOrderByWithAggregationInput[];
+    by: Prisma.VocabReviewScalarFieldEnum[] | Prisma.VocabReviewScalarFieldEnum;
+    having?: Prisma.VocabReviewScalarWhereWithAggregatesInput;
+    take?: number;
+    skip?: number;
+    _count?: VocabReviewCountAggregateInputType | true;
+    _min?: VocabReviewMinAggregateInputType;
+    _max?: VocabReviewMaxAggregateInputType;
+};
+export type VocabReviewGroupByOutputType = {
+    id: string;
+    userId: string;
+    vocabId: string;
+    outcome: $Enums.ReviewOutcome;
+    createdAt: Date;
+    _count: VocabReviewCountAggregateOutputType | null;
+    _min: VocabReviewMinAggregateOutputType | null;
+    _max: VocabReviewMaxAggregateOutputType | null;
+};
+export type GetVocabReviewGroupByPayload<T extends VocabReviewGroupByArgs> = Prisma.PrismaPromise<Array<Prisma.PickEnumerable<VocabReviewGroupByOutputType, T['by']> & {
+    [P in ((keyof T) & (keyof VocabReviewGroupByOutputType))]: P extends '_count' ? T[P] extends boolean ? number : Prisma.GetScalarType<T[P], VocabReviewGroupByOutputType[P]> : Prisma.GetScalarType<T[P], VocabReviewGroupByOutputType[P]>;
+}>>;
+export type VocabReviewWhereInput = {
+    AND?: Prisma.VocabReviewWhereInput | Prisma.VocabReviewWhereInput[];
+    OR?: Prisma.VocabReviewWhereInput[];
+    NOT?: Prisma.VocabReviewWhereInput | Prisma.VocabReviewWhereInput[];
+    id?: Prisma.StringFilter<"VocabReview"> | string;
+    userId?: Prisma.StringFilter<"VocabReview"> | string;
+    vocabId?: Prisma.StringFilter<"VocabReview"> | string;
+    outcome?: Prisma.EnumReviewOutcomeFilter<"VocabReview"> | $Enums.ReviewOutcome;
+    createdAt?: Prisma.DateTimeFilter<"VocabReview"> | Date | string;
+    user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
+    vocab?: Prisma.XOR<Prisma.VocabScalarRelationFilter, Prisma.VocabWhereInput>;
+};
+export type VocabReviewOrderByWithRelationInput = {
+    id?: Prisma.SortOrder;
+    userId?: Prisma.SortOrder;
+    vocabId?: Prisma.SortOrder;
+    outcome?: Prisma.SortOrder;
+    createdAt?: Prisma.SortOrder;
+    user?: Prisma.UserOrderByWithRelationInput;
+    vocab?: Prisma.VocabOrderByWithRelationInput;
+};
+export type VocabReviewWhereUniqueInput = Prisma.AtLeast<{
+    id?: string;
+    AND?: Prisma.VocabReviewWhereInput | Prisma.VocabReviewWhereInput[];
+    OR?: Prisma.VocabReviewWhereInput[];
+    NOT?: Prisma.VocabReviewWhereInput | Prisma.VocabReviewWhereInput[];
+    userId?: Prisma.StringFilter<"VocabReview"> | string;
+    vocabId?: Prisma.StringFilter<"VocabReview"> | string;
+    outcome?: Prisma.EnumReviewOutcomeFilter<"VocabReview"> | $Enums.ReviewOutcome;
+    createdAt?: Prisma.DateTimeFilter<"VocabReview"> | Date | string;
+    user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
+    vocab?: Prisma.XOR<Prisma.VocabScalarRelationFilter, Prisma.VocabWhereInput>;
+}, "id">;
+export type VocabReviewOrderByWithAggregationInput = {
+    id?: Prisma.SortOrder;
+    userId?: Prisma.SortOrder;
+    vocabId?: Prisma.SortOrder;
+    outcome?: Prisma.SortOrder;
+    createdAt?: Prisma.SortOrder;
+    _count?: Prisma.VocabReviewCountOrderByAggregateInput;
+    _max?: Prisma.VocabReviewMaxOrderByAggregateInput;
+    _min?: Prisma.VocabReviewMinOrderByAggregateInput;
+};
+export type VocabReviewScalarWhereWithAggregatesInput = {
+    AND?: Prisma.VocabReviewScalarWhereWithAggregatesInput | Prisma.VocabReviewScalarWhereWithAggregatesInput[];
+    OR?: Prisma.VocabReviewScalarWhereWithAggregatesInput[];
+    NOT?: Prisma.VocabReviewScalarWhereWithAggregatesInput | Prisma.VocabReviewScalarWhereWithAggregatesInput[];
+    id?: Prisma.StringWithAggregatesFilter<"VocabReview"> | string;
+    userId?: Prisma.StringWithAggregatesFilter<"VocabReview"> | string;
+    vocabId?: Prisma.StringWithAggregatesFilter<"VocabReview"> | string;
+    outcome?: Prisma.EnumReviewOutcomeWithAggregatesFilter<"VocabReview"> | $Enums.ReviewOutcome;
+    createdAt?: Prisma.DateTimeWithAggregatesFilter<"VocabReview"> | Date | string;
+};
+export type VocabReviewCreateInput = {
+    id?: string;
+    outcome: $Enums.ReviewOutcome;
+    createdAt?: Date | string;
+    user: Prisma.UserCreateNestedOneWithoutReviewsInput;
+    vocab: Prisma.VocabCreateNestedOneWithoutReviewsInput;
+};
+export type VocabReviewUncheckedCreateInput = {
+    id?: string;
+    userId: string;
+    vocabId: string;
+    outcome: $Enums.ReviewOutcome;
+    createdAt?: Date | string;
+};
+export type VocabReviewUpdateInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    outcome?: Prisma.EnumReviewOutcomeFieldUpdateOperationsInput | $Enums.ReviewOutcome;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    user?: Prisma.UserUpdateOneRequiredWithoutReviewsNestedInput;
+    vocab?: Prisma.VocabUpdateOneRequiredWithoutReviewsNestedInput;
+};
+export type VocabReviewUncheckedUpdateInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    userId?: Prisma.StringFieldUpdateOperationsInput | string;
+    vocabId?: Prisma.StringFieldUpdateOperationsInput | string;
+    outcome?: Prisma.EnumReviewOutcomeFieldUpdateOperationsInput | $Enums.ReviewOutcome;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+};
+export type VocabReviewCreateManyInput = {
+    id?: string;
+    userId: string;
+    vocabId: string;
+    outcome: $Enums.ReviewOutcome;
+    createdAt?: Date | string;
+};
+export type VocabReviewUpdateManyMutationInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    outcome?: Prisma.EnumReviewOutcomeFieldUpdateOperationsInput | $Enums.ReviewOutcome;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+};
+export type VocabReviewUncheckedUpdateManyInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    userId?: Prisma.StringFieldUpdateOperationsInput | string;
+    vocabId?: Prisma.StringFieldUpdateOperationsInput | string;
+    outcome?: Prisma.EnumReviewOutcomeFieldUpdateOperationsInput | $Enums.ReviewOutcome;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+};
+export type VocabReviewListRelationFilter = {
+    every?: Prisma.VocabReviewWhereInput;
+    some?: Prisma.VocabReviewWhereInput;
+    none?: Prisma.VocabReviewWhereInput;
+};
+export type VocabReviewOrderByRelationAggregateInput = {
+    _count?: Prisma.SortOrder;
+};
+export type VocabReviewCountOrderByAggregateInput = {
+    id?: Prisma.SortOrder;
+    userId?: Prisma.SortOrder;
+    vocabId?: Prisma.SortOrder;
+    outcome?: Prisma.SortOrder;
+    createdAt?: Prisma.SortOrder;
+};
+export type VocabReviewMaxOrderByAggregateInput = {
+    id?: Prisma.SortOrder;
+    userId?: Prisma.SortOrder;
+    vocabId?: Prisma.SortOrder;
+    outcome?: Prisma.SortOrder;
+    createdAt?: Prisma.SortOrder;
+};
+export type VocabReviewMinOrderByAggregateInput = {
+    id?: Prisma.SortOrder;
+    userId?: Prisma.SortOrder;
+    vocabId?: Prisma.SortOrder;
+    outcome?: Prisma.SortOrder;
+    createdAt?: Prisma.SortOrder;
+};
+export type VocabReviewCreateNestedManyWithoutUserInput = {
+    create?: Prisma.XOR<Prisma.VocabReviewCreateWithoutUserInput, Prisma.VocabReviewUncheckedCreateWithoutUserInput> | Prisma.VocabReviewCreateWithoutUserInput[] | Prisma.VocabReviewUncheckedCreateWithoutUserInput[];
+    connectOrCreate?: Prisma.VocabReviewCreateOrConnectWithoutUserInput | Prisma.VocabReviewCreateOrConnectWithoutUserInput[];
+    createMany?: Prisma.VocabReviewCreateManyUserInputEnvelope;
+    connect?: Prisma.VocabReviewWhereUniqueInput | Prisma.VocabReviewWhereUniqueInput[];
+};
+export type VocabReviewUncheckedCreateNestedManyWithoutUserInput = {
+    create?: Prisma.XOR<Prisma.VocabReviewCreateWithoutUserInput, Prisma.VocabReviewUncheckedCreateWithoutUserInput> | Prisma.VocabReviewCreateWithoutUserInput[] | Prisma.VocabReviewUncheckedCreateWithoutUserInput[];
+    connectOrCreate?: Prisma.VocabReviewCreateOrConnectWithoutUserInput | Prisma.VocabReviewCreateOrConnectWithoutUserInput[];
+    createMany?: Prisma.VocabReviewCreateManyUserInputEnvelope;
+    connect?: Prisma.VocabReviewWhereUniqueInput | Prisma.VocabReviewWhereUniqueInput[];
+};
+export type VocabReviewUpdateManyWithoutUserNestedInput = {
+    create?: Prisma.XOR<Prisma.VocabReviewCreateWithoutUserInput, Prisma.VocabReviewUncheckedCreateWithoutUserInput> | Prisma.VocabReviewCreateWithoutUserInput[] | Prisma.VocabReviewUncheckedCreateWithoutUserInput[];
+    connectOrCreate?: Prisma.VocabReviewCreateOrConnectWithoutUserInput | Prisma.VocabReviewCreateOrConnectWithoutUserInput[];
+    upsert?: Prisma.VocabReviewUpsertWithWhereUniqueWithoutUserInput | Prisma.VocabReviewUpsertWithWhereUniqueWithoutUserInput[];
+    createMany?: Prisma.VocabReviewCreateManyUserInputEnvelope;
+    set?: Prisma.VocabReviewWhereUniqueInput | Prisma.VocabReviewWhereUniqueInput[];
+    disconnect?: Prisma.VocabReviewWhereUniqueInput | Prisma.VocabReviewWhereUniqueInput[];
+    delete?: Prisma.VocabReviewWhereUniqueInput | Prisma.VocabReviewWhereUniqueInput[];
+    connect?: Prisma.VocabReviewWhereUniqueInput | Prisma.VocabReviewWhereUniqueInput[];
+    update?: Prisma.VocabReviewUpdateWithWhereUniqueWithoutUserInput | Prisma.VocabReviewUpdateWithWhereUniqueWithoutUserInput[];
+    updateMany?: Prisma.VocabReviewUpdateManyWithWhereWithoutUserInput | Prisma.VocabReviewUpdateManyWithWhereWithoutUserInput[];
+    deleteMany?: Prisma.VocabReviewScalarWhereInput | Prisma.VocabReviewScalarWhereInput[];
+};
+export type VocabReviewUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: Prisma.XOR<Prisma.VocabReviewCreateWithoutUserInput, Prisma.VocabReviewUncheckedCreateWithoutUserInput> | Prisma.VocabReviewCreateWithoutUserInput[] | Prisma.VocabReviewUncheckedCreateWithoutUserInput[];
+    connectOrCreate?: Prisma.VocabReviewCreateOrConnectWithoutUserInput | Prisma.VocabReviewCreateOrConnectWithoutUserInput[];
+    upsert?: Prisma.VocabReviewUpsertWithWhereUniqueWithoutUserInput | Prisma.VocabReviewUpsertWithWhereUniqueWithoutUserInput[];
+    createMany?: Prisma.VocabReviewCreateManyUserInputEnvelope;
+    set?: Prisma.VocabReviewWhereUniqueInput | Prisma.VocabReviewWhereUniqueInput[];
+    disconnect?: Prisma.VocabReviewWhereUniqueInput | Prisma.VocabReviewWhereUniqueInput[];
+    delete?: Prisma.VocabReviewWhereUniqueInput | Prisma.VocabReviewWhereUniqueInput[];
+    connect?: Prisma.VocabReviewWhereUniqueInput | Prisma.VocabReviewWhereUniqueInput[];
+    update?: Prisma.VocabReviewUpdateWithWhereUniqueWithoutUserInput | Prisma.VocabReviewUpdateWithWhereUniqueWithoutUserInput[];
+    updateMany?: Prisma.VocabReviewUpdateManyWithWhereWithoutUserInput | Prisma.VocabReviewUpdateManyWithWhereWithoutUserInput[];
+    deleteMany?: Prisma.VocabReviewScalarWhereInput | Prisma.VocabReviewScalarWhereInput[];
+};
+export type VocabReviewCreateNestedManyWithoutVocabInput = {
+    create?: Prisma.XOR<Prisma.VocabReviewCreateWithoutVocabInput, Prisma.VocabReviewUncheckedCreateWithoutVocabInput> | Prisma.VocabReviewCreateWithoutVocabInput[] | Prisma.VocabReviewUncheckedCreateWithoutVocabInput[];
+    connectOrCreate?: Prisma.VocabReviewCreateOrConnectWithoutVocabInput | Prisma.VocabReviewCreateOrConnectWithoutVocabInput[];
+    createMany?: Prisma.VocabReviewCreateManyVocabInputEnvelope;
+    connect?: Prisma.VocabReviewWhereUniqueInput | Prisma.VocabReviewWhereUniqueInput[];
+};
+export type VocabReviewUncheckedCreateNestedManyWithoutVocabInput = {
+    create?: Prisma.XOR<Prisma.VocabReviewCreateWithoutVocabInput, Prisma.VocabReviewUncheckedCreateWithoutVocabInput> | Prisma.VocabReviewCreateWithoutVocabInput[] | Prisma.VocabReviewUncheckedCreateWithoutVocabInput[];
+    connectOrCreate?: Prisma.VocabReviewCreateOrConnectWithoutVocabInput | Prisma.VocabReviewCreateOrConnectWithoutVocabInput[];
+    createMany?: Prisma.VocabReviewCreateManyVocabInputEnvelope;
+    connect?: Prisma.VocabReviewWhereUniqueInput | Prisma.VocabReviewWhereUniqueInput[];
+};
+export type VocabReviewUpdateManyWithoutVocabNestedInput = {
+    create?: Prisma.XOR<Prisma.VocabReviewCreateWithoutVocabInput, Prisma.VocabReviewUncheckedCreateWithoutVocabInput> | Prisma.VocabReviewCreateWithoutVocabInput[] | Prisma.VocabReviewUncheckedCreateWithoutVocabInput[];
+    connectOrCreate?: Prisma.VocabReviewCreateOrConnectWithoutVocabInput | Prisma.VocabReviewCreateOrConnectWithoutVocabInput[];
+    upsert?: Prisma.VocabReviewUpsertWithWhereUniqueWithoutVocabInput | Prisma.VocabReviewUpsertWithWhereUniqueWithoutVocabInput[];
+    createMany?: Prisma.VocabReviewCreateManyVocabInputEnvelope;
+    set?: Prisma.VocabReviewWhereUniqueInput | Prisma.VocabReviewWhereUniqueInput[];
+    disconnect?: Prisma.VocabReviewWhereUniqueInput | Prisma.VocabReviewWhereUniqueInput[];
+    delete?: Prisma.VocabReviewWhereUniqueInput | Prisma.VocabReviewWhereUniqueInput[];
+    connect?: Prisma.VocabReviewWhereUniqueInput | Prisma.VocabReviewWhereUniqueInput[];
+    update?: Prisma.VocabReviewUpdateWithWhereUniqueWithoutVocabInput | Prisma.VocabReviewUpdateWithWhereUniqueWithoutVocabInput[];
+    updateMany?: Prisma.VocabReviewUpdateManyWithWhereWithoutVocabInput | Prisma.VocabReviewUpdateManyWithWhereWithoutVocabInput[];
+    deleteMany?: Prisma.VocabReviewScalarWhereInput | Prisma.VocabReviewScalarWhereInput[];
+};
+export type VocabReviewUncheckedUpdateManyWithoutVocabNestedInput = {
+    create?: Prisma.XOR<Prisma.VocabReviewCreateWithoutVocabInput, Prisma.VocabReviewUncheckedCreateWithoutVocabInput> | Prisma.VocabReviewCreateWithoutVocabInput[] | Prisma.VocabReviewUncheckedCreateWithoutVocabInput[];
+    connectOrCreate?: Prisma.VocabReviewCreateOrConnectWithoutVocabInput | Prisma.VocabReviewCreateOrConnectWithoutVocabInput[];
+    upsert?: Prisma.VocabReviewUpsertWithWhereUniqueWithoutVocabInput | Prisma.VocabReviewUpsertWithWhereUniqueWithoutVocabInput[];
+    createMany?: Prisma.VocabReviewCreateManyVocabInputEnvelope;
+    set?: Prisma.VocabReviewWhereUniqueInput | Prisma.VocabReviewWhereUniqueInput[];
+    disconnect?: Prisma.VocabReviewWhereUniqueInput | Prisma.VocabReviewWhereUniqueInput[];
+    delete?: Prisma.VocabReviewWhereUniqueInput | Prisma.VocabReviewWhereUniqueInput[];
+    connect?: Prisma.VocabReviewWhereUniqueInput | Prisma.VocabReviewWhereUniqueInput[];
+    update?: Prisma.VocabReviewUpdateWithWhereUniqueWithoutVocabInput | Prisma.VocabReviewUpdateWithWhereUniqueWithoutVocabInput[];
+    updateMany?: Prisma.VocabReviewUpdateManyWithWhereWithoutVocabInput | Prisma.VocabReviewUpdateManyWithWhereWithoutVocabInput[];
+    deleteMany?: Prisma.VocabReviewScalarWhereInput | Prisma.VocabReviewScalarWhereInput[];
+};
+export type EnumReviewOutcomeFieldUpdateOperationsInput = {
+    set?: $Enums.ReviewOutcome;
+};
+export type VocabReviewCreateWithoutUserInput = {
+    id?: string;
+    outcome: $Enums.ReviewOutcome;
+    createdAt?: Date | string;
+    vocab: Prisma.VocabCreateNestedOneWithoutReviewsInput;
+};
+export type VocabReviewUncheckedCreateWithoutUserInput = {
+    id?: string;
+    vocabId: string;
+    outcome: $Enums.ReviewOutcome;
+    createdAt?: Date | string;
+};
+export type VocabReviewCreateOrConnectWithoutUserInput = {
+    where: Prisma.VocabReviewWhereUniqueInput;
+    create: Prisma.XOR<Prisma.VocabReviewCreateWithoutUserInput, Prisma.VocabReviewUncheckedCreateWithoutUserInput>;
+};
+export type VocabReviewCreateManyUserInputEnvelope = {
+    data: Prisma.VocabReviewCreateManyUserInput | Prisma.VocabReviewCreateManyUserInput[];
+    skipDuplicates?: boolean;
+};
+export type VocabReviewUpsertWithWhereUniqueWithoutUserInput = {
+    where: Prisma.VocabReviewWhereUniqueInput;
+    update: Prisma.XOR<Prisma.VocabReviewUpdateWithoutUserInput, Prisma.VocabReviewUncheckedUpdateWithoutUserInput>;
+    create: Prisma.XOR<Prisma.VocabReviewCreateWithoutUserInput, Prisma.VocabReviewUncheckedCreateWithoutUserInput>;
+};
+export type VocabReviewUpdateWithWhereUniqueWithoutUserInput = {
+    where: Prisma.VocabReviewWhereUniqueInput;
+    data: Prisma.XOR<Prisma.VocabReviewUpdateWithoutUserInput, Prisma.VocabReviewUncheckedUpdateWithoutUserInput>;
+};
+export type VocabReviewUpdateManyWithWhereWithoutUserInput = {
+    where: Prisma.VocabReviewScalarWhereInput;
+    data: Prisma.XOR<Prisma.VocabReviewUpdateManyMutationInput, Prisma.VocabReviewUncheckedUpdateManyWithoutUserInput>;
+};
+export type VocabReviewScalarWhereInput = {
+    AND?: Prisma.VocabReviewScalarWhereInput | Prisma.VocabReviewScalarWhereInput[];
+    OR?: Prisma.VocabReviewScalarWhereInput[];
+    NOT?: Prisma.VocabReviewScalarWhereInput | Prisma.VocabReviewScalarWhereInput[];
+    id?: Prisma.StringFilter<"VocabReview"> | string;
+    userId?: Prisma.StringFilter<"VocabReview"> | string;
+    vocabId?: Prisma.StringFilter<"VocabReview"> | string;
+    outcome?: Prisma.EnumReviewOutcomeFilter<"VocabReview"> | $Enums.ReviewOutcome;
+    createdAt?: Prisma.DateTimeFilter<"VocabReview"> | Date | string;
+};
+export type VocabReviewCreateWithoutVocabInput = {
+    id?: string;
+    outcome: $Enums.ReviewOutcome;
+    createdAt?: Date | string;
+    user: Prisma.UserCreateNestedOneWithoutReviewsInput;
+};
+export type VocabReviewUncheckedCreateWithoutVocabInput = {
+    id?: string;
+    userId: string;
+    outcome: $Enums.ReviewOutcome;
+    createdAt?: Date | string;
+};
+export type VocabReviewCreateOrConnectWithoutVocabInput = {
+    where: Prisma.VocabReviewWhereUniqueInput;
+    create: Prisma.XOR<Prisma.VocabReviewCreateWithoutVocabInput, Prisma.VocabReviewUncheckedCreateWithoutVocabInput>;
+};
+export type VocabReviewCreateManyVocabInputEnvelope = {
+    data: Prisma.VocabReviewCreateManyVocabInput | Prisma.VocabReviewCreateManyVocabInput[];
+    skipDuplicates?: boolean;
+};
+export type VocabReviewUpsertWithWhereUniqueWithoutVocabInput = {
+    where: Prisma.VocabReviewWhereUniqueInput;
+    update: Prisma.XOR<Prisma.VocabReviewUpdateWithoutVocabInput, Prisma.VocabReviewUncheckedUpdateWithoutVocabInput>;
+    create: Prisma.XOR<Prisma.VocabReviewCreateWithoutVocabInput, Prisma.VocabReviewUncheckedCreateWithoutVocabInput>;
+};
+export type VocabReviewUpdateWithWhereUniqueWithoutVocabInput = {
+    where: Prisma.VocabReviewWhereUniqueInput;
+    data: Prisma.XOR<Prisma.VocabReviewUpdateWithoutVocabInput, Prisma.VocabReviewUncheckedUpdateWithoutVocabInput>;
+};
+export type VocabReviewUpdateManyWithWhereWithoutVocabInput = {
+    where: Prisma.VocabReviewScalarWhereInput;
+    data: Prisma.XOR<Prisma.VocabReviewUpdateManyMutationInput, Prisma.VocabReviewUncheckedUpdateManyWithoutVocabInput>;
+};
+export type VocabReviewCreateManyUserInput = {
+    id?: string;
+    vocabId: string;
+    outcome: $Enums.ReviewOutcome;
+    createdAt?: Date | string;
+};
+export type VocabReviewUpdateWithoutUserInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    outcome?: Prisma.EnumReviewOutcomeFieldUpdateOperationsInput | $Enums.ReviewOutcome;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    vocab?: Prisma.VocabUpdateOneRequiredWithoutReviewsNestedInput;
+};
+export type VocabReviewUncheckedUpdateWithoutUserInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    vocabId?: Prisma.StringFieldUpdateOperationsInput | string;
+    outcome?: Prisma.EnumReviewOutcomeFieldUpdateOperationsInput | $Enums.ReviewOutcome;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+};
+export type VocabReviewUncheckedUpdateManyWithoutUserInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    vocabId?: Prisma.StringFieldUpdateOperationsInput | string;
+    outcome?: Prisma.EnumReviewOutcomeFieldUpdateOperationsInput | $Enums.ReviewOutcome;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+};
+export type VocabReviewCreateManyVocabInput = {
+    id?: string;
+    userId: string;
+    outcome: $Enums.ReviewOutcome;
+    createdAt?: Date | string;
+};
+export type VocabReviewUpdateWithoutVocabInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    outcome?: Prisma.EnumReviewOutcomeFieldUpdateOperationsInput | $Enums.ReviewOutcome;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    user?: Prisma.UserUpdateOneRequiredWithoutReviewsNestedInput;
+};
+export type VocabReviewUncheckedUpdateWithoutVocabInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    userId?: Prisma.StringFieldUpdateOperationsInput | string;
+    outcome?: Prisma.EnumReviewOutcomeFieldUpdateOperationsInput | $Enums.ReviewOutcome;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+};
+export type VocabReviewUncheckedUpdateManyWithoutVocabInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    userId?: Prisma.StringFieldUpdateOperationsInput | string;
+    outcome?: Prisma.EnumReviewOutcomeFieldUpdateOperationsInput | $Enums.ReviewOutcome;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+};
+export type VocabReviewSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+    id?: boolean;
+    userId?: boolean;
+    vocabId?: boolean;
+    outcome?: boolean;
+    createdAt?: boolean;
+    user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+    vocab?: boolean | Prisma.VocabDefaultArgs<ExtArgs>;
+}, ExtArgs["result"]["vocabReview"]>;
+export type VocabReviewSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+    id?: boolean;
+    userId?: boolean;
+    vocabId?: boolean;
+    outcome?: boolean;
+    createdAt?: boolean;
+    user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+    vocab?: boolean | Prisma.VocabDefaultArgs<ExtArgs>;
+}, ExtArgs["result"]["vocabReview"]>;
+export type VocabReviewSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+    id?: boolean;
+    userId?: boolean;
+    vocabId?: boolean;
+    outcome?: boolean;
+    createdAt?: boolean;
+    user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+    vocab?: boolean | Prisma.VocabDefaultArgs<ExtArgs>;
+}, ExtArgs["result"]["vocabReview"]>;
+export type VocabReviewSelectScalar = {
+    id?: boolean;
+    userId?: boolean;
+    vocabId?: boolean;
+    outcome?: boolean;
+    createdAt?: boolean;
+};
+export type VocabReviewOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "vocabId" | "outcome" | "createdAt", ExtArgs["result"]["vocabReview"]>;
+export type VocabReviewInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+    vocab?: boolean | Prisma.VocabDefaultArgs<ExtArgs>;
+};
+export type VocabReviewIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+    vocab?: boolean | Prisma.VocabDefaultArgs<ExtArgs>;
+};
+export type VocabReviewIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+    vocab?: boolean | Prisma.VocabDefaultArgs<ExtArgs>;
+};
+export type $VocabReviewPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    name: "VocabReview";
+    objects: {
+        user: Prisma.$UserPayload<ExtArgs>;
+        vocab: Prisma.$VocabPayload<ExtArgs>;
+    };
+    scalars: runtime.Types.Extensions.GetPayloadResult<{
+        id: string;
+        userId: string;
+        vocabId: string;
+        outcome: $Enums.ReviewOutcome;
+        createdAt: Date;
+    }, ExtArgs["result"]["vocabReview"]>;
+    composites: {};
+};
+export type VocabReviewGetPayload<S extends boolean | null | undefined | VocabReviewDefaultArgs> = runtime.Types.Result.GetResult<Prisma.$VocabReviewPayload, S>;
+export type VocabReviewCountArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = Omit<VocabReviewFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+    select?: VocabReviewCountAggregateInputType | true;
+};
+export interface VocabReviewDelegate<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: {
+        types: Prisma.TypeMap<ExtArgs>['model']['VocabReview'];
+        meta: {
+            name: 'VocabReview';
+        };
+    };
+    /**
+     * Find zero or one VocabReview that matches the filter.
+     * @param {VocabReviewFindUniqueArgs} args - Arguments to find a VocabReview
+     * @example
+     * // Get one VocabReview
+     * const vocabReview = await prisma.vocabReview.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends VocabReviewFindUniqueArgs>(args: Prisma.SelectSubset<T, VocabReviewFindUniqueArgs<ExtArgs>>): Prisma.Prisma__VocabReviewClient<runtime.Types.Result.GetResult<Prisma.$VocabReviewPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Find one VocabReview that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {VocabReviewFindUniqueOrThrowArgs} args - Arguments to find a VocabReview
+     * @example
+     * // Get one VocabReview
+     * const vocabReview = await prisma.vocabReview.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends VocabReviewFindUniqueOrThrowArgs>(args: Prisma.SelectSubset<T, VocabReviewFindUniqueOrThrowArgs<ExtArgs>>): Prisma.Prisma__VocabReviewClient<runtime.Types.Result.GetResult<Prisma.$VocabReviewPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Find the first VocabReview that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VocabReviewFindFirstArgs} args - Arguments to find a VocabReview
+     * @example
+     * // Get one VocabReview
+     * const vocabReview = await prisma.vocabReview.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends VocabReviewFindFirstArgs>(args?: Prisma.SelectSubset<T, VocabReviewFindFirstArgs<ExtArgs>>): Prisma.Prisma__VocabReviewClient<runtime.Types.Result.GetResult<Prisma.$VocabReviewPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Find the first VocabReview that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VocabReviewFindFirstOrThrowArgs} args - Arguments to find a VocabReview
+     * @example
+     * // Get one VocabReview
+     * const vocabReview = await prisma.vocabReview.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends VocabReviewFindFirstOrThrowArgs>(args?: Prisma.SelectSubset<T, VocabReviewFindFirstOrThrowArgs<ExtArgs>>): Prisma.Prisma__VocabReviewClient<runtime.Types.Result.GetResult<Prisma.$VocabReviewPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Find zero or more VocabReviews that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VocabReviewFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all VocabReviews
+     * const vocabReviews = await prisma.vocabReview.findMany()
+     *
+     * // Get first 10 VocabReviews
+     * const vocabReviews = await prisma.vocabReview.findMany({ take: 10 })
+     *
+     * // Only select the `id`
+     * const vocabReviewWithIdOnly = await prisma.vocabReview.findMany({ select: { id: true } })
+     *
+     */
+    findMany<T extends VocabReviewFindManyArgs>(args?: Prisma.SelectSubset<T, VocabReviewFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VocabReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>;
+    /**
+     * Create a VocabReview.
+     * @param {VocabReviewCreateArgs} args - Arguments to create a VocabReview.
+     * @example
+     * // Create one VocabReview
+     * const VocabReview = await prisma.vocabReview.create({
+     *   data: {
+     *     // ... data to create a VocabReview
+     *   }
+     * })
+     *
+     */
+    create<T extends VocabReviewCreateArgs>(args: Prisma.SelectSubset<T, VocabReviewCreateArgs<ExtArgs>>): Prisma.Prisma__VocabReviewClient<runtime.Types.Result.GetResult<Prisma.$VocabReviewPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Create many VocabReviews.
+     * @param {VocabReviewCreateManyArgs} args - Arguments to create many VocabReviews.
+     * @example
+     * // Create many VocabReviews
+     * const vocabReview = await prisma.vocabReview.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     */
+    createMany<T extends VocabReviewCreateManyArgs>(args?: Prisma.SelectSubset<T, VocabReviewCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>;
+    /**
+     * Create many VocabReviews and returns the data saved in the database.
+     * @param {VocabReviewCreateManyAndReturnArgs} args - Arguments to create many VocabReviews.
+     * @example
+     * // Create many VocabReviews
+     * const vocabReview = await prisma.vocabReview.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     * // Create many VocabReviews and only return the `id`
+     * const vocabReviewWithIdOnly = await prisma.vocabReview.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     *
+     */
+    createManyAndReturn<T extends VocabReviewCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, VocabReviewCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VocabReviewPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>;
+    /**
+     * Delete a VocabReview.
+     * @param {VocabReviewDeleteArgs} args - Arguments to delete one VocabReview.
+     * @example
+     * // Delete one VocabReview
+     * const VocabReview = await prisma.vocabReview.delete({
+     *   where: {
+     *     // ... filter to delete one VocabReview
+     *   }
+     * })
+     *
+     */
+    delete<T extends VocabReviewDeleteArgs>(args: Prisma.SelectSubset<T, VocabReviewDeleteArgs<ExtArgs>>): Prisma.Prisma__VocabReviewClient<runtime.Types.Result.GetResult<Prisma.$VocabReviewPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Update one VocabReview.
+     * @param {VocabReviewUpdateArgs} args - Arguments to update one VocabReview.
+     * @example
+     * // Update one VocabReview
+     * const vocabReview = await prisma.vocabReview.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     *
+     */
+    update<T extends VocabReviewUpdateArgs>(args: Prisma.SelectSubset<T, VocabReviewUpdateArgs<ExtArgs>>): Prisma.Prisma__VocabReviewClient<runtime.Types.Result.GetResult<Prisma.$VocabReviewPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Delete zero or more VocabReviews.
+     * @param {VocabReviewDeleteManyArgs} args - Arguments to filter VocabReviews to delete.
+     * @example
+     * // Delete a few VocabReviews
+     * const { count } = await prisma.vocabReview.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     *
+     */
+    deleteMany<T extends VocabReviewDeleteManyArgs>(args?: Prisma.SelectSubset<T, VocabReviewDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>;
+    /**
+     * Update zero or more VocabReviews.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VocabReviewUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many VocabReviews
+     * const vocabReview = await prisma.vocabReview.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     *
+     */
+    updateMany<T extends VocabReviewUpdateManyArgs>(args: Prisma.SelectSubset<T, VocabReviewUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>;
+    /**
+     * Update zero or more VocabReviews and returns the data updated in the database.
+     * @param {VocabReviewUpdateManyAndReturnArgs} args - Arguments to update many VocabReviews.
+     * @example
+     * // Update many VocabReviews
+     * const vocabReview = await prisma.vocabReview.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     * // Update zero or more VocabReviews and only return the `id`
+     * const vocabReviewWithIdOnly = await prisma.vocabReview.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     *
+     */
+    updateManyAndReturn<T extends VocabReviewUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, VocabReviewUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VocabReviewPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>;
+    /**
+     * Create or update one VocabReview.
+     * @param {VocabReviewUpsertArgs} args - Arguments to update or create a VocabReview.
+     * @example
+     * // Update or create a VocabReview
+     * const vocabReview = await prisma.vocabReview.upsert({
+     *   create: {
+     *     // ... data to create a VocabReview
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the VocabReview we want to update
+     *   }
+     * })
+     */
+    upsert<T extends VocabReviewUpsertArgs>(args: Prisma.SelectSubset<T, VocabReviewUpsertArgs<ExtArgs>>): Prisma.Prisma__VocabReviewClient<runtime.Types.Result.GetResult<Prisma.$VocabReviewPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Count the number of VocabReviews.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VocabReviewCountArgs} args - Arguments to filter VocabReviews to count.
+     * @example
+     * // Count the number of VocabReviews
+     * const count = await prisma.vocabReview.count({
+     *   where: {
+     *     // ... the filter for the VocabReviews we want to count
+     *   }
+     * })
+    **/
+    count<T extends VocabReviewCountArgs>(args?: Prisma.Subset<T, VocabReviewCountArgs>): Prisma.PrismaPromise<T extends runtime.Types.Utils.Record<'select', any> ? T['select'] extends true ? number : Prisma.GetScalarType<T['select'], VocabReviewCountAggregateOutputType> : number>;
+    /**
+     * Allows you to perform aggregations operations on a VocabReview.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VocabReviewAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends VocabReviewAggregateArgs>(args: Prisma.Subset<T, VocabReviewAggregateArgs>): Prisma.PrismaPromise<GetVocabReviewAggregateType<T>>;
+    /**
+     * Group by VocabReview.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VocabReviewGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     *
+    **/
+    groupBy<T extends VocabReviewGroupByArgs, HasSelectOrTake extends Prisma.Or<Prisma.Extends<'skip', Prisma.Keys<T>>, Prisma.Extends<'take', Prisma.Keys<T>>>, OrderByArg extends Prisma.True extends HasSelectOrTake ? {
+        orderBy: VocabReviewGroupByArgs['orderBy'];
+    } : {
+        orderBy?: VocabReviewGroupByArgs['orderBy'];
+    }, OrderFields extends Prisma.ExcludeUnderscoreKeys<Prisma.Keys<Prisma.MaybeTupleToUnion<T['orderBy']>>>, ByFields extends Prisma.MaybeTupleToUnion<T['by']>, ByValid extends Prisma.Has<ByFields, OrderFields>, HavingFields extends Prisma.GetHavingFields<T['having']>, HavingValid extends Prisma.Has<ByFields, HavingFields>, ByEmpty extends T['by'] extends never[] ? Prisma.True : Prisma.False, InputErrors extends ByEmpty extends Prisma.True ? `Error: "by" must not be empty.` : HavingValid extends Prisma.False ? {
+        [P in HavingFields]: P extends ByFields ? never : P extends string ? `Error: Field "${P}" used in "having" needs to be provided in "by".` : [
+            Error,
+            'Field ',
+            P,
+            ` in "having" needs to be provided in "by"`
+        ];
+    }[HavingFields] : 'take' extends Prisma.Keys<T> ? 'orderBy' extends Prisma.Keys<T> ? ByValid extends Prisma.True ? {} : {
+        [P in OrderFields]: P extends ByFields ? never : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+    }[OrderFields] : 'Error: If you provide "take", you also need to provide "orderBy"' : 'skip' extends Prisma.Keys<T> ? 'orderBy' extends Prisma.Keys<T> ? ByValid extends Prisma.True ? {} : {
+        [P in OrderFields]: P extends ByFields ? never : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+    }[OrderFields] : 'Error: If you provide "skip", you also need to provide "orderBy"' : ByValid extends Prisma.True ? {} : {
+        [P in OrderFields]: P extends ByFields ? never : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+    }[OrderFields]>(args: Prisma.SubsetIntersection<T, VocabReviewGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetVocabReviewGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>;
+    /**
+     * Fields of the VocabReview model
+     */
+    readonly fields: VocabReviewFieldRefs;
+}
+/**
+ * The delegate class that acts as a "Promise-like" for VocabReview.
+ * Why is this prefixed with `Prisma__`?
+ * Because we want to prevent naming conflicts as mentioned in
+ * https://github.com/prisma/prisma-client-js/issues/707
+ */
+export interface Prisma__VocabReviewClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise";
+    user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>;
+    vocab<T extends Prisma.VocabDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.VocabDefaultArgs<ExtArgs>>): Prisma.Prisma__VocabClient<runtime.Types.Result.GetResult<Prisma.$VocabPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): runtime.Types.Utils.JsPromise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): runtime.Types.Utils.JsPromise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): runtime.Types.Utils.JsPromise<T>;
+}
+/**
+ * Fields of the VocabReview model
+ */
+export interface VocabReviewFieldRefs {
+    readonly id: Prisma.FieldRef<"VocabReview", 'String'>;
+    readonly userId: Prisma.FieldRef<"VocabReview", 'String'>;
+    readonly vocabId: Prisma.FieldRef<"VocabReview", 'String'>;
+    readonly outcome: Prisma.FieldRef<"VocabReview", 'ReviewOutcome'>;
+    readonly createdAt: Prisma.FieldRef<"VocabReview", 'DateTime'>;
+}
+/**
+ * VocabReview findUnique
+ */
+export type VocabReviewFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VocabReview
+     */
+    select?: Prisma.VocabReviewSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the VocabReview
+     */
+    omit?: Prisma.VocabReviewOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.VocabReviewInclude<ExtArgs> | null;
+    /**
+     * Filter, which VocabReview to fetch.
+     */
+    where: Prisma.VocabReviewWhereUniqueInput;
+};
+/**
+ * VocabReview findUniqueOrThrow
+ */
+export type VocabReviewFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VocabReview
+     */
+    select?: Prisma.VocabReviewSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the VocabReview
+     */
+    omit?: Prisma.VocabReviewOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.VocabReviewInclude<ExtArgs> | null;
+    /**
+     * Filter, which VocabReview to fetch.
+     */
+    where: Prisma.VocabReviewWhereUniqueInput;
+};
+/**
+ * VocabReview findFirst
+ */
+export type VocabReviewFindFirstArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VocabReview
+     */
+    select?: Prisma.VocabReviewSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the VocabReview
+     */
+    omit?: Prisma.VocabReviewOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.VocabReviewInclude<ExtArgs> | null;
+    /**
+     * Filter, which VocabReview to fetch.
+     */
+    where?: Prisma.VocabReviewWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of VocabReviews to fetch.
+     */
+    orderBy?: Prisma.VocabReviewOrderByWithRelationInput | Prisma.VocabReviewOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for searching for VocabReviews.
+     */
+    cursor?: Prisma.VocabReviewWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` VocabReviews from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` VocabReviews.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of VocabReviews.
+     */
+    distinct?: Prisma.VocabReviewScalarFieldEnum | Prisma.VocabReviewScalarFieldEnum[];
+};
+/**
+ * VocabReview findFirstOrThrow
+ */
+export type VocabReviewFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VocabReview
+     */
+    select?: Prisma.VocabReviewSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the VocabReview
+     */
+    omit?: Prisma.VocabReviewOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.VocabReviewInclude<ExtArgs> | null;
+    /**
+     * Filter, which VocabReview to fetch.
+     */
+    where?: Prisma.VocabReviewWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of VocabReviews to fetch.
+     */
+    orderBy?: Prisma.VocabReviewOrderByWithRelationInput | Prisma.VocabReviewOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for searching for VocabReviews.
+     */
+    cursor?: Prisma.VocabReviewWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` VocabReviews from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` VocabReviews.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of VocabReviews.
+     */
+    distinct?: Prisma.VocabReviewScalarFieldEnum | Prisma.VocabReviewScalarFieldEnum[];
+};
+/**
+ * VocabReview findMany
+ */
+export type VocabReviewFindManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VocabReview
+     */
+    select?: Prisma.VocabReviewSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the VocabReview
+     */
+    omit?: Prisma.VocabReviewOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.VocabReviewInclude<ExtArgs> | null;
+    /**
+     * Filter, which VocabReviews to fetch.
+     */
+    where?: Prisma.VocabReviewWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of VocabReviews to fetch.
+     */
+    orderBy?: Prisma.VocabReviewOrderByWithRelationInput | Prisma.VocabReviewOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for listing VocabReviews.
+     */
+    cursor?: Prisma.VocabReviewWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` VocabReviews from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` VocabReviews.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of VocabReviews.
+     */
+    distinct?: Prisma.VocabReviewScalarFieldEnum | Prisma.VocabReviewScalarFieldEnum[];
+};
+/**
+ * VocabReview create
+ */
+export type VocabReviewCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VocabReview
+     */
+    select?: Prisma.VocabReviewSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the VocabReview
+     */
+    omit?: Prisma.VocabReviewOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.VocabReviewInclude<ExtArgs> | null;
+    /**
+     * The data needed to create a VocabReview.
+     */
+    data: Prisma.XOR<Prisma.VocabReviewCreateInput, Prisma.VocabReviewUncheckedCreateInput>;
+};
+/**
+ * VocabReview createMany
+ */
+export type VocabReviewCreateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many VocabReviews.
+     */
+    data: Prisma.VocabReviewCreateManyInput | Prisma.VocabReviewCreateManyInput[];
+    skipDuplicates?: boolean;
+};
+/**
+ * VocabReview createManyAndReturn
+ */
+export type VocabReviewCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VocabReview
+     */
+    select?: Prisma.VocabReviewSelectCreateManyAndReturn<ExtArgs> | null;
+    /**
+     * Omit specific fields from the VocabReview
+     */
+    omit?: Prisma.VocabReviewOmit<ExtArgs> | null;
+    /**
+     * The data used to create many VocabReviews.
+     */
+    data: Prisma.VocabReviewCreateManyInput | Prisma.VocabReviewCreateManyInput[];
+    skipDuplicates?: boolean;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.VocabReviewIncludeCreateManyAndReturn<ExtArgs> | null;
+};
+/**
+ * VocabReview update
+ */
+export type VocabReviewUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VocabReview
+     */
+    select?: Prisma.VocabReviewSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the VocabReview
+     */
+    omit?: Prisma.VocabReviewOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.VocabReviewInclude<ExtArgs> | null;
+    /**
+     * The data needed to update a VocabReview.
+     */
+    data: Prisma.XOR<Prisma.VocabReviewUpdateInput, Prisma.VocabReviewUncheckedUpdateInput>;
+    /**
+     * Choose, which VocabReview to update.
+     */
+    where: Prisma.VocabReviewWhereUniqueInput;
+};
+/**
+ * VocabReview updateMany
+ */
+export type VocabReviewUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * The data used to update VocabReviews.
+     */
+    data: Prisma.XOR<Prisma.VocabReviewUpdateManyMutationInput, Prisma.VocabReviewUncheckedUpdateManyInput>;
+    /**
+     * Filter which VocabReviews to update
+     */
+    where?: Prisma.VocabReviewWhereInput;
+    /**
+     * Limit how many VocabReviews to update.
+     */
+    limit?: number;
+};
+/**
+ * VocabReview updateManyAndReturn
+ */
+export type VocabReviewUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VocabReview
+     */
+    select?: Prisma.VocabReviewSelectUpdateManyAndReturn<ExtArgs> | null;
+    /**
+     * Omit specific fields from the VocabReview
+     */
+    omit?: Prisma.VocabReviewOmit<ExtArgs> | null;
+    /**
+     * The data used to update VocabReviews.
+     */
+    data: Prisma.XOR<Prisma.VocabReviewUpdateManyMutationInput, Prisma.VocabReviewUncheckedUpdateManyInput>;
+    /**
+     * Filter which VocabReviews to update
+     */
+    where?: Prisma.VocabReviewWhereInput;
+    /**
+     * Limit how many VocabReviews to update.
+     */
+    limit?: number;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.VocabReviewIncludeUpdateManyAndReturn<ExtArgs> | null;
+};
+/**
+ * VocabReview upsert
+ */
+export type VocabReviewUpsertArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VocabReview
+     */
+    select?: Prisma.VocabReviewSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the VocabReview
+     */
+    omit?: Prisma.VocabReviewOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.VocabReviewInclude<ExtArgs> | null;
+    /**
+     * The filter to search for the VocabReview to update in case it exists.
+     */
+    where: Prisma.VocabReviewWhereUniqueInput;
+    /**
+     * In case the VocabReview found by the `where` argument doesn't exist, create a new VocabReview with this data.
+     */
+    create: Prisma.XOR<Prisma.VocabReviewCreateInput, Prisma.VocabReviewUncheckedCreateInput>;
+    /**
+     * In case the VocabReview was found with the provided `where` argument, update it with this data.
+     */
+    update: Prisma.XOR<Prisma.VocabReviewUpdateInput, Prisma.VocabReviewUncheckedUpdateInput>;
+};
+/**
+ * VocabReview delete
+ */
+export type VocabReviewDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VocabReview
+     */
+    select?: Prisma.VocabReviewSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the VocabReview
+     */
+    omit?: Prisma.VocabReviewOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.VocabReviewInclude<ExtArgs> | null;
+    /**
+     * Filter which VocabReview to delete.
+     */
+    where: Prisma.VocabReviewWhereUniqueInput;
+};
+/**
+ * VocabReview deleteMany
+ */
+export type VocabReviewDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Filter which VocabReviews to delete
+     */
+    where?: Prisma.VocabReviewWhereInput;
+    /**
+     * Limit how many VocabReviews to delete.
+     */
+    limit?: number;
+};
+/**
+ * VocabReview without action
+ */
+export type VocabReviewDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VocabReview
+     */
+    select?: Prisma.VocabReviewSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the VocabReview
+     */
+    omit?: Prisma.VocabReviewOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.VocabReviewInclude<ExtArgs> | null;
+};
+//# sourceMappingURL=VocabReview.d.ts.map
