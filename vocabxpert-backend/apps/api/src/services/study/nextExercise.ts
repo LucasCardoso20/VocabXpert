@@ -28,6 +28,17 @@ export async function createNextExerciseForSession(input: { sessionId: string; u
 
   if (!session) return { kind: "NOT_FOUND" as const };
 
+  const user = await prisma.user.findUnique({
+  where: { id: input.userId },
+  select: {
+    targetLanguage: true,
+  },
+});
+
+if (!user) {
+  throw new Error("USER_NOT_FOUND");
+}
+
   if (session.finishedAt) {
     console.info({ sessionId: session.id, finishedAt: session.finishedAt }, "Session already finished."); // ✅ Log
     return { kind: "DONE" as const, exercise: null };
@@ -48,13 +59,14 @@ export async function createNextExerciseForSession(input: { sessionId: string; u
   const vocabId = vocabIds[session.currentIndex];
 
   const gen: GeneratedExercise = await generateExercise({
-    userId: input.userId,
-    listId: session.listId,
-    vocabId,
-    exerciseType: session.exerciseType as ExerciseType,
-    direction: normalizeDirection(session.direction),
-    enabledExerciseTypes: session.enabledExerciseTypes as any,
-  });
+  userId: input.userId,
+  listId: session.listId,
+  vocabId,
+  exerciseType: session.exerciseType as ExerciseType,
+  direction: normalizeDirection(session.direction),
+  enabledExerciseTypes: session.enabledExerciseTypes as any,
+  targetLanguage: user.targetLanguage,
+});
 
   const exercise = await prisma.studyExercise.create({
     data: {

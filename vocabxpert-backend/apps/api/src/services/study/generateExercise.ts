@@ -52,6 +52,94 @@ function safeUniq(arr: string[]) {
   return out;
 }
 
+function resolveSpeechLocale(
+  targetLanguage: string | null | undefined
+): string | undefined {
+  const language = targetLanguage
+    ?.trim()
+    .toLowerCase()
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '');
+
+  if (!language) {
+    return undefined;
+  }
+
+  if (
+    language === 'en' ||
+    language === 'english' ||
+    language === 'ingles'
+  ) {
+    return 'en-US';
+  }
+
+  if (
+    language === 'pt' ||
+    language === 'portuguese' ||
+    language === 'portugues'
+  ) {
+    return 'pt-BR';
+  }
+
+  if (
+    language === 'es' ||
+    language === 'spanish' ||
+    language === 'espanhol'
+  ) {
+    return 'es-ES';
+  }
+
+  if (
+    language === 'fr' ||
+    language === 'french' ||
+    language === 'frances'
+  ) {
+    return 'fr-FR';
+  }
+
+  if (
+    language === 'de' ||
+    language === 'german' ||
+    language === 'alemao'
+  ) {
+    return 'de-DE';
+  }
+
+  if (
+    language === 'it' ||
+    language === 'italian' ||
+    language === 'italiano'
+  ) {
+    return 'it-IT';
+  }
+
+  if (
+    language === 'ja' ||
+    language === 'japanese' ||
+    language === 'japones'
+  ) {
+    return 'ja-JP';
+  }
+
+  if (
+    language === 'ko' ||
+    language === 'korean' ||
+    language === 'coreano'
+  ) {
+    return 'ko-KR';
+  }
+
+  if (
+    language === 'zh' ||
+    language === 'chinese' ||
+    language === 'chines'
+  ) {
+    return 'zh-CN';
+  }
+
+  return undefined;
+}
+
 const ALL_TYPES = [
   "MULTIPLE_CHOICE_TRANSLATION",
   "CREATE_SENTENCE",
@@ -76,6 +164,7 @@ export async function generateExercise(input: {
   exerciseType: "RANDOM" | ConcreteExerciseType;
   enabledExerciseTypes?: ConcreteExerciseType[];
   direction: "WORD_TO_TRANSLATION" | "TRANSLATION_TO_WORD";
+  targetLanguage?: string | null;
 }) : Promise<GeneratedExercise> {
   const vocab = await prisma.vocab.findFirst({
     where: { id: input.vocabId, userId: input.userId, listId: input.listId },
@@ -286,19 +375,18 @@ export async function generateExercise(input: {
 }
 
   if (resolvedType === "DICTATION") {
-    // Produção: melhor ditar uma frase curta (exemplo) ou a palavra
-    const textToDictate = (examples[0] ?? vocab.word).trim();
+  const textToDictate = (examples[0] ?? vocab.word).trim();
 
-    return {
-      type: resolvedType as ExerciseType,
-      payload: {
-        language: "target",
-        textToDictate,
-        hintTranslation: vocab.translation,
-        // front pode usar TTS do device; opcionalmente você adiciona um endpoint de áudio depois
-      },
-    };
-  }
+  return {
+    type: resolvedType as ExerciseType,
+    payload: {
+      language: "target",
+      locale: resolveSpeechLocale(input.targetLanguage),
+      textToDictate,
+      hintTranslation: vocab.translation,
+    },
+  };
+}
 
   if (resolvedType === "CREATE_SENTENCE") {
     return {

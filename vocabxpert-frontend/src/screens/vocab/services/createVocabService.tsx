@@ -1,4 +1,4 @@
-import * as SecureStore from 'expo-secure-store';
+import { appStorage } from '../../../storage/appStorage';
 import apiClient from '../../../api/client';
 
 export type ListItem = {
@@ -12,7 +12,7 @@ type GetListsResponse = {
 };
 
 export async function fetchUserLists(): Promise<ListItem[]> {
-  const userId = await SecureStore.getItemAsync('x-user-id');
+  const userId = await appStorage.getItem('x-user-id');
   if (!userId) throw new Error('USER_ID_NOT_FOUND');
 
   const { data } = await apiClient.get<GetListsResponse>('/lists', {
@@ -23,7 +23,7 @@ export async function fetchUserLists(): Promise<ListItem[]> {
 }
 
 export async function createList(name: string): Promise<ListItem> {
-  const userId = await SecureStore.getItemAsync('x-user-id');
+  const userId = await appStorage.getItem('x-user-id');
   if (!userId) throw new Error('USER_ID_NOT_FOUND');
 
   const { data } = await apiClient.post(
@@ -36,7 +36,7 @@ export async function createList(name: string): Promise<ListItem> {
 }
 
 export async function previewVocab(word: string): Promise<{ translation: string; examples: string[] }> {
-  const userId = await SecureStore.getItemAsync('x-user-id');
+  const userId = await appStorage.getItem('x-user-id');
   if (!userId) throw new Error('USER_ID_NOT_FOUND');
 
   const { data } = await apiClient.post(
@@ -60,7 +60,7 @@ export async function createVocab(params: {
   translation?: string;
   examples?: string[];
 }) {
-  const userId = await SecureStore.getItemAsync('x-user-id');
+  const userId = await appStorage.getItem('x-user-id');
   if (!userId) throw new Error('USER_ID_NOT_FOUND');
 
   const payload = {

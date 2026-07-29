@@ -11,13 +11,24 @@ export type DeterministicEvalResult = {
 };
 
 // apps/api/src/services/study/evaluateExercise.deterministic.ts
-
 function norm(s: string) {
   return s
     .trim()
     .toLowerCase()
-    .normalize("NFKD")
-    .replace(/[\u0300-\u036f]/g, "")
+    // .normalize("NFKD") // REMOVIDO: Para manter acentos e cedilhas
+    // .replace(/[\u0300-\u036f]/g, "") // REMOVIDO: Para manter acentos e cedilhas
+    .replace(/[^\p{L}\p{N}]+/gu, " ") // Isso ainda remove pontuações e caracteres especiais
+    .trim()
+    .replace(/\s+/g, " ");
+}
+
+// NOVA FUNÇÃO: normLoose - para comparações mais flexíveis (ignora acentos)
+function normLoose(s: string) {
+  return s
+    .trim()
+    .toLowerCase()
+    .normalize("NFKD") // Mantém esta linha para remover acentos
+    .replace(/[\u0300-\u036f]/g, "") // Mantém esta linha para remover acentos
     .replace(/[^\p{L}\p{N}]+/gu, " ")
     .trim()
     .replace(/\s+/g, " ");
@@ -50,16 +61,22 @@ export function evaluateExerciseDeterministic(input: {
     if (!Array.isArray(p?.options) || typeof p?.correctIndex !== "number") return null;
     if (typeof r?.index !== "number") return null;
 
+    // ADICIONADO: Verifica se o índice da resposta do usuário está dentro dos limites das opções
+    if (r.index < 0 || r.index >= p.options.length) {
+      return null;
+    }
+
     return r.index === p.correctIndex
       ? result("CORRECT", "Correct.")
       : result("INCORRECT", `Incorrect. Correct answer: ${p.options[p.correctIndex]}`);
   }
 
-  // FLASHCARD
+    // FLASHCARD
   if (input.type === "FLASHCARD") {
+    if (typeof p !== 'object' || p === null) return null;
+
     if (typeof r?.answer !== "string") return null;
 
-    // usa gabarito do próprio exercício (payload.back)
     const expected =
       typeof p?.back === "string" && p.back.trim().length > 0
         ? p.back
@@ -69,18 +86,27 @@ export function evaluateExerciseDeterministic(input: {
 
     if (!expected) return null;
 
-    const a = norm(r.answer);
-    const e = norm(expected);
+    const a = norm(r.answer); // 'a' continua sendo normalizado de forma rigorosa
+    const e = norm(expected); // 'e' continua sendo normalizado de forma rigorosa
 
     if (a === e) return result("CORRECT", "Correct.");
-    if (a.includes(e) || e.includes(a)) return result("PARTIAL", `Almost. Expected: ${expected}`, 0.5);
+
+    // NOVO: Use normLoose para a verificação PARTIAL
+    const aLoose = normLoose(r.answer);
+    const eLoose = normLoose(expected);
+
+    if (aLoose.includes(eLoose) || eLoose.includes(aLoose)) return result("PARTIAL", `Almost. Expected: ${expected}`, 0.5);
     return result("INCORRECT", `Incorrect. Expected: ${expected}`);
   }
-
-  // CLOZE (o seu CLOZE é por alternativas)
+    // CLOZE (o seu CLOZE é por alternativas)
   if (input.type === "CLOZE") {
     if (!Array.isArray(p?.options) || typeof p?.correctIndex !== "number") return null;
     if (typeof r?.index !== "number") return null;
+
+    // ADICIONADO: Verifica se o índice da resposta do usuário está dentro dos limites das opções
+    if (r.index < 0 || r.index >= p.options.length) {
+      return null;
+    }
 
     return r.index === p.correctIndex
       ? result("CORRECT", "Correct.")
@@ -91,6 +117,11 @@ export function evaluateExerciseDeterministic(input: {
   if (input.type === "CHOOSE_CORRECT_EXAMPLE") {
     if (!Array.isArray(p?.options) || typeof p?.correctIndex !== "number") return null;
     if (typeof r?.index !== "number") return null;
+
+    // ADICIONADO: Verifica se o índice da resposta do usuário está dentro dos limites das opções
+    if (r.index < 0 || r.index >= p.options.length) {
+      return null;
+    }
 
     return r.index === p.correctIndex
       ? result("CORRECT", "Correct.")
@@ -152,8 +183,8 @@ export function evaluateExerciseDeterministic(input: {
     const score = correct / total;
 
     if (score === 1) return result("CORRECT", "Perfect match.", 1);
-    if (score >= 0.5) return result("PARTIAL", "Some matches are correct.", score);
-    return result("INCORRECT", "Most matches are incorrect.", score);
+  if (score > 0 && score < 1) return result("PARTIAL", "Some matches are correct.", score); // <-- ALTERADO AQUI
+  return result("INCORRECT", "Most matches are incorrect.", score);
   }
 
   return null; // não sei avaliar -> cai pra Gemini

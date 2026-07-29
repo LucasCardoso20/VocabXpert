@@ -43,16 +43,22 @@ export async function selectVocabIds(input: {
   const dueSet = new Set(dueIds);
 
   if (dueIds.length < input.limit) {
-    const neverStudied = await prisma.vocab.findMany({
-      where: {
-        userId: input.userId,
-        listId: input.listId,
-        progress: { is: null },
-      },
-      orderBy: { createdAt: "desc" },
-      take: input.limit - dueIds.length,
-      select: { id: true },
-    });
+   const neverStudied = await prisma.vocab.findMany({
+  where: {
+    userId: input.userId,
+    listId: input.listId,
+    progresses: {
+      none: {},
+    },
+  },
+  orderBy: {
+    createdAt: 'desc',
+  },
+  take: input.limit - dueIds.length,
+  select: {
+    id: true,
+  },
+});
 
     for (const v of neverStudied) {
       if (!dueSet.has(v.id)) dueIds.push(v.id);

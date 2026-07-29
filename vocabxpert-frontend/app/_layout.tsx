@@ -1,38 +1,39 @@
-// app/_layout.tsx
-// Remova: import 'react-native-gesture-handler'; // Não é necessário aqui se não houver gestos globais
 import { Stack } from 'expo-router';
-import { useAppFonts } from '../src/theme/typography';
 import * as SplashScreen from 'expo-splash-screen';
+import { StatusBar } from 'expo-status-bar';
 import { useCallback, useEffect, useState } from 'react';
 import { View } from 'react-native';
-import { StatusBar } from 'expo-status-bar';
-import * as SecureStore from 'expo-secure-store';
-// Remova: import { GestureHandlerRootView } from 'react-native-gesture-handler'; // Não é necessário aqui
-// Remova: import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'; // Não é necessário aqui
+
+import { appStorage } from '@/src/storage/appStorage';
+import { useAppFonts } from '@/src/theme/typography';
 
 SplashScreen.preventAutoHideAsync();
 
+type OnboardingStatus = 'loading' | 'completed' | 'not_completed';
+
 export default function RootLayout() {
   const fontsLoaded = useAppFonts();
-  const [onboardingStatus, setOnboardingStatus] = useState<'loading' | 'completed' | 'not_completed'>(
-    'loading'
-  );
+
+  const [onboardingStatus, setOnboardingStatus] =
+    useState<OnboardingStatus>('loading');
 
   useEffect(() => {
-    const checkOnboarding = async () => {
+    async function checkOnboarding() {
       try {
-        const onboarded = await SecureStore.getItemAsync('onboarded');
-        if (onboarded === 'true') {
-          setOnboardingStatus('completed');
-        } else {
-          setOnboardingStatus('not_completed');
-        }
-      } catch (e) {
-        console.error('Failed to check onboarding status:', e);
+        const onboarded = await appStorage.getItem('onboarded');
+
+        setOnboardingStatus(
+          onboarded === 'true' ? 'completed' : 'not_completed'
+        );
+      } catch (error) {
+        console.error('Failed to check onboarding status:', error);
+
+        // Em caso de falha, o caminho seguro é exibir onboarding.
         setOnboardingStatus('not_completed');
       }
-    };
-    checkOnboarding();
+    }
+
+    void checkOnboarding();
   }, []);
 
   const onLayoutRootView = useCallback(async () => {
@@ -41,42 +42,48 @@ export default function RootLayout() {
     }
   }, [fontsLoaded, onboardingStatus]);
 
+  // Mantém a Splash Screen enquanto fontes e storage são verificados.
   if (!fontsLoaded || onboardingStatus === 'loading') {
     return null;
   }
 
+  const initialRouteName =
+    onboardingStatus === 'completed' ? '(tabs)' : 'onboarding';
+
   return (
     <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
       <StatusBar style="dark" />
-      {onboardingStatus === 'not_completed' ? (
-        <Stack screenOptions={{
+
+      <Stack
+        initialRouteName={initialRouteName}
+        screenOptions={{
           headerShown: false,
           animation: 'fade_from_bottom',
           animationDuration: 220,
           gestureEnabled: true,
-        }}>
-          <Stack.Screen name="onboarding" options={{ headerShown: false }} />
-        </Stack>
-      ) : (
-        <Stack screenOptions={{
-          headerShown: false,
-          animation: 'fade_from_bottom',
-          animationDuration: 220,
-          gestureEnabled: true,
-        }}>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          {/* ESTA É A LINHA QUE PRECISA SER RESTAURADA! */}
-          <Stack.Screen
-            name="vocab/create" // <-- O NOME DA SUA ROTA DE CRIAÇÃO DE VOCABULÁRIO
-            options={{
-              headerShown: true,
-              title: 'Adicionar Vocab',
-              presentation: 'card', // Para abrir como um modal/card
-            }}
-          />
-          <Stack.Screen name="study/exercise" options={{ headerShown: false }} />
-        </Stack>
-      )}
+        }}
+      >
+        {/* Sempre registradas */}
+        <Stack.Screen name="onboarding" options={{ headerShown: false }} />
+
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+
+        <Stack.Screen
+          name="vocab/create"
+          options={{
+            headerShown: true,
+            title: 'Adicionar Vocab',
+            presentation: 'card',
+          }}
+        />
+
+        <Stack.Screen name="study" options={{ headerShown: false }} />
+
+        <Stack.Screen
+          name="study/exercise"
+          options={{ headerShown: false }}
+        />
+      </Stack>
     </View>
   );
 }

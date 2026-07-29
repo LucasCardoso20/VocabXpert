@@ -18,7 +18,7 @@ export default function HomeHeader({ userName }: HomeHeaderProps) {
     <View style={[styles.container, { paddingTop: insets.top + 8 }]}>
       <View style={styles.left}>
         <View style={[styles.avatar, getShadow('sh1')]}>
-          <Text style={styles.avatarEmoji}>👩🏽‍🦱</Text>
+          <Text style={styles.avatarEmoji}>👦</Text>
         </View>
 
         <View>

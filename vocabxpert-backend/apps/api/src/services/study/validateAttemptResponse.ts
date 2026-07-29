@@ -7,7 +7,9 @@ const DictationResponse = z.object({ text: z.string().min(1) });
 const MatchResponse = z.object({
   matches: z.array(z.object({ word: z.string().min(1), translation: z.string().min(1) })).min(1),
 });
-
+const CreateSentenceResponse = z.object({
+  sentence: z.string().trim().min(1),
+});
 export function validateAttemptResponse(input: { exerciseType: string | undefined; response: unknown }) {
   const t = input.exerciseType;
 
@@ -21,6 +23,11 @@ export function validateAttemptResponse(input: { exerciseType: string | undefine
 
   if (t === "MATCH") return MatchResponse.parse(input.response);
 
+
   // CREATE_SENTENCE e outros subjetivos podem ficar livres (ou validar outro contrato)
+  if (t === "CREATE_SENTENCE") {
+    return CreateSentenceResponse.parse(input.response);
+  }
+  
   return input.response;
 }

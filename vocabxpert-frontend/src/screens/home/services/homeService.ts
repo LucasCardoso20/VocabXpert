@@ -1,4 +1,4 @@
-import * as SecureStore from 'expo-secure-store';
+import { appStorage } from '../../../storage/appStorage';
 import apiClient from '../../../api/client';
 import { HomeData, VocabCard, VocabList } from '../types';
 
@@ -18,11 +18,11 @@ type ApiVocab = {
 };
 
 export async function fetchHomeData(): Promise<HomeData> {
-  const userId = await SecureStore.getItemAsync('x-user-id');
-  const storedDefaultListId = await SecureStore.getItemAsync('default-list-id');
+  const userId = await appStorage.getItem('x-user-id');
+  const storedDefaultListId = await appStorage.getItem('default-list-id');
 
   if (!userId) {
-    throw new Error('x-user-id não encontrado no SecureStore');
+    throw new Error('x-user-id não encontrado no appStorage');
   }
 
   const headers = { 'x-user-id': userId };

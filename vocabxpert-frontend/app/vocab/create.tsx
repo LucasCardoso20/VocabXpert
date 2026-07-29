@@ -12,8 +12,7 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import * as SecureStore from 'expo-secure-store';
-
+import { appStorage } from '../../src/storage/appStorage';
 import apiClient from '../../src/api/client';
 import { colors } from '../../src/theme/colors';
 import { spacing } from '../../src/theme/spacing';
@@ -36,7 +35,7 @@ type CreateVocabPayload = {
 };
 
 async function createVocab(payload: CreateVocabPayload) {
-  const userId = await SecureStore.getItemAsync('x-user-id');
+  const userId = await appStorage.getItem('x-user-id');
 
   if (!userId) throw new Error('USER_ID_NOT_FOUND');
 

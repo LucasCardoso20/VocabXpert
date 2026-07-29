@@ -3,7 +3,7 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { View, StyleSheet, Alert, Animated, Easing } from 'react-native';
 import { useRouter } from 'expo-router';
-import * as SecureStore from 'expo-secure-store';
+import { appStorage } from '../../src/storage/appStorage';
 import apiClient from '../../src/api/client';
 
 import OnboardingHeader from '../../src/components/onboarding/OnboardingHeader';
@@ -99,9 +99,9 @@ useEffect(() => {
         const { userId, defaultListId } = response.data;
 
         // Salvar userId e defaultListId (se necessário) e marcar onboarding como completo
-        await SecureStore.setItemAsync('x-user-id', userId);
-        await SecureStore.setItemAsync('default-list-id', defaultListId); // Salvar a lista padrão
-        await SecureStore.setItemAsync('onboarded', 'true');
+        await appStorage.setItem('x-user-id', userId);
+        await appStorage.setItem('default-list-id', defaultListId); // Salvar a lista padrão
+        await appStorage.setItem('onboarded', 'true');
 
         Alert.alert('Sucesso!', 'Seu perfil foi criado com sucesso!');
         router.replace('/(tabs)'); // Redireciona para a tela principal

@@ -12,19 +12,20 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import * as SecureStore from 'expo-secure-store';
+import { appStorage } from '../../storage/appStorage';
 
 import apiClient from '../../../src/api/client';
-import { colors } from '../../src/theme/colors';
-import { spacing } from '../../src/theme/spacing';
-import { radio } from '../../src/theme/radio';
+
 
 import {
   createList,
   fetchUserLists,
   previewVocab,
   type ListItem,
-} from '../../src/screens/vocab/services/createVocabService';
+} from '@/src/screens/vocab/services/createVocabService';
+import { colors } from '@/src/theme/colors';
+import { spacing } from '@/src/theme/spacing';
+import { radio } from '@/src/theme/radio';
 
 type CreateVocabPayload = {
   listId: string;
@@ -34,7 +35,7 @@ type CreateVocabPayload = {
 };
 
 async function createVocab(payload: CreateVocabPayload) {
-  const userId = await SecureStore.getItemAsync('x-user-id');
+  const userId = await appStorage.getItem('x-user-id');
   if (!userId) throw new Error('USER_ID_NOT_FOUND');
 
   const { data } = await apiClient.post(
@@ -86,10 +87,10 @@ export default function CreateVocabScreen() {
       const data = await fetchUserLists();
       setLists(data);
 
-      const defaultListId = await SecureStore.getItemAsync('default-list-id');
+      const defaultListId = await appStorage.getItem('default-list-id');
       const defaultList =
-        (defaultListId && data.find((l) => l.id === defaultListId)) ||
-        data.find((l) => l.isDefault) ||
+        (defaultListId && data.find((l: any) => l.id === defaultListId)) ||
+        data.find((l: any) => l.isDefault) ||
         data[0];
 
       setSelectedListId(defaultList?.id ?? '');

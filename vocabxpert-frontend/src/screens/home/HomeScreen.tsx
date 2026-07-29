@@ -100,14 +100,19 @@ export default function HomeScreen() {
         <MyVocabsSection
           vocabs={vocabs}
           onAddVocab={() => {
-            console.log('[HomeScreen] going to /vocab/create');
             router.push('/vocab/create');
+          }}
+          onStartQuiz={() => {
+            router.push('/study');
           }}
           onPressVocab={(vocab) => {
             router.push({
               pathname: '/vocab/[vocabId]',
               params: { vocabId: vocab.id },
             });
+          }}
+          onPressSound={(vocab) => {
+            // sua lógica atual de fala/pronúncia
           }}
         />
 

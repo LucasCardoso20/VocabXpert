@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 import { resolve } from "node:path";
-
+import cors from '@fastify/cors';
 dotenv.config({ path: resolve(process.cwd(), "../../.env") });
 
 import Fastify from "fastify";
@@ -21,6 +21,20 @@ import { tooltipRoutes } from "./routes/tooltip.js";
 
 const app = Fastify({
   logger: true
+});
+
+await app.register(cors, {
+  origin: [
+    'http://localhost:8081',
+    'http://127.0.0.1:8081',
+  ],
+
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+
+  allowedHeaders: [
+    'Content-Type',
+    'x-user-id',
+  ],
 });
 
 function getErrCode(err: unknown): string | undefined {

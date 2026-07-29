@@ -17,7 +17,7 @@ export default function TabsLayout() {
         options={{
           title: 'Vocabulário',
           headerShown: true,
-          header: () => <HomeHeader userName="Juliana" />,
+          header: () => <HomeHeader userName="Lucas" />,
         }}
       />
       <Tabs.Screen

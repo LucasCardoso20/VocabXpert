@@ -1,4 +1,4 @@
-import * as SecureStore from 'expo-secure-store';
+import { appStorage } from '../../../storage/appStorage';
 import apiClient from '../../../api/client';
 
 export type VocabExample = {
@@ -24,7 +24,7 @@ export type VocabDetail = {
 };
 
 export async function fetchVocabDetail(vocabId: string): Promise<VocabDetail> {
-  const userId = await SecureStore.getItemAsync('x-user-id');
+  const userId = await appStorage.getItem('x-user-id');
   if (!userId) throw new Error('USER_ID_NOT_FOUND');
 
   const { data } = await apiClient.get(`/vocabs/${vocabId}`, {

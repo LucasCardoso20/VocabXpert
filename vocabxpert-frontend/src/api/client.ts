@@ -1,9 +1,7 @@
 // src/api/client.ts
 
 import axios from 'axios';
-import * as SecureStore from 'expo-secure-store'; // ✅ Importar expo-secure-store
-
-// ✅ URL base do seu backend
+import { appStorage } from '../storage/appStorage'; // ✅ URL base do seu backend
 const API_BASE_URL = 'http://192.168.0.12:3000'; // Verifique se este IP ainda está correto!
 
 const apiClient = axios.create({
@@ -18,14 +16,14 @@ const apiClient = axios.create({
 // ✅ Interceptor para adicionar o x-user-id automaticamente
 apiClient.interceptors.request.use(
   async (config) => {
-    const userId = await SecureStore.getItemAsync('x-user-id'); // ✅ Usar SecureStore.getItemAsync
+    const userId = await appStorage.getItem('x-user-id'); // ✅ Usar appStorage.getItem
 if (userId) {
   config.headers['x-user-id'] = userId;
 } else {
-  let newUserId = await SecureStore.getItemAsync('x-user-id'); // ✅ Usar SecureStore.getItemAsync
+  let newUserId = await appStorage.getItem('x-user-id'); // ✅ Usar appStorage.getItem
   if (!newUserId) {
     newUserId = 'uuid-v4-placeholder-' + Math.random().toString(36).substring(2, 15);
-    await SecureStore.setItemAsync('x-user-id', newUserId); // ✅ Usar SecureStore.setItemAsync
+    await appStorage.setItem('x-user-id', newUserId); // ✅ Usar appStorage.setItem
     console.log('Generated and saved new x-user-id:', newUserId);
   }
   config.headers['x-user-id'] = newUserId;

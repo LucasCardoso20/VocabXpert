@@ -5,22 +5,38 @@ import { ExerciseType } from "@vocabxpert/db";
 import { z } from "zod";
 import { callGeminiWithResilience } from "./geminiClient.js";
 
+const IssueSchema = z.object({
+  type: z.enum(["grammar", "spelling", "vocabulary", "meaning", "other"]),
+  explanation: z.string(),
+  // Opcional: para indicar o trecho da frase onde o problema ocorre
+  startIndex: z.number().optional(),
+  endIndex: z.number().optional(),
+});
+
+export type Issue = z.infer<typeof IssueSchema>;
+
 // --- Schema para a resposta esperada da Gemini ---
 const GeminiEvaluationResponseSchema = z.object({
-  verdict: z.enum(["CORRECT", "INCORRECT", "UNKNOWN"]),
+  verdict: z.enum(["CORRECT", "PARTIAL", "INCORRECT", "UNKNOWN"]),
   feedback: z.string(),
   score: z.number().min(0).max(1),
+  // Novos campos para feedback detalhado
+  correctedSentence: z.string().optional(), // Versão corrigida da frase do usuário
+  issues: z.array(IssueSchema).optional(), // Lista de problemas encontrados
 });
 
 type GeminiEvaluationResponse = z.infer<typeof GeminiEvaluationResponseSchema>;
 
+
 // --- Tipo de retorno da função de avaliação ---
 export type EvaluationResult = {
-  verdict: "CORRECT" | "INCORRECT" | "UNKNOWN";
+  verdict: "CORRECT" | "PARTIAL" | "INCORRECT" | "UNKNOWN";
   feedback: string;
   score: number;
   aiModel: string;
   latencyMs: number;
+  correctedSentence?: string; // Estes campos também precisam estar aqui, se não estiverem
+  issues?: Issue[]; // Estes campos também precisam estar aqui, se não estiverem
 };
 
 // --- Função auxiliar para parsear a resposta da Gemini ---
@@ -48,35 +64,67 @@ export async function evaluateExerciseViaGemini(input: {
   // const genAI = new GoogleGenerativeAI(env.GEMINI_API_KEY);
   // const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-  const prompt = `
-    You are an AI assistant specialized in evaluating language learning exercises.
-    Evaluate the user's response for a "${input.exerciseType}" exercise.
-    The user's native language is "${input.nativeLanguage}" and they are learning "${input.targetLanguage}".
+ const userSentence =
+  typeof input.userResponse?.sentence === "string"
+    ? input.userResponse.sentence.trim()
+    : "";
 
-    Exercise Details:
-    - Exercise Type: ${input.exerciseType}
-    - Expected Word: "${input.expected.word}"
-    - Expected Translation: "${input.expected.translation}"
-    - Exercise Payload: ${JSON.stringify(input.exercisePayload)}
+const constraints = input.exercisePayload?.constraints ?? {};
 
-    User's Response:
-    - User Input: ${JSON.stringify(input.userResponse)}
+const prompt = `
+You are an AI assistant specialized in evaluating language learning exercises.
 
-    Provide a verdict, a brief feedback, and a score (0 to 1) based on correctness.
-    - "CORRECT": The response is perfectly correct.
-    - "INCORRECT": The response is wrong.
-    - "UNKNOWN": If you cannot confidently determine correctness (e.g., for creative responses where multiple answers are valid).
+Evaluate a CREATE_SENTENCE exercise.
 
-    Return your response as a JSON object with the following structure:
-    \`\`\`json
+Student profile:
+- Native language: "${input.nativeLanguage}"
+- Target language: "${input.targetLanguage}"
+
+Exercise requirements:
+- Required word: "${input.expected.word}"
+- Translation/reference meaning: "${input.expected.translation}"
+- Minimum words: ${constraints.minWords ?? 0}
+- Must include the required word: ${constraints.mustIncludeWord === true ? "yes" : "no"}
+- Must avoid the native language: ${constraints.forbidNativeLanguage === true ? "yes" : "no"}
+
+Student sentence:
+"${userSentence}"
+
+Evaluation rules:
+1. Check whether the sentence is written predominantly in the target language.
+2. Check whether it contains the required word, allowing normal capitalization differences.
+3. Check whether it has at least the requested minimum number of words.
+4. Check whether the required word is used in a meaningful and grammatically acceptable way.
+5. Minor punctuation, capitalization, or non-critical grammar mistakes can receive a partial score.
+6. Do not require the sentence to match a predefined sentence exactly. Creative but valid sentences are allowed.
+
+Verdict rules:
+- "CORRECT": The sentence fulfills all requirements perfectly.
+- "PARTIAL": The sentence fulfills most requirements but has minor issues (e.g., small grammar error, slightly awkward phrasing).
+- "INCORRECT": The sentence does not fulfill an essential requirement, has an invalid use of the word, or is not understandable.
+- "UNKNOWN": Use only when the sentence may be valid but cannot be assessed confidently.
+
+Feedback rules:
+- Write concise, encouraging feedback in the student's native language: "${input.nativeLanguage}".
+- Explain what was correct or what needs improvement.
+- If the sentence is not perfectly correct, provide a 'correctedSentence' field with a suggested corrected version.
+- If there are specific issues, list them in the 'issues' array. Each issue should have a 'type' (grammar, spelling, vocabulary, meaning, other) and an 'explanation' in the student's native language.
+
+Return only valid JSON, without Markdown fences:
+
+{
+  "verdict": "CORRECT" | "PARTIAL" | "INCORRECT" | "UNKNOWN",
+  "feedback": "string",
+  "score": 0 | 0.5 | 1,
+  "correctedSentence"?: "string",
+  "issues"?: [
     {
-      "verdict": "CORRECT" | "INCORRECT" | "UNKNOWN",
-      "feedback": "string",
-      "score": 0 | 0.5 | 1
+      "type": "grammar" | "spelling" | "vocabulary" | "meaning" | "other",
+      "explanation": "string"
     }
-    \`\`\`
-    `;
-
+  ]
+}
+`;
   // ✅ Usar a função resiliente para chamar a Gemini
   const geminiResult = await callGeminiWithResilience(
     prompt,

@@ -6,10 +6,13 @@
 
     "rootDir": "./src",
     "outDir": "./dist",
-
+    "types": ["jest"], // <-- ADICIONE ESTA LINHA para que o TypeScript reconheça 'describe', 'it', 'expect'
+    "allowImportingTsExtensions": true, // <-- ADICIONE ESTA LINHA para permitir importar .ts
+    "noEmit": true, // <-- ADICIONE ESTA LINHA para que o TypeScript não gere arquivos .js ao verificar tipos
     "strict": true,
+
     "skipLibCheck": true,
-    "types": ["node"]
+     "isolatedModules": true // <-- ADICIONE ESTA LINHA
   },
-  "include": ["src"]
+  "include": ["src/**/*.ts", "src/**/*.test.ts"], // <-- ATUALIZE ESTA LINHA para incluir os arquivos de teste
 }
