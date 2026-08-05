@@ -1,5 +1,6 @@
 import React from 'react';
 import { Tabs } from 'expo-router';
+
 import CustomTabBar from '@/src/components/layout/CustomTabBar';
 import HomeHeader from '@/src/components/layout/HomeHeader';
 
@@ -15,27 +16,30 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Vocabulário',
+          title: 'Início',
           headerShown: true,
-          header: () => <HomeHeader userName="Lucas" />,
+          header: () => <HomeHeader />,
         }}
       />
+
       <Tabs.Screen
-        name="favorites"
+        name="study"
         options={{
-          title: 'Favoritos',
+          title: 'Estudar',
         }}
       />
+
       <Tabs.Screen
-        name="collections"
+        name="reviews"
         options={{
-          title: 'Coleções',
+          title: 'Revisões',
         }}
       />
+
       <Tabs.Screen
-        name="settings"
+        name="progress"
         options={{
-          title: 'Configurações',
+          title: 'Progresso',
         }}
       />
     </Tabs>

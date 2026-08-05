@@ -19,9 +19,13 @@ import MyVocabsSection from './components/MyVocabsSection';
 import VocabListsSection from './components/VocabListsSection';
 import { fetchHomeData } from './services/homeService';
 import { VocabCard, VocabList } from './types';
+import { useProfile } from '@/src/contexts/ProfileContext';
+import HomeHeader from '@/src/components/layout/HomeHeader';
+
 
 export default function HomeScreen() {
   const router = useRouter();
+  const { activeLanguage, isLoadingProfile } = useProfile();
 
   const [vocabs, setVocabs] = useState<VocabCard[]>([]);
   const [lists, setLists] = useState<VocabList[]>([]);
@@ -32,32 +36,49 @@ export default function HomeScreen() {
   // Evita duplicar o load: um no mount + outro no primeiro focus
   const didInitialLoadRef = useRef(false);
 
-  const loadHome = useCallback(async (isRefresh = false) => {
-    try {
-      if (isRefresh) setRefreshing(true);
-      else setLoading(true);
+const loadHome = useCallback(async (isRefresh = false) => {
+  /**
+   * Enquanto o perfil ainda carrega, ainda não sabemos qual idioma está ativo.
+   * Evita uma chamada de Home em um contexto potencialmente antigo.
+   */
+  if (isLoadingProfile) {
+    return;
+  }
 
-      setError(null);
+  try {
+    if (isRefresh) setRefreshing(true);
+    else setLoading(true);
 
-      const data = await fetchHomeData();
-      setVocabs(data.vocabs);
-      setLists(data.lists);
-    } catch (err: any) {
-      console.error('Erro ao carregar Home:', err?.response?.data || err?.message);
-      setError('Não foi possível carregar os dados da Home.');
-    } finally {
-      setLoading(false);
-      setRefreshing(false);
-    }
-  }, []);
+    setError(null);
+
+    const data = await fetchHomeData();
+
+    setVocabs(data.vocabs);
+    setLists(data.lists);
+  } catch (err: any) {
+    console.error(
+      'Erro ao carregar Home:',
+      err?.response?.data || err?.message
+    );
+
+    setError('Não foi possível carregar os dados da Home.');
+  } finally {
+    setLoading(false);
+    setRefreshing(false);
+  }
+}, [isLoadingProfile, activeLanguage?.id]);
 
   // Primeiro carregamento
   useEffect(() => {
-    (async () => {
-      await loadHome(false);
-      didInitialLoadRef.current = true;
-    })();
-  }, [loadHome]);
+  if (isLoadingProfile) {
+    return;
+  }
+
+  (async () => {
+    await loadHome(false);
+    didInitialLoadRef.current = true;
+  })();
+}, [isLoadingProfile, loadHome]);
 
   // Recarrega sempre que voltar para a Home (ex: depois de criar vocab/lista)
   useFocusEffect(

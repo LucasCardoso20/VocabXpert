@@ -198,12 +198,51 @@ function normalizeWordOrderToken(value: string) {
     .replace(/\s+/g, ' ');
 }
 
+function formatNextReviewDate(dateValue: string | null) {
+  if (!dateValue) {
+    return 'A data será definida em breve.';
+  }
+
+  const date = new Date(dateValue);
+
+  if (Number.isNaN(date.getTime())) {
+    return 'Data indisponível.';
+  }
+
+  return date.toLocaleDateString('pt-BR', {
+    day: '2-digit',
+    month: 'long',
+    year: 'numeric',
+  });
+}
+
+function getExerciseDirection(exercise: StudyExercise | null) {
+  if (!exercise || typeof exercise.payload !== 'object' || !exercise.payload) {
+    return null;
+  }
+
+  const payload = exercise.payload as { direction?: string };
+
+  return payload.direction ?? null;
+}
+
+function getDirectionLabel(direction: string | null) {
+  if (direction === 'WORD_TO_TRANSLATION') {
+    return 'Palavra → Tradução';
+  }
+
+  if (direction === 'TRANSLATION_TO_WORD') {
+    return 'Tradução → Palavra';
+  }
+
+  return null;
+}
+
 export default function ExerciseScreen() {
   const router = useRouter();
   const params = useLocalSearchParams<{
     sessionId?: string | string[];
   }>();
-
   const sessionId = Array.isArray(params.sessionId)
     ? params.sessionId[0]
     : params.sessionId;
@@ -216,6 +255,8 @@ export default function ExerciseScreen() {
   const [exercise, setExercise] = useState<StudyExercise | null>(null);
   const [attempt, setAttempt] = useState<SubmitAttemptResponse | null>(null);
   const [finished, setFinished] = useState(false);
+
+  const directionLabel = getDirectionLabel(getExerciseDirection(exercise));
 
   const [selectedOptionIndex, setSelectedOptionIndex] = useState<number | null>(
     null
@@ -237,6 +278,7 @@ const [matchSelections, setMatchSelections] = useState<MatchSelection[]>([]);
 
   const [flashcardAnswer, setFlashcardAnswer] = useState('');
 const [dictationAnswer, setDictationAnswer] = useState('');
+const [dictationRate, setDictationRate] = useState<0.62 | 0.82>(0.82);
 const [createdSentence, setCreatedSentence] = useState('');
   const loadInitialExercise = useCallback(async () => {
     if (!sessionId) {
@@ -377,36 +419,43 @@ const createSentencePayload = useMemo<CreateSentencePayload | null>(() => {
   return exercise.payload as CreateSentencePayload;
 }, [exercise]);
 
+const speakDictation = useCallback(
+  async (rate: number) => {
+    const text = dictationPayload?.textToDictate?.trim();
+    const locale = dictationPayload?.locale?.trim();
+
+    if (!text) {
+      setError('Não foi possível carregar o texto deste ditado.');
+      return;
+    }
+
+    if (!locale) {
+      setError(
+        'Este ditado não possui um idioma configurado para reprodução.'
+      );
+      return;
+    }
+
+    try {
+      await Speech.stop();
+
+      Speech.speak(text, {
+        language: locale,
+        rate,
+        pitch: 1,
+      });
+    } catch (err) {
+      console.warn('[ExerciseScreen] dictation speech error:', err);
+
+      setError('Não foi possível reproduzir o áudio do ditado.');
+    }
+  },
+  [dictationPayload]
+);
+
 const playDictation = useCallback(async () => {
-  const text = dictationPayload?.textToDictate?.trim();
-  const locale = dictationPayload?.locale?.trim();
-
-  if (!text) {
-    setError('Não foi possível carregar o texto deste ditado.');
-    return;
-  }
-
-  if (!locale) {
-    setError(
-      'Este ditado não possui um idioma configurado para reprodução.'
-    );
-    return;
-  }
-
-  try {
-    await Speech.stop();
-
-    Speech.speak(text, {
-      language: locale,
-      rate: 0.82,
-      pitch: 1,
-    });
-  } catch (err) {
-    console.warn('[ExerciseScreen] dictation speech error:', err);
-
-    setError('Não foi possível reproduzir o áudio do ditado.');
-  }
-}, [dictationPayload]);
+  await speakDictation(dictationRate);
+}, [dictationRate, speakDictation]);
 
 useEffect(() => {
   if (exercise?.type !== 'DICTATION') {
@@ -414,18 +463,20 @@ useEffect(() => {
   }
 
   setDictationAnswer('');
+  setDictationRate(0.82);
 
   /**
-   * Pequeno atraso para a tela terminar de montar antes da fala.
+   * O áudio automático sempre inicia em velocidade normal.
+   * Este efeito só roda quando um NOVO exercício de ditado é aberto.
    */
   const timeoutId = setTimeout(() => {
-    void playDictation();
+    void speakDictation(0.82);
   }, 250);
 
   return () => {
     clearTimeout(timeoutId);
   };
-}, [exercise?.id, exercise?.type, playDictation]);
+}, [exercise?.id, exercise?.type, speakDictation]);
 
 useEffect(() => {
   return () => {
@@ -891,8 +942,17 @@ const unsupported =
           <Ionicons name="close" size={22} color={colors.text} />
         </Pressable>
 
-        <Text style={styles.headerTitle}>{getExerciseLabel(exercise.type)}</Text>
+          <View style={styles.headerTitleContainer}>
+            <Text style={styles.headerTitle}>
+              {getExerciseLabel(exercise.type)}
+            </Text>
 
+            {!!directionLabel && (
+              <Text style={styles.headerDirection}>
+                {directionLabel}
+              </Text>
+            )}
+          </View>
         <View style={{ width: 40 }} />
       </View>
 
@@ -1036,44 +1096,102 @@ const unsupported =
         Ouça a frase com atenção e escreva exatamente o que você escutou.
       </Text>
 
-      <Pressable
-        style={styles.dictationReplayButton}
-        onPress={() => {
-          void playDictation();
-        }}
-        disabled={submitting || !!attempt}
+                    <View style={styles.dictationActions}>
+                      <View style={styles.dictationSpeedSection}>
+  <Text style={styles.dictationSpeedLabel}>Velocidade do áudio</Text>
+
+  <View style={styles.dictationSpeedOptions}>
+    <Pressable
+      style={[
+        styles.dictationSpeedButton,
+        dictationRate === 0.82 && styles.dictationSpeedButtonActive,
+        (submitting || !!attempt) && styles.dictationSpeedButtonDisabled,
+      ]}
+      onPress={() => setDictationRate(0.82)}
+      disabled={submitting || !!attempt}
+    >
+      <Ionicons
+        name="play-outline"
+        size={15}
+        color={dictationRate === 0.82 ? '#FFFFFF' : colors.primary}
+      />
+
+      <Text
+        style={[
+          styles.dictationSpeedButtonText,
+          dictationRate === 0.82 && styles.dictationSpeedButtonTextActive,
+        ]}
       >
-        <Pressable
-  style={[
-    styles.dictationSkipButton,
-    (submitting || loadingNext || !!attempt) &&
-      styles.dictationSkipButtonDisabled,
-  ]}
-  onPress={() => {
-    void skipCurrentExercise();
-  }}
-  disabled={submitting || loadingNext || !!attempt}
->
-  <Ionicons
-    name="play-skip-forward-outline"
-    size={18}
-    color={colors.muted}
-  />
+        Normal
+      </Text>
+    </Pressable>
 
-  <Text style={styles.dictationSkipButtonText}>
-    {loadingNext ? 'Pulando...' : 'Pular este exercício'}
-  </Text>
-</Pressable>
-        <Ionicons
-          name="refresh-outline"
-          size={18}
-          color={colors.primary}
-        />
+    <Pressable
+      style={[
+        styles.dictationSpeedButton,
+        dictationRate === 0.62 && styles.dictationSpeedButtonActive,
+        (submitting || !!attempt) && styles.dictationSpeedButtonDisabled,
+      ]}
+      onPress={() => setDictationRate(0.62)}
+      disabled={submitting || !!attempt}
+    >
+      <Ionicons
+        name="speedometer-outline"
+        size={15}
+        color={dictationRate === 0.62 ? '#FFFFFF' : colors.primary}
+      />
 
-        <Text style={styles.dictationReplayButtonText}>
-          Ouvir novamente
-        </Text>
-      </Pressable>
+      <Text
+        style={[
+          styles.dictationSpeedButtonText,
+          dictationRate === 0.62 && styles.dictationSpeedButtonTextActive,
+        ]}
+      >
+        Mais devagar
+      </Text>
+    </Pressable>
+  </View>
+</View>
+  <Pressable
+    style={styles.dictationReplayButton}
+    onPress={() => {
+      void playDictation();
+    }}
+    disabled={submitting || !!attempt}
+  >
+    <Ionicons
+      name="refresh-outline"
+      size={18}
+      color={colors.primary}
+    />
+
+    <Text style={styles.dictationReplayButtonText}>
+      Ouvir novamente
+    </Text>
+  </Pressable>
+
+  <Pressable
+    style={[
+      styles.dictationSkipButton,
+      (submitting || loadingNext || !!attempt) &&
+        styles.dictationSkipButtonDisabled,
+    ]}
+    onPress={() => {
+      void skipCurrentExercise();
+    }}
+    disabled={submitting || loadingNext || !!attempt}
+  >
+    <Ionicons
+      name="play-skip-forward-outline"
+      size={18}
+      color={colors.muted}
+    />
+
+    <Text style={styles.dictationSkipButtonText}>
+      {loadingNext ? 'Pulando...' : 'Pular este exercício'}
+    </Text>
+  </Pressable>
+</View>
     </View>
 
     {!!dictationPayload?.hintTranslation && (
@@ -1412,6 +1530,30 @@ const unsupported =
                 <Text style={styles.feedbackMeta}>
                   Pontuação: {Math.round(attempt.score * 100)}%
                 </Text>
+                <View style={styles.reviewSchedule}>
+  <Ionicons
+    name={
+      attempt.outcome === 'KNOWN'
+        ? 'calendar-outline'
+        : 'refresh-outline'
+    }
+    size={17}
+    color={attempt.outcome === 'KNOWN' ? '#166534' : '#92400E'}
+  />
+
+  <Text
+    style={[
+      styles.reviewScheduleText,
+      attempt.outcome === 'KNOWN'
+        ? styles.reviewScheduleKnown
+        : styles.reviewScheduleUnknown,
+    ]}
+  >
+    {attempt.outcome === 'KNOWN'
+      ? `Próxima revisão: ${formatNextReviewDate(attempt.nextDueAt)}`
+      : 'Esta palavra voltará em breve para reforçar seu aprendizado.'}
+  </Text>
+</View>
 
                 {exercise.type === 'MATCH' &&
   attempt.verdict !== 'CORRECT' &&
@@ -1694,13 +1836,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.surface,
     borderWidth: 1,
     borderColor: colors.border,
-  },
-  headerTitle: {
-    flex: 1,
-    textAlign: 'center',
-    color: colors.text,
-    fontFamily: 'DM Sans Bold',
-    fontSize: 15,
   },
 
   exerciseCard: {
@@ -2522,5 +2657,100 @@ createSentenceIssueText: {
   fontFamily: 'DM Sans',
   fontSize: 12.5,
   lineHeight: 18,
+},
+dictationActions: {
+  width: '100%',
+  marginTop: spacing.s3,
+  alignItems: 'center',
+},
+
+reviewSchedule: {
+  flexDirection: 'row',
+  alignItems: 'flex-start',
+  gap: spacing.s2,
+  marginTop: spacing.s3,
+  paddingTop: spacing.s3,
+  borderTopWidth: 1,
+  borderTopColor: 'rgba(13, 27, 66, 0.10)',
+},
+reviewScheduleText: {
+  flex: 1,
+  fontFamily: 'DM Sans SemiBold',
+  fontSize: 12,
+  lineHeight: 18,
+},
+reviewScheduleKnown: {
+  color: '#166534',
+},
+reviewScheduleUnknown: {
+  color: '#92400E',
+},
+headerTitleContainer: {
+  flex: 1,
+  alignItems: 'center',
+},
+headerTitle: {
+  color: colors.text,
+  fontFamily: 'DM Sans Bold',
+  fontSize: 15,
+  textAlign: 'center',
+},
+headerDirection: {
+  marginTop: 1,
+  color: colors.muted,
+  fontFamily: 'DM Sans Medium',
+  fontSize: 10,
+},
+
+dictationSpeedSection: {
+  width: '100%',
+  marginTop: spacing.s3,
+},
+
+dictationSpeedLabel: {
+  color: colors.muted,
+  fontFamily: 'DM Sans SemiBold',
+  fontSize: 12,
+  textAlign: 'center',
+},
+
+dictationSpeedOptions: {
+  flexDirection: 'row',
+  justifyContent: 'center',
+  flexWrap: 'wrap',
+  gap: spacing.s2,
+  marginTop: spacing.s2,
+},
+
+dictationSpeedButton: {
+  minHeight: 38,
+  flexDirection: 'row',
+  alignItems: 'center',
+  justifyContent: 'center',
+  gap: 6,
+  paddingHorizontal: spacing.s3,
+  borderWidth: 1,
+  borderColor: colors.primary,
+  borderRadius: radio.full,
+  backgroundColor: '#FFFFFF',
+},
+
+dictationSpeedButtonActive: {
+  backgroundColor: colors.primary,
+  borderColor: colors.primary,
+},
+
+dictationSpeedButtonDisabled: {
+  opacity: 0.55,
+},
+
+dictationSpeedButtonText: {
+  color: colors.primary,
+  fontFamily: 'DM Sans SemiBold',
+  fontSize: 12,
+},
+
+dictationSpeedButtonTextActive: {
+  color: '#FFFFFF',
 },
 });

@@ -1,4 +1,5 @@
 export type * from './models/User.js';
+export type * from './models/UserLearningLanguage.js';
 export type * from './models/Interest.js';
 export type * from './models/UserInterest.js';
 export type * from './models/VocabList.js';

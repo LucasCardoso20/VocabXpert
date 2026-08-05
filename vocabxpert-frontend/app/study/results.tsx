@@ -257,9 +257,16 @@ export default function StudyResultsScreen() {
 
         <Pressable
           style={styles.primaryButton}
+          onPress={() => router.replace('/reviews')}
+        >
+          <Text style={styles.primaryButtonText}>Ver minhas revisões</Text>
+        </Pressable>
+
+        <Pressable
+          style={styles.outlineButton}
           onPress={() => router.replace('/study')}
         >
-          <Text style={styles.primaryButtonText}>Estudar novamente</Text>
+          <Text style={styles.outlineButtonText}>Estudar novamente</Text>
         </Pressable>
 
         <Pressable
@@ -468,4 +475,20 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     textAlign: 'center',
   },
+  outlineButton: {
+  height: 52,
+  alignItems: 'center',
+  justifyContent: 'center',
+  marginTop: spacing.s2,
+  borderWidth: 1,
+  borderColor: colors.primary,
+  borderRadius: radio.full,
+  backgroundColor: colors.surface,
+},
+
+outlineButtonText: {
+  color: colors.primary,
+  fontFamily: 'DM Sans SemiBold',
+  fontSize: 15,
+},
 });

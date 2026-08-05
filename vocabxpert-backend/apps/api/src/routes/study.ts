@@ -18,6 +18,8 @@ import { evaluateExerciseDeterministic } from "../services/study/evaluateExercis
 import { validateAttemptResponse } from "../services/study/validateAttemptResponse.js";
 import { ZodError } from "zod";
 import { createNextExerciseForSession } from "../services/study/nextExercise.js";
+import { getActiveLearningLanguage } from "../lib/active-learning-language.js";
+
 
 let studyConfigCache: any = null;
 const STUDY_CONFIG_CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutos de TTL (Time To Live)
@@ -62,9 +64,24 @@ export const studyRoutes: FastifyPluginAsync = async (app) => {
   app.post("/study/session", async (req, reply) => {
     const body = CreateStudySessionBodySchema.parse(req.body);
 
+    const activeLanguage = await getActiveLearningLanguage(req.userId);
+
+    if (!activeLanguage) {
+      return reply.code(409).send({
+        ok: false,
+        error: "NO_ACTIVE_LEARNING_LANGUAGE",
+      });
+    }
+
     const list = await prisma.vocabList.findFirst({
-      where: { id: body.listId, userId: req.userId },
-      select: { id: true },
+      where: {
+        id: body.listId,
+        userId: req.userId,
+        learningLanguageId: activeLanguage.id,
+      },
+      select: {
+        id: true,
+      },
     });
     if (!list) return reply.status(404).send({ ok: false, error: "LIST_NOT_FOUND" });
 
@@ -108,7 +125,14 @@ export const studyRoutes: FastifyPluginAsync = async (app) => {
   // Obter detalhes de uma sessão de estudo
   app.get("/study/sessions/:sessionId", async (req, reply) => {
     const { sessionId } = req.params as { sessionId: string };
+    const activeLanguage = await getActiveLearningLanguage(req.userId);
 
+    if (!activeLanguage) {
+      return reply.code(409).send({
+        ok: false,
+        error: "NO_ACTIVE_LEARNING_LANGUAGE",
+      });
+    }
     const session = await prisma.studySession.findFirst({
       where: { id: sessionId, userId: req.userId },
       select: {
@@ -126,6 +150,25 @@ export const studyRoutes: FastifyPluginAsync = async (app) => {
     });
 
     if (!session) return reply.status(404).send({ ok: false, error: "SESSION_NOT_FOUND" });
+
+    const list = await prisma.vocabList.findFirst({
+      where: {
+        id: session.listId,
+        userId: req.userId,
+        learningLanguageId: activeLanguage.id,
+      },
+      select: {
+        id: true,
+      },
+    });
+
+    if (!list) {
+      return reply.status(404).send({
+        ok: false,
+        error: "SESSION_NOT_FOUND",
+      });
+    }
+
     console.info({ sessionId: session.id, finishedAt: session.finishedAt }, "GET /study/sessions/:sessionId returned.");
 
     return { ok: true, session };
@@ -134,7 +177,50 @@ export const studyRoutes: FastifyPluginAsync = async (app) => {
   // Próximo exercício da sessão
   app.get("/study/sessions/:sessionId/next", async (req, reply) => {
     const { sessionId } = req.params as { sessionId: string };
+    const activeLanguage = await getActiveLearningLanguage(req.userId);
 
+    if (!activeLanguage) {
+      return reply.code(409).send({
+        ok: false,
+        error: "NO_ACTIVE_LEARNING_LANGUAGE",
+      });
+    }
+
+    const session = await prisma.studySession.findFirst({
+      where: {
+        id: sessionId,
+        userId: req.userId,
+      },
+      select: {
+        id: true,
+        listId: true,
+      },
+    });
+
+    if (!session) {
+      return reply.status(404).send({
+        ok: false,
+        error: "SESSION_NOT_FOUND",
+      });
+    }
+
+    const list = await prisma.vocabList.findFirst({
+      where: {
+        id: session.listId,
+        userId: req.userId,
+        learningLanguageId: activeLanguage.id,
+      },
+      select: {
+        id: true,
+      },
+    });
+
+    if (!list) {
+      return reply.status(404).send({
+        ok: false,
+        error: "SESSION_NOT_FOUND",
+      });
+    }
     const r = await createNextExerciseForSession({ sessionId, userId: req.userId });
 
     if (r.kind === "NOT_FOUND") return reply.status(404).send({ ok: false, error: "SESSION_NOT_FOUND" });
@@ -145,13 +231,42 @@ export const studyRoutes: FastifyPluginAsync = async (app) => {
   // Finalizar sessão manualmente
   app.post("/study/sessions/:sessionId/finish", async (req, reply) => {
     const { sessionId } = req.params as { sessionId: string };
+    const activeLanguage = await getActiveLearningLanguage(req.userId);
 
+    if (!activeLanguage) {
+      return reply.code(409).send({
+        ok: false,
+        error: "NO_ACTIVE_LEARNING_LANGUAGE",
+      });
+    }
     const session = await prisma.studySession.findFirst({
-      where: { id: sessionId, userId: req.userId },
-      select: { id: true },
+      where: {
+        id: sessionId,
+        userId: req.userId,
+      },
+      select: {
+        id: true,
+        listId: true,
+      },
     });
     if (!session) return reply.status(404).send({ ok: false, error: "SESSION_NOT_FOUND" });
+    const list = await prisma.vocabList.findFirst({
+      where: {
+        id: session.listId,
+        userId: req.userId,
+        learningLanguageId: activeLanguage.id,
+      },
+      select: {
+        id: true,
+      },
+    });
 
+    if (!list) {
+      return reply.status(404).send({
+        ok: false,
+        error: "SESSION_NOT_FOUND",
+      });
+    }
     await prisma.studySession.update({
       where: { id: sessionId },
       data: { finishedAt: new Date() },
@@ -166,6 +281,15 @@ export const studyRoutes: FastifyPluginAsync = async (app) => {
       const { exerciseId } = req.params as { exerciseId: string };
       const body = SubmitAttemptBodySchema.parse(req.body);
 
+      const activeLanguage = await getActiveLearningLanguage(req.userId);
+
+      if (!activeLanguage) {
+        return reply.code(409).send({
+          ok: false,
+          error: "NO_ACTIVE_LEARNING_LANGUAGE",
+        });
+      }
+
       const exercise = await prisma.studyExercise.findFirst({
         where: { id: exerciseId, userId: req.userId },
         select: {
@@ -174,10 +298,40 @@ export const studyRoutes: FastifyPluginAsync = async (app) => {
           type: true,
           payload: true,
           vocab: { select: { word: true, translation: true } },
-          session: { select: { direction: true } },
+          session: {
+            select: {
+              direction: true,
+              listId: true,
+            },
+          },
         },
       });
       if (!exercise) return reply.status(404).send({ ok: false, error: "EXERCISE_NOT_FOUND" });
+      
+      if (!exercise.session) {
+        return reply.status(404).send({
+          ok: false,
+          error: "EXERCISE_NOT_FOUND",
+        });
+      }
+
+      const list = await prisma.vocabList.findFirst({
+        where: {
+          id: exercise.session.listId,
+          userId: req.userId,
+          learningLanguageId: activeLanguage.id,
+        },
+        select: {
+          id: true,
+        },
+      });
+
+      if (!list) {
+        return reply.status(404).send({
+          ok: false,
+          error: "EXERCISE_NOT_FOUND",
+        });
+      }
 
       let responseValidated: any;
       try {
@@ -195,9 +349,13 @@ export const studyRoutes: FastifyPluginAsync = async (app) => {
       }
 
       const user = await prisma.user.findUnique({
-        where: { id: req.userId },
-        select: { nativeLanguage: true, targetLanguage: true },
-      });
+      where: {
+        id: req.userId,
+      },
+      select: {
+        nativeLanguage: true,
+      },
+    });
       if (!user) return reply.status(404).send({ ok: false, error: "USER_NOT_FOUND" });
 
       const expected = {
@@ -228,7 +386,7 @@ export const studyRoutes: FastifyPluginAsync = async (app) => {
       } else if (exercise.type === "CREATE_SENTENCE") {
         ai = await evaluateExerciseViaGemini({
           nativeLanguage: user.nativeLanguage,
-          targetLanguage: user.targetLanguage,
+          targetLanguage: activeLanguage.language,
           exerciseType: exercise.type,
           exercisePayload: exercise.payload,
           userResponse: responseValidated,
@@ -303,10 +461,23 @@ export const studyRoutes: FastifyPluginAsync = async (app) => {
 
   app.get("/study/stats", async (req, reply) => {
     const q = StudyStatsQuerySchema.parse(req.query);
+    const activeLanguage = await getActiveLearningLanguage(req.userId);
 
+    if (!activeLanguage) {
+      return reply.code(409).send({
+        ok: false,
+        error: "NO_ACTIVE_LEARNING_LANGUAGE",
+      });
+    }
     const list = await prisma.vocabList.findFirst({
-      where: { id: q.listId, userId: req.userId },
-      select: { id: true },
+      where: {
+        id: q.listId,
+        userId: req.userId,
+        learningLanguageId: activeLanguage.id,
+      },
+      select: {
+        id: true,
+      },
     });
     if (!list) return reply.status(404).send({ ok: false, error: "LIST_NOT_FOUND" });
 

@@ -27,6 +27,11 @@ export { Prisma };
  */
 export type User = Prisma.UserModel;
 /**
+ * Model UserLearningLanguage
+ *
+ */
+export type UserLearningLanguage = Prisma.UserLearningLanguageModel;
+/**
  * Model Interest
  *
  */

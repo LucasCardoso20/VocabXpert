@@ -129,6 +129,17 @@ export interface PrismaClient<in LogOpts extends Prisma.LogLevel = never, in out
         omit: OmitOpts;
     }>;
     /**
+     * `prisma.userLearningLanguage`: Exposes CRUD operations for the **UserLearningLanguage** model.
+      * Example usage:
+      * ```ts
+      * // Fetch zero or more UserLearningLanguages
+      * const userLearningLanguages = await prisma.userLearningLanguage.findMany()
+      * ```
+      */
+    get userLearningLanguage(): Prisma.UserLearningLanguageDelegate<ExtArgs, {
+        omit: OmitOpts;
+    }>;
+    /**
      * `prisma.interest`: Exposes CRUD operations for the **Interest** model.
       * Example usage:
       * ```ts

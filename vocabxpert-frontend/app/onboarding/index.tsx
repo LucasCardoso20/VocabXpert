@@ -86,15 +86,20 @@ useEffect(() => {
       setLoading(true);
       try {
         // ✅ AQUI É ONDE ENVIAMOS OS DADOS PARA O BACKEND
-        const response = await apiClient.post('/onboarding', {
-          userName: 'Usuário Anônimo', // ✅ Você pode adicionar um campo de nome na tela 1 ou 3 se quiser
-          nativeLanguage: onboardingData.nativeLanguage,
-          targetLanguage: onboardingData.targetLanguage,
-          level: onboardingData.level,
-          interests: onboardingData.interests, // ✅ Enviando como array, conforme o backend espera
-          customInterests: [], // ✅ Se você tiver custom interests separados, envie aqui
-          timeout: 90000, // 90 segundos para garantir que o backend tenha tempo suficiente para processar
-        });
+        const response = await apiClient.post(
+          '/onboarding',
+          {
+            userName: 'Usuário Anônimo',
+            nativeLanguage: onboardingData.nativeLanguage,
+            targetLanguage: onboardingData.targetLanguage,
+            level: onboardingData.level,
+            interests: onboardingData.interests,
+            customInterests: [],
+          },
+          {
+            timeout: 90000,
+          }
+        );
 
         const { userId, defaultListId } = response.data;
 

@@ -1,35 +1,69 @@
 import React from 'react';
-import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
-import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
+import type { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
 import { colors } from '../../theme/colors';
-import { spacing } from '../../theme/spacing';
 import { radio } from '../../theme/radio';
+import { spacing } from '../../theme/spacing';
 import { getShadow } from '../../theme/shadows';
 
-const routeConfig: Record<
-  string,
-  { label: string; icon: keyof typeof Ionicons.glyphMap; activeIcon: keyof typeof Ionicons.glyphMap }
-> = {
-  index: { label: 'Vocabulário', icon: 'home-outline', activeIcon: 'home' },
-  favorites: { label: 'Favoritos', icon: 'heart-outline', activeIcon: 'heart' },
-  collections: { label: 'Coleções', icon: 'grid-outline', activeIcon: 'grid' },
-  settings: { label: 'Configurações', icon: 'settings-outline', activeIcon: 'settings' },
+type TabConfig = {
+  label: string;
+  icon: keyof typeof Ionicons.glyphMap;
+  activeIcon: keyof typeof Ionicons.glyphMap;
 };
 
-export default function CustomTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
+const routeConfig: Record<string, TabConfig> = {
+  index: {
+    label: 'Início',
+    icon: 'home-outline',
+    activeIcon: 'home',
+  },
+
+  study: {
+    label: 'Estudar',
+    icon: 'play-circle-outline',
+    activeIcon: 'play-circle',
+  },
+
+  reviews: {
+    label: 'Revisões',
+    icon: 'calendar-outline',
+    activeIcon: 'calendar',
+  },
+
+  progress: {
+    label: 'Progresso',
+    icon: 'stats-chart-outline',
+    activeIcon: 'stats-chart',
+  },
+};
+
+export default function CustomTabBar({
+  state,
+  navigation,
+}: BottomTabBarProps) {
   const insets = useSafeAreaInsets();
 
   return (
-    <View style={[styles.wrapper, { paddingBottom: insets.bottom + 12 }]}>
-      <View style={[styles.inner, getShadow('sh3')]}>
+    <View style={[styles.wrapper, { paddingBottom: insets.bottom + 10 }]}>
+      <View style={[styles.bar, getShadow('sh3')]}>
         {state.routes.map((route, index) => {
-          const isFocused = state.index === index;
-          const cfg = routeConfig[route.name];
-          if (!cfg) return null;
+          const config = routeConfig[route.name];
 
-          const onPress = () => {
+          /**
+           * Segurança extra: se por acidente uma rota que não pertence
+           * ao menu estiver registrada no navigator, ela não aparece.
+           */
+          if (!config) {
+            return null;
+          }
+
+          const isFocused = state.index === index;
+
+          const handlePress = () => {
             const event = navigation.emit({
               type: 'tabPress',
               target: route.key,
@@ -42,21 +76,37 @@ export default function CustomTabBar({ state, descriptors, navigation }: BottomT
           };
 
           return (
-            <TouchableOpacity
+            <Pressable
               key={route.key}
-              onPress={onPress}
-              activeOpacity={0.8}
-              style={styles.item}
+              style={styles.tab}
+              onPress={handlePress}
+              accessibilityRole="button"
+              accessibilityState={{ selected: isFocused }}
+              accessibilityLabel={config.label}
             >
-              {isFocused ? (
-                <View style={styles.activePill}>
-                  <Ionicons name={cfg.activeIcon} size={18} color="#fff" />
-                  <Text style={styles.activeText}>{cfg.label}</Text>
-                </View>
-              ) : (
-                <Ionicons name={cfg.icon} size={22} color={colors.light} />
-              )}
-            </TouchableOpacity>
+              <View
+                style={[
+                  styles.iconContainer,
+                  isFocused && styles.iconContainerActive,
+                ]}
+              >
+                <Ionicons
+                  name={isFocused ? config.activeIcon : config.icon}
+                  size={20}
+                  color={isFocused ? '#FFFFFF' : colors.light}
+                />
+              </View>
+
+              <Text
+                style={[
+                  styles.label,
+                  isFocused && styles.labelActive,
+                ]}
+                numberOfLines={1}
+              >
+                {config.label}
+              </Text>
+            </Pressable>
           );
         })}
       </View>
@@ -67,39 +117,52 @@ export default function CustomTabBar({ state, descriptors, navigation }: BottomT
 const styles = StyleSheet.create({
   wrapper: {
     position: 'absolute',
-    left: 0,
     right: 0,
     bottom: 0,
-    paddingHorizontal: spacing.s5,
+    left: 0,
+    paddingHorizontal: spacing.s4,
     pointerEvents: 'box-none',
   },
-  inner: {
-    backgroundColor: colors.surface,
-    borderRadius: radio.xl ?? 24,
-    paddingHorizontal: spacing.s3,
-    paddingVertical: spacing.s3,
+
+  bar: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
     alignItems: 'center',
+    justifyContent: 'space-around',
+    paddingHorizontal: spacing.s2,
+    paddingVertical: spacing.s2,
+    borderRadius: radio.xl ?? 24,
+    backgroundColor: colors.surface,
   },
-  item: {
-    minWidth: 44,
-    minHeight: 44,
+
+  tab: {
+    flex: 1,
+    minHeight: 54,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  activePill: {
-    flexDirection: 'row',
+
+  iconContainer: {
+    width: 34,
+    height: 30,
     alignItems: 'center',
-    gap: spacing.s2,
+    justifyContent: 'center',
+    borderRadius: radio.full,
+  },
+
+  iconContainerActive: {
     backgroundColor: colors.primary,
     borderRadius: radio.full,
-    paddingVertical: spacing.s2,
-    paddingHorizontal: spacing.s4,
   },
-  activeText: {
-    color: '#fff',
-    fontSize: 13,
-    fontFamily: 'DM Sans SemiBold',
+
+  label: {
+    marginTop: 3,
+    color: colors.light,
+    fontFamily: 'DM Sans Medium',
+    fontSize: 10,
+  },
+
+  labelActive: {
+    color: colors.primary,
+    fontFamily: 'DM Sans Bold',
   },
 });

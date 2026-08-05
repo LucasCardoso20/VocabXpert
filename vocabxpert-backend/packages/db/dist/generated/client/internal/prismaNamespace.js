@@ -68,6 +68,7 @@ export const JsonNull = runtime.JsonNull;
 export const AnyNull = runtime.AnyNull;
 export const ModelName = {
     User: 'User',
+    UserLearningLanguage: 'UserLearningLanguage',
     Interest: 'Interest',
     UserInterest: 'UserInterest',
     VocabList: 'VocabList',
@@ -93,8 +94,18 @@ export const UserScalarFieldEnum = {
     id: 'id',
     email: 'email',
     passwordHash: 'passwordHash',
+    displayName: 'displayName',
     nativeLanguage: 'nativeLanguage',
     targetLanguage: 'targetLanguage',
+    level: 'level',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    activeLearningLanguageId: 'activeLearningLanguageId'
+};
+export const UserLearningLanguageScalarFieldEnum = {
+    id: 'id',
+    userId: 'userId',
+    language: 'language',
     level: 'level',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -112,6 +123,7 @@ export const VocabListScalarFieldEnum = {
     userId: 'userId',
     name: 'name',
     isDefault: 'isDefault',
+    learningLanguageId: 'learningLanguageId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
 };

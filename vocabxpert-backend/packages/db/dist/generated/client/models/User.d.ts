@@ -15,62 +15,74 @@ export type UserMinAggregateOutputType = {
     id: string | null;
     email: string | null;
     passwordHash: string | null;
+    displayName: string | null;
     nativeLanguage: string | null;
     targetLanguage: string | null;
     level: $Enums.TargetLevel | null;
     createdAt: Date | null;
     updatedAt: Date | null;
+    activeLearningLanguageId: string | null;
 };
 export type UserMaxAggregateOutputType = {
     id: string | null;
     email: string | null;
     passwordHash: string | null;
+    displayName: string | null;
     nativeLanguage: string | null;
     targetLanguage: string | null;
     level: $Enums.TargetLevel | null;
     createdAt: Date | null;
     updatedAt: Date | null;
+    activeLearningLanguageId: string | null;
 };
 export type UserCountAggregateOutputType = {
     id: number;
     email: number;
     passwordHash: number;
+    displayName: number;
     nativeLanguage: number;
     targetLanguage: number;
     level: number;
     createdAt: number;
     updatedAt: number;
+    activeLearningLanguageId: number;
     _all: number;
 };
 export type UserMinAggregateInputType = {
     id?: true;
     email?: true;
     passwordHash?: true;
+    displayName?: true;
     nativeLanguage?: true;
     targetLanguage?: true;
     level?: true;
     createdAt?: true;
     updatedAt?: true;
+    activeLearningLanguageId?: true;
 };
 export type UserMaxAggregateInputType = {
     id?: true;
     email?: true;
     passwordHash?: true;
+    displayName?: true;
     nativeLanguage?: true;
     targetLanguage?: true;
     level?: true;
     createdAt?: true;
     updatedAt?: true;
+    activeLearningLanguageId?: true;
 };
 export type UserCountAggregateInputType = {
     id?: true;
     email?: true;
     passwordHash?: true;
+    displayName?: true;
     nativeLanguage?: true;
     targetLanguage?: true;
     level?: true;
     createdAt?: true;
     updatedAt?: true;
+    activeLearningLanguageId?: true;
     _all?: true;
 };
 export type UserAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -139,11 +151,13 @@ export type UserGroupByOutputType = {
     id: string;
     email: string | null;
     passwordHash: string | null;
+    displayName: string;
     nativeLanguage: string;
     targetLanguage: string;
     level: $Enums.TargetLevel;
     createdAt: Date;
     updatedAt: Date;
+    activeLearningLanguageId: string | null;
     _count: UserCountAggregateOutputType | null;
     _min: UserMinAggregateOutputType | null;
     _max: UserMaxAggregateOutputType | null;
@@ -158,11 +172,13 @@ export type UserWhereInput = {
     id?: Prisma.StringFilter<"User"> | string;
     email?: Prisma.StringNullableFilter<"User"> | string | null;
     passwordHash?: Prisma.StringNullableFilter<"User"> | string | null;
+    displayName?: Prisma.StringFilter<"User"> | string;
     nativeLanguage?: Prisma.StringFilter<"User"> | string;
     targetLanguage?: Prisma.StringFilter<"User"> | string;
     level?: Prisma.EnumTargetLevelFilter<"User"> | $Enums.TargetLevel;
     createdAt?: Prisma.DateTimeFilter<"User"> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string;
+    activeLearningLanguageId?: Prisma.StringNullableFilter<"User"> | string | null;
     interests?: Prisma.UserInterestListRelationFilter;
     lists?: Prisma.VocabListListRelationFilter;
     vocabs?: Prisma.VocabListRelationFilter;
@@ -171,16 +187,20 @@ export type UserWhereInput = {
     studySessions?: Prisma.StudySessionListRelationFilter;
     studyExercises?: Prisma.StudyExerciseListRelationFilter;
     studyAttempts?: Prisma.StudyAttemptListRelationFilter;
+    learningLanguages?: Prisma.UserLearningLanguageListRelationFilter;
+    activeLearningLanguage?: Prisma.XOR<Prisma.UserLearningLanguageNullableScalarRelationFilter, Prisma.UserLearningLanguageWhereInput> | null;
 };
 export type UserOrderByWithRelationInput = {
     id?: Prisma.SortOrder;
     email?: Prisma.SortOrderInput | Prisma.SortOrder;
     passwordHash?: Prisma.SortOrderInput | Prisma.SortOrder;
+    displayName?: Prisma.SortOrder;
     nativeLanguage?: Prisma.SortOrder;
     targetLanguage?: Prisma.SortOrder;
     level?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
+    activeLearningLanguageId?: Prisma.SortOrderInput | Prisma.SortOrder;
     interests?: Prisma.UserInterestOrderByRelationAggregateInput;
     lists?: Prisma.VocabListOrderByRelationAggregateInput;
     vocabs?: Prisma.VocabOrderByRelationAggregateInput;
@@ -189,6 +209,8 @@ export type UserOrderByWithRelationInput = {
     studySessions?: Prisma.StudySessionOrderByRelationAggregateInput;
     studyExercises?: Prisma.StudyExerciseOrderByRelationAggregateInput;
     studyAttempts?: Prisma.StudyAttemptOrderByRelationAggregateInput;
+    learningLanguages?: Prisma.UserLearningLanguageOrderByRelationAggregateInput;
+    activeLearningLanguage?: Prisma.UserLearningLanguageOrderByWithRelationInput;
 };
 export type UserWhereUniqueInput = Prisma.AtLeast<{
     id?: string;
@@ -197,11 +219,13 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
     OR?: Prisma.UserWhereInput[];
     NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[];
     passwordHash?: Prisma.StringNullableFilter<"User"> | string | null;
+    displayName?: Prisma.StringFilter<"User"> | string;
     nativeLanguage?: Prisma.StringFilter<"User"> | string;
     targetLanguage?: Prisma.StringFilter<"User"> | string;
     level?: Prisma.EnumTargetLevelFilter<"User"> | $Enums.TargetLevel;
     createdAt?: Prisma.DateTimeFilter<"User"> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string;
+    activeLearningLanguageId?: Prisma.StringNullableFilter<"User"> | string | null;
     interests?: Prisma.UserInterestListRelationFilter;
     lists?: Prisma.VocabListListRelationFilter;
     vocabs?: Prisma.VocabListRelationFilter;
@@ -210,16 +234,20 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
     studySessions?: Prisma.StudySessionListRelationFilter;
     studyExercises?: Prisma.StudyExerciseListRelationFilter;
     studyAttempts?: Prisma.StudyAttemptListRelationFilter;
+    learningLanguages?: Prisma.UserLearningLanguageListRelationFilter;
+    activeLearningLanguage?: Prisma.XOR<Prisma.UserLearningLanguageNullableScalarRelationFilter, Prisma.UserLearningLanguageWhereInput> | null;
 }, "id" | "email">;
 export type UserOrderByWithAggregationInput = {
     id?: Prisma.SortOrder;
     email?: Prisma.SortOrderInput | Prisma.SortOrder;
     passwordHash?: Prisma.SortOrderInput | Prisma.SortOrder;
+    displayName?: Prisma.SortOrder;
     nativeLanguage?: Prisma.SortOrder;
     targetLanguage?: Prisma.SortOrder;
     level?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
+    activeLearningLanguageId?: Prisma.SortOrderInput | Prisma.SortOrder;
     _count?: Prisma.UserCountOrderByAggregateInput;
     _max?: Prisma.UserMaxOrderByAggregateInput;
     _min?: Prisma.UserMinOrderByAggregateInput;
@@ -231,16 +259,19 @@ export type UserScalarWhereWithAggregatesInput = {
     id?: Prisma.StringWithAggregatesFilter<"User"> | string;
     email?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null;
     passwordHash?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null;
+    displayName?: Prisma.StringWithAggregatesFilter<"User"> | string;
     nativeLanguage?: Prisma.StringWithAggregatesFilter<"User"> | string;
     targetLanguage?: Prisma.StringWithAggregatesFilter<"User"> | string;
     level?: Prisma.EnumTargetLevelWithAggregatesFilter<"User"> | $Enums.TargetLevel;
     createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string;
     updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string;
+    activeLearningLanguageId?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null;
 };
 export type UserCreateInput = {
     id?: string;
     email?: string | null;
     passwordHash?: string | null;
+    displayName?: string;
     nativeLanguage: string;
     targetLanguage: string;
     level: $Enums.TargetLevel;
@@ -254,16 +285,20 @@ export type UserCreateInput = {
     studySessions?: Prisma.StudySessionCreateNestedManyWithoutUserInput;
     studyExercises?: Prisma.StudyExerciseCreateNestedManyWithoutUserInput;
     studyAttempts?: Prisma.StudyAttemptCreateNestedManyWithoutUserInput;
+    learningLanguages?: Prisma.UserLearningLanguageCreateNestedManyWithoutUserInput;
+    activeLearningLanguage?: Prisma.UserLearningLanguageCreateNestedOneWithoutActiveForUsersInput;
 };
 export type UserUncheckedCreateInput = {
     id?: string;
     email?: string | null;
     passwordHash?: string | null;
+    displayName?: string;
     nativeLanguage: string;
     targetLanguage: string;
     level: $Enums.TargetLevel;
     createdAt?: Date | string;
     updatedAt?: Date | string;
+    activeLearningLanguageId?: string | null;
     interests?: Prisma.UserInterestUncheckedCreateNestedManyWithoutUserInput;
     lists?: Prisma.VocabListUncheckedCreateNestedManyWithoutUserInput;
     vocabs?: Prisma.VocabUncheckedCreateNestedManyWithoutUserInput;
@@ -272,11 +307,13 @@ export type UserUncheckedCreateInput = {
     studySessions?: Prisma.StudySessionUncheckedCreateNestedManyWithoutUserInput;
     studyExercises?: Prisma.StudyExerciseUncheckedCreateNestedManyWithoutUserInput;
     studyAttempts?: Prisma.StudyAttemptUncheckedCreateNestedManyWithoutUserInput;
+    learningLanguages?: Prisma.UserLearningLanguageUncheckedCreateNestedManyWithoutUserInput;
 };
 export type UserUpdateInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    displayName?: Prisma.StringFieldUpdateOperationsInput | string;
     nativeLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
     targetLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
     level?: Prisma.EnumTargetLevelFieldUpdateOperationsInput | $Enums.TargetLevel;
@@ -290,16 +327,20 @@ export type UserUpdateInput = {
     studySessions?: Prisma.StudySessionUpdateManyWithoutUserNestedInput;
     studyExercises?: Prisma.StudyExerciseUpdateManyWithoutUserNestedInput;
     studyAttempts?: Prisma.StudyAttemptUpdateManyWithoutUserNestedInput;
+    learningLanguages?: Prisma.UserLearningLanguageUpdateManyWithoutUserNestedInput;
+    activeLearningLanguage?: Prisma.UserLearningLanguageUpdateOneWithoutActiveForUsersNestedInput;
 };
 export type UserUncheckedUpdateInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    displayName?: Prisma.StringFieldUpdateOperationsInput | string;
     nativeLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
     targetLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
     level?: Prisma.EnumTargetLevelFieldUpdateOperationsInput | $Enums.TargetLevel;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    activeLearningLanguageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     interests?: Prisma.UserInterestUncheckedUpdateManyWithoutUserNestedInput;
     lists?: Prisma.VocabListUncheckedUpdateManyWithoutUserNestedInput;
     vocabs?: Prisma.VocabUncheckedUpdateManyWithoutUserNestedInput;
@@ -308,21 +349,25 @@ export type UserUncheckedUpdateInput = {
     studySessions?: Prisma.StudySessionUncheckedUpdateManyWithoutUserNestedInput;
     studyExercises?: Prisma.StudyExerciseUncheckedUpdateManyWithoutUserNestedInput;
     studyAttempts?: Prisma.StudyAttemptUncheckedUpdateManyWithoutUserNestedInput;
+    learningLanguages?: Prisma.UserLearningLanguageUncheckedUpdateManyWithoutUserNestedInput;
 };
 export type UserCreateManyInput = {
     id?: string;
     email?: string | null;
     passwordHash?: string | null;
+    displayName?: string;
     nativeLanguage: string;
     targetLanguage: string;
     level: $Enums.TargetLevel;
     createdAt?: Date | string;
     updatedAt?: Date | string;
+    activeLearningLanguageId?: string | null;
 };
 export type UserUpdateManyMutationInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    displayName?: Prisma.StringFieldUpdateOperationsInput | string;
     nativeLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
     targetLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
     level?: Prisma.EnumTargetLevelFieldUpdateOperationsInput | $Enums.TargetLevel;
@@ -333,45 +378,61 @@ export type UserUncheckedUpdateManyInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    displayName?: Prisma.StringFieldUpdateOperationsInput | string;
     nativeLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
     targetLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
     level?: Prisma.EnumTargetLevelFieldUpdateOperationsInput | $Enums.TargetLevel;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    activeLearningLanguageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
 };
 export type UserCountOrderByAggregateInput = {
     id?: Prisma.SortOrder;
     email?: Prisma.SortOrder;
     passwordHash?: Prisma.SortOrder;
+    displayName?: Prisma.SortOrder;
     nativeLanguage?: Prisma.SortOrder;
     targetLanguage?: Prisma.SortOrder;
     level?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
+    activeLearningLanguageId?: Prisma.SortOrder;
 };
 export type UserMaxOrderByAggregateInput = {
     id?: Prisma.SortOrder;
     email?: Prisma.SortOrder;
     passwordHash?: Prisma.SortOrder;
+    displayName?: Prisma.SortOrder;
     nativeLanguage?: Prisma.SortOrder;
     targetLanguage?: Prisma.SortOrder;
     level?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
+    activeLearningLanguageId?: Prisma.SortOrder;
 };
 export type UserMinOrderByAggregateInput = {
     id?: Prisma.SortOrder;
     email?: Prisma.SortOrder;
     passwordHash?: Prisma.SortOrder;
+    displayName?: Prisma.SortOrder;
     nativeLanguage?: Prisma.SortOrder;
     targetLanguage?: Prisma.SortOrder;
     level?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
+    activeLearningLanguageId?: Prisma.SortOrder;
 };
 export type UserScalarRelationFilter = {
     is?: Prisma.UserWhereInput;
     isNot?: Prisma.UserWhereInput;
+};
+export type UserListRelationFilter = {
+    every?: Prisma.UserWhereInput;
+    some?: Prisma.UserWhereInput;
+    none?: Prisma.UserWhereInput;
+};
+export type UserOrderByRelationAggregateInput = {
+    _count?: Prisma.SortOrder;
 };
 export type StringFieldUpdateOperationsInput = {
     set?: string;
@@ -384,6 +445,56 @@ export type EnumTargetLevelFieldUpdateOperationsInput = {
 };
 export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string;
+};
+export type UserCreateNestedOneWithoutLearningLanguagesInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutLearningLanguagesInput, Prisma.UserUncheckedCreateWithoutLearningLanguagesInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutLearningLanguagesInput;
+    connect?: Prisma.UserWhereUniqueInput;
+};
+export type UserCreateNestedManyWithoutActiveLearningLanguageInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutActiveLearningLanguageInput, Prisma.UserUncheckedCreateWithoutActiveLearningLanguageInput> | Prisma.UserCreateWithoutActiveLearningLanguageInput[] | Prisma.UserUncheckedCreateWithoutActiveLearningLanguageInput[];
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutActiveLearningLanguageInput | Prisma.UserCreateOrConnectWithoutActiveLearningLanguageInput[];
+    createMany?: Prisma.UserCreateManyActiveLearningLanguageInputEnvelope;
+    connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[];
+};
+export type UserUncheckedCreateNestedManyWithoutActiveLearningLanguageInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutActiveLearningLanguageInput, Prisma.UserUncheckedCreateWithoutActiveLearningLanguageInput> | Prisma.UserCreateWithoutActiveLearningLanguageInput[] | Prisma.UserUncheckedCreateWithoutActiveLearningLanguageInput[];
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutActiveLearningLanguageInput | Prisma.UserCreateOrConnectWithoutActiveLearningLanguageInput[];
+    createMany?: Prisma.UserCreateManyActiveLearningLanguageInputEnvelope;
+    connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[];
+};
+export type UserUpdateOneRequiredWithoutLearningLanguagesNestedInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutLearningLanguagesInput, Prisma.UserUncheckedCreateWithoutLearningLanguagesInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutLearningLanguagesInput;
+    upsert?: Prisma.UserUpsertWithoutLearningLanguagesInput;
+    connect?: Prisma.UserWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutLearningLanguagesInput, Prisma.UserUpdateWithoutLearningLanguagesInput>, Prisma.UserUncheckedUpdateWithoutLearningLanguagesInput>;
+};
+export type UserUpdateManyWithoutActiveLearningLanguageNestedInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutActiveLearningLanguageInput, Prisma.UserUncheckedCreateWithoutActiveLearningLanguageInput> | Prisma.UserCreateWithoutActiveLearningLanguageInput[] | Prisma.UserUncheckedCreateWithoutActiveLearningLanguageInput[];
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutActiveLearningLanguageInput | Prisma.UserCreateOrConnectWithoutActiveLearningLanguageInput[];
+    upsert?: Prisma.UserUpsertWithWhereUniqueWithoutActiveLearningLanguageInput | Prisma.UserUpsertWithWhereUniqueWithoutActiveLearningLanguageInput[];
+    createMany?: Prisma.UserCreateManyActiveLearningLanguageInputEnvelope;
+    set?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[];
+    disconnect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[];
+    delete?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[];
+    connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[];
+    update?: Prisma.UserUpdateWithWhereUniqueWithoutActiveLearningLanguageInput | Prisma.UserUpdateWithWhereUniqueWithoutActiveLearningLanguageInput[];
+    updateMany?: Prisma.UserUpdateManyWithWhereWithoutActiveLearningLanguageInput | Prisma.UserUpdateManyWithWhereWithoutActiveLearningLanguageInput[];
+    deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[];
+};
+export type UserUncheckedUpdateManyWithoutActiveLearningLanguageNestedInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutActiveLearningLanguageInput, Prisma.UserUncheckedCreateWithoutActiveLearningLanguageInput> | Prisma.UserCreateWithoutActiveLearningLanguageInput[] | Prisma.UserUncheckedCreateWithoutActiveLearningLanguageInput[];
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutActiveLearningLanguageInput | Prisma.UserCreateOrConnectWithoutActiveLearningLanguageInput[];
+    upsert?: Prisma.UserUpsertWithWhereUniqueWithoutActiveLearningLanguageInput | Prisma.UserUpsertWithWhereUniqueWithoutActiveLearningLanguageInput[];
+    createMany?: Prisma.UserCreateManyActiveLearningLanguageInputEnvelope;
+    set?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[];
+    disconnect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[];
+    delete?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[];
+    connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[];
+    update?: Prisma.UserUpdateWithWhereUniqueWithoutActiveLearningLanguageInput | Prisma.UserUpdateWithWhereUniqueWithoutActiveLearningLanguageInput[];
+    updateMany?: Prisma.UserUpdateManyWithWhereWithoutActiveLearningLanguageInput | Prisma.UserUpdateManyWithWhereWithoutActiveLearningLanguageInput[];
+    deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[];
 };
 export type UserCreateNestedOneWithoutInterestsInput = {
     create?: Prisma.XOR<Prisma.UserCreateWithoutInterestsInput, Prisma.UserUncheckedCreateWithoutInterestsInput>;
@@ -481,10 +592,180 @@ export type UserUpdateOneRequiredWithoutStudyAttemptsNestedInput = {
     connect?: Prisma.UserWhereUniqueInput;
     update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutStudyAttemptsInput, Prisma.UserUpdateWithoutStudyAttemptsInput>, Prisma.UserUncheckedUpdateWithoutStudyAttemptsInput>;
 };
+export type UserCreateWithoutLearningLanguagesInput = {
+    id?: string;
+    email?: string | null;
+    passwordHash?: string | null;
+    displayName?: string;
+    nativeLanguage: string;
+    targetLanguage: string;
+    level: $Enums.TargetLevel;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    interests?: Prisma.UserInterestCreateNestedManyWithoutUserInput;
+    lists?: Prisma.VocabListCreateNestedManyWithoutUserInput;
+    vocabs?: Prisma.VocabCreateNestedManyWithoutUserInput;
+    reviews?: Prisma.VocabReviewCreateNestedManyWithoutUserInput;
+    progresses?: Prisma.VocabProgressCreateNestedManyWithoutUserInput;
+    studySessions?: Prisma.StudySessionCreateNestedManyWithoutUserInput;
+    studyExercises?: Prisma.StudyExerciseCreateNestedManyWithoutUserInput;
+    studyAttempts?: Prisma.StudyAttemptCreateNestedManyWithoutUserInput;
+    activeLearningLanguage?: Prisma.UserLearningLanguageCreateNestedOneWithoutActiveForUsersInput;
+};
+export type UserUncheckedCreateWithoutLearningLanguagesInput = {
+    id?: string;
+    email?: string | null;
+    passwordHash?: string | null;
+    displayName?: string;
+    nativeLanguage: string;
+    targetLanguage: string;
+    level: $Enums.TargetLevel;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    activeLearningLanguageId?: string | null;
+    interests?: Prisma.UserInterestUncheckedCreateNestedManyWithoutUserInput;
+    lists?: Prisma.VocabListUncheckedCreateNestedManyWithoutUserInput;
+    vocabs?: Prisma.VocabUncheckedCreateNestedManyWithoutUserInput;
+    reviews?: Prisma.VocabReviewUncheckedCreateNestedManyWithoutUserInput;
+    progresses?: Prisma.VocabProgressUncheckedCreateNestedManyWithoutUserInput;
+    studySessions?: Prisma.StudySessionUncheckedCreateNestedManyWithoutUserInput;
+    studyExercises?: Prisma.StudyExerciseUncheckedCreateNestedManyWithoutUserInput;
+    studyAttempts?: Prisma.StudyAttemptUncheckedCreateNestedManyWithoutUserInput;
+};
+export type UserCreateOrConnectWithoutLearningLanguagesInput = {
+    where: Prisma.UserWhereUniqueInput;
+    create: Prisma.XOR<Prisma.UserCreateWithoutLearningLanguagesInput, Prisma.UserUncheckedCreateWithoutLearningLanguagesInput>;
+};
+export type UserCreateWithoutActiveLearningLanguageInput = {
+    id?: string;
+    email?: string | null;
+    passwordHash?: string | null;
+    displayName?: string;
+    nativeLanguage: string;
+    targetLanguage: string;
+    level: $Enums.TargetLevel;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    interests?: Prisma.UserInterestCreateNestedManyWithoutUserInput;
+    lists?: Prisma.VocabListCreateNestedManyWithoutUserInput;
+    vocabs?: Prisma.VocabCreateNestedManyWithoutUserInput;
+    reviews?: Prisma.VocabReviewCreateNestedManyWithoutUserInput;
+    progresses?: Prisma.VocabProgressCreateNestedManyWithoutUserInput;
+    studySessions?: Prisma.StudySessionCreateNestedManyWithoutUserInput;
+    studyExercises?: Prisma.StudyExerciseCreateNestedManyWithoutUserInput;
+    studyAttempts?: Prisma.StudyAttemptCreateNestedManyWithoutUserInput;
+    learningLanguages?: Prisma.UserLearningLanguageCreateNestedManyWithoutUserInput;
+};
+export type UserUncheckedCreateWithoutActiveLearningLanguageInput = {
+    id?: string;
+    email?: string | null;
+    passwordHash?: string | null;
+    displayName?: string;
+    nativeLanguage: string;
+    targetLanguage: string;
+    level: $Enums.TargetLevel;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    interests?: Prisma.UserInterestUncheckedCreateNestedManyWithoutUserInput;
+    lists?: Prisma.VocabListUncheckedCreateNestedManyWithoutUserInput;
+    vocabs?: Prisma.VocabUncheckedCreateNestedManyWithoutUserInput;
+    reviews?: Prisma.VocabReviewUncheckedCreateNestedManyWithoutUserInput;
+    progresses?: Prisma.VocabProgressUncheckedCreateNestedManyWithoutUserInput;
+    studySessions?: Prisma.StudySessionUncheckedCreateNestedManyWithoutUserInput;
+    studyExercises?: Prisma.StudyExerciseUncheckedCreateNestedManyWithoutUserInput;
+    studyAttempts?: Prisma.StudyAttemptUncheckedCreateNestedManyWithoutUserInput;
+    learningLanguages?: Prisma.UserLearningLanguageUncheckedCreateNestedManyWithoutUserInput;
+};
+export type UserCreateOrConnectWithoutActiveLearningLanguageInput = {
+    where: Prisma.UserWhereUniqueInput;
+    create: Prisma.XOR<Prisma.UserCreateWithoutActiveLearningLanguageInput, Prisma.UserUncheckedCreateWithoutActiveLearningLanguageInput>;
+};
+export type UserCreateManyActiveLearningLanguageInputEnvelope = {
+    data: Prisma.UserCreateManyActiveLearningLanguageInput | Prisma.UserCreateManyActiveLearningLanguageInput[];
+    skipDuplicates?: boolean;
+};
+export type UserUpsertWithoutLearningLanguagesInput = {
+    update: Prisma.XOR<Prisma.UserUpdateWithoutLearningLanguagesInput, Prisma.UserUncheckedUpdateWithoutLearningLanguagesInput>;
+    create: Prisma.XOR<Prisma.UserCreateWithoutLearningLanguagesInput, Prisma.UserUncheckedCreateWithoutLearningLanguagesInput>;
+    where?: Prisma.UserWhereInput;
+};
+export type UserUpdateToOneWithWhereWithoutLearningLanguagesInput = {
+    where?: Prisma.UserWhereInput;
+    data: Prisma.XOR<Prisma.UserUpdateWithoutLearningLanguagesInput, Prisma.UserUncheckedUpdateWithoutLearningLanguagesInput>;
+};
+export type UserUpdateWithoutLearningLanguagesInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    displayName?: Prisma.StringFieldUpdateOperationsInput | string;
+    nativeLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
+    targetLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
+    level?: Prisma.EnumTargetLevelFieldUpdateOperationsInput | $Enums.TargetLevel;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    interests?: Prisma.UserInterestUpdateManyWithoutUserNestedInput;
+    lists?: Prisma.VocabListUpdateManyWithoutUserNestedInput;
+    vocabs?: Prisma.VocabUpdateManyWithoutUserNestedInput;
+    reviews?: Prisma.VocabReviewUpdateManyWithoutUserNestedInput;
+    progresses?: Prisma.VocabProgressUpdateManyWithoutUserNestedInput;
+    studySessions?: Prisma.StudySessionUpdateManyWithoutUserNestedInput;
+    studyExercises?: Prisma.StudyExerciseUpdateManyWithoutUserNestedInput;
+    studyAttempts?: Prisma.StudyAttemptUpdateManyWithoutUserNestedInput;
+    activeLearningLanguage?: Prisma.UserLearningLanguageUpdateOneWithoutActiveForUsersNestedInput;
+};
+export type UserUncheckedUpdateWithoutLearningLanguagesInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    displayName?: Prisma.StringFieldUpdateOperationsInput | string;
+    nativeLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
+    targetLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
+    level?: Prisma.EnumTargetLevelFieldUpdateOperationsInput | $Enums.TargetLevel;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    activeLearningLanguageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    interests?: Prisma.UserInterestUncheckedUpdateManyWithoutUserNestedInput;
+    lists?: Prisma.VocabListUncheckedUpdateManyWithoutUserNestedInput;
+    vocabs?: Prisma.VocabUncheckedUpdateManyWithoutUserNestedInput;
+    reviews?: Prisma.VocabReviewUncheckedUpdateManyWithoutUserNestedInput;
+    progresses?: Prisma.VocabProgressUncheckedUpdateManyWithoutUserNestedInput;
+    studySessions?: Prisma.StudySessionUncheckedUpdateManyWithoutUserNestedInput;
+    studyExercises?: Prisma.StudyExerciseUncheckedUpdateManyWithoutUserNestedInput;
+    studyAttempts?: Prisma.StudyAttemptUncheckedUpdateManyWithoutUserNestedInput;
+};
+export type UserUpsertWithWhereUniqueWithoutActiveLearningLanguageInput = {
+    where: Prisma.UserWhereUniqueInput;
+    update: Prisma.XOR<Prisma.UserUpdateWithoutActiveLearningLanguageInput, Prisma.UserUncheckedUpdateWithoutActiveLearningLanguageInput>;
+    create: Prisma.XOR<Prisma.UserCreateWithoutActiveLearningLanguageInput, Prisma.UserUncheckedCreateWithoutActiveLearningLanguageInput>;
+};
+export type UserUpdateWithWhereUniqueWithoutActiveLearningLanguageInput = {
+    where: Prisma.UserWhereUniqueInput;
+    data: Prisma.XOR<Prisma.UserUpdateWithoutActiveLearningLanguageInput, Prisma.UserUncheckedUpdateWithoutActiveLearningLanguageInput>;
+};
+export type UserUpdateManyWithWhereWithoutActiveLearningLanguageInput = {
+    where: Prisma.UserScalarWhereInput;
+    data: Prisma.XOR<Prisma.UserUpdateManyMutationInput, Prisma.UserUncheckedUpdateManyWithoutActiveLearningLanguageInput>;
+};
+export type UserScalarWhereInput = {
+    AND?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[];
+    OR?: Prisma.UserScalarWhereInput[];
+    NOT?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[];
+    id?: Prisma.StringFilter<"User"> | string;
+    email?: Prisma.StringNullableFilter<"User"> | string | null;
+    passwordHash?: Prisma.StringNullableFilter<"User"> | string | null;
+    displayName?: Prisma.StringFilter<"User"> | string;
+    nativeLanguage?: Prisma.StringFilter<"User"> | string;
+    targetLanguage?: Prisma.StringFilter<"User"> | string;
+    level?: Prisma.EnumTargetLevelFilter<"User"> | $Enums.TargetLevel;
+    createdAt?: Prisma.DateTimeFilter<"User"> | Date | string;
+    updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string;
+    activeLearningLanguageId?: Prisma.StringNullableFilter<"User"> | string | null;
+};
 export type UserCreateWithoutInterestsInput = {
     id?: string;
     email?: string | null;
     passwordHash?: string | null;
+    displayName?: string;
     nativeLanguage: string;
     targetLanguage: string;
     level: $Enums.TargetLevel;
@@ -497,16 +778,20 @@ export type UserCreateWithoutInterestsInput = {
     studySessions?: Prisma.StudySessionCreateNestedManyWithoutUserInput;
     studyExercises?: Prisma.StudyExerciseCreateNestedManyWithoutUserInput;
     studyAttempts?: Prisma.StudyAttemptCreateNestedManyWithoutUserInput;
+    learningLanguages?: Prisma.UserLearningLanguageCreateNestedManyWithoutUserInput;
+    activeLearningLanguage?: Prisma.UserLearningLanguageCreateNestedOneWithoutActiveForUsersInput;
 };
 export type UserUncheckedCreateWithoutInterestsInput = {
     id?: string;
     email?: string | null;
     passwordHash?: string | null;
+    displayName?: string;
     nativeLanguage: string;
     targetLanguage: string;
     level: $Enums.TargetLevel;
     createdAt?: Date | string;
     updatedAt?: Date | string;
+    activeLearningLanguageId?: string | null;
     lists?: Prisma.VocabListUncheckedCreateNestedManyWithoutUserInput;
     vocabs?: Prisma.VocabUncheckedCreateNestedManyWithoutUserInput;
     reviews?: Prisma.VocabReviewUncheckedCreateNestedManyWithoutUserInput;
@@ -514,6 +799,7 @@ export type UserUncheckedCreateWithoutInterestsInput = {
     studySessions?: Prisma.StudySessionUncheckedCreateNestedManyWithoutUserInput;
     studyExercises?: Prisma.StudyExerciseUncheckedCreateNestedManyWithoutUserInput;
     studyAttempts?: Prisma.StudyAttemptUncheckedCreateNestedManyWithoutUserInput;
+    learningLanguages?: Prisma.UserLearningLanguageUncheckedCreateNestedManyWithoutUserInput;
 };
 export type UserCreateOrConnectWithoutInterestsInput = {
     where: Prisma.UserWhereUniqueInput;
@@ -532,6 +818,7 @@ export type UserUpdateWithoutInterestsInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    displayName?: Prisma.StringFieldUpdateOperationsInput | string;
     nativeLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
     targetLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
     level?: Prisma.EnumTargetLevelFieldUpdateOperationsInput | $Enums.TargetLevel;
@@ -544,16 +831,20 @@ export type UserUpdateWithoutInterestsInput = {
     studySessions?: Prisma.StudySessionUpdateManyWithoutUserNestedInput;
     studyExercises?: Prisma.StudyExerciseUpdateManyWithoutUserNestedInput;
     studyAttempts?: Prisma.StudyAttemptUpdateManyWithoutUserNestedInput;
+    learningLanguages?: Prisma.UserLearningLanguageUpdateManyWithoutUserNestedInput;
+    activeLearningLanguage?: Prisma.UserLearningLanguageUpdateOneWithoutActiveForUsersNestedInput;
 };
 export type UserUncheckedUpdateWithoutInterestsInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    displayName?: Prisma.StringFieldUpdateOperationsInput | string;
     nativeLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
     targetLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
     level?: Prisma.EnumTargetLevelFieldUpdateOperationsInput | $Enums.TargetLevel;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    activeLearningLanguageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     lists?: Prisma.VocabListUncheckedUpdateManyWithoutUserNestedInput;
     vocabs?: Prisma.VocabUncheckedUpdateManyWithoutUserNestedInput;
     reviews?: Prisma.VocabReviewUncheckedUpdateManyWithoutUserNestedInput;
@@ -561,11 +852,13 @@ export type UserUncheckedUpdateWithoutInterestsInput = {
     studySessions?: Prisma.StudySessionUncheckedUpdateManyWithoutUserNestedInput;
     studyExercises?: Prisma.StudyExerciseUncheckedUpdateManyWithoutUserNestedInput;
     studyAttempts?: Prisma.StudyAttemptUncheckedUpdateManyWithoutUserNestedInput;
+    learningLanguages?: Prisma.UserLearningLanguageUncheckedUpdateManyWithoutUserNestedInput;
 };
 export type UserCreateWithoutListsInput = {
     id?: string;
     email?: string | null;
     passwordHash?: string | null;
+    displayName?: string;
     nativeLanguage: string;
     targetLanguage: string;
     level: $Enums.TargetLevel;
@@ -578,16 +871,20 @@ export type UserCreateWithoutListsInput = {
     studySessions?: Prisma.StudySessionCreateNestedManyWithoutUserInput;
     studyExercises?: Prisma.StudyExerciseCreateNestedManyWithoutUserInput;
     studyAttempts?: Prisma.StudyAttemptCreateNestedManyWithoutUserInput;
+    learningLanguages?: Prisma.UserLearningLanguageCreateNestedManyWithoutUserInput;
+    activeLearningLanguage?: Prisma.UserLearningLanguageCreateNestedOneWithoutActiveForUsersInput;
 };
 export type UserUncheckedCreateWithoutListsInput = {
     id?: string;
     email?: string | null;
     passwordHash?: string | null;
+    displayName?: string;
     nativeLanguage: string;
     targetLanguage: string;
     level: $Enums.TargetLevel;
     createdAt?: Date | string;
     updatedAt?: Date | string;
+    activeLearningLanguageId?: string | null;
     interests?: Prisma.UserInterestUncheckedCreateNestedManyWithoutUserInput;
     vocabs?: Prisma.VocabUncheckedCreateNestedManyWithoutUserInput;
     reviews?: Prisma.VocabReviewUncheckedCreateNestedManyWithoutUserInput;
@@ -595,6 +892,7 @@ export type UserUncheckedCreateWithoutListsInput = {
     studySessions?: Prisma.StudySessionUncheckedCreateNestedManyWithoutUserInput;
     studyExercises?: Prisma.StudyExerciseUncheckedCreateNestedManyWithoutUserInput;
     studyAttempts?: Prisma.StudyAttemptUncheckedCreateNestedManyWithoutUserInput;
+    learningLanguages?: Prisma.UserLearningLanguageUncheckedCreateNestedManyWithoutUserInput;
 };
 export type UserCreateOrConnectWithoutListsInput = {
     where: Prisma.UserWhereUniqueInput;
@@ -613,6 +911,7 @@ export type UserUpdateWithoutListsInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    displayName?: Prisma.StringFieldUpdateOperationsInput | string;
     nativeLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
     targetLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
     level?: Prisma.EnumTargetLevelFieldUpdateOperationsInput | $Enums.TargetLevel;
@@ -625,16 +924,20 @@ export type UserUpdateWithoutListsInput = {
     studySessions?: Prisma.StudySessionUpdateManyWithoutUserNestedInput;
     studyExercises?: Prisma.StudyExerciseUpdateManyWithoutUserNestedInput;
     studyAttempts?: Prisma.StudyAttemptUpdateManyWithoutUserNestedInput;
+    learningLanguages?: Prisma.UserLearningLanguageUpdateManyWithoutUserNestedInput;
+    activeLearningLanguage?: Prisma.UserLearningLanguageUpdateOneWithoutActiveForUsersNestedInput;
 };
 export type UserUncheckedUpdateWithoutListsInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    displayName?: Prisma.StringFieldUpdateOperationsInput | string;
     nativeLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
     targetLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
     level?: Prisma.EnumTargetLevelFieldUpdateOperationsInput | $Enums.TargetLevel;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    activeLearningLanguageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     interests?: Prisma.UserInterestUncheckedUpdateManyWithoutUserNestedInput;
     vocabs?: Prisma.VocabUncheckedUpdateManyWithoutUserNestedInput;
     reviews?: Prisma.VocabReviewUncheckedUpdateManyWithoutUserNestedInput;
@@ -642,11 +945,13 @@ export type UserUncheckedUpdateWithoutListsInput = {
     studySessions?: Prisma.StudySessionUncheckedUpdateManyWithoutUserNestedInput;
     studyExercises?: Prisma.StudyExerciseUncheckedUpdateManyWithoutUserNestedInput;
     studyAttempts?: Prisma.StudyAttemptUncheckedUpdateManyWithoutUserNestedInput;
+    learningLanguages?: Prisma.UserLearningLanguageUncheckedUpdateManyWithoutUserNestedInput;
 };
 export type UserCreateWithoutVocabsInput = {
     id?: string;
     email?: string | null;
     passwordHash?: string | null;
+    displayName?: string;
     nativeLanguage: string;
     targetLanguage: string;
     level: $Enums.TargetLevel;
@@ -659,16 +964,20 @@ export type UserCreateWithoutVocabsInput = {
     studySessions?: Prisma.StudySessionCreateNestedManyWithoutUserInput;
     studyExercises?: Prisma.StudyExerciseCreateNestedManyWithoutUserInput;
     studyAttempts?: Prisma.StudyAttemptCreateNestedManyWithoutUserInput;
+    learningLanguages?: Prisma.UserLearningLanguageCreateNestedManyWithoutUserInput;
+    activeLearningLanguage?: Prisma.UserLearningLanguageCreateNestedOneWithoutActiveForUsersInput;
 };
 export type UserUncheckedCreateWithoutVocabsInput = {
     id?: string;
     email?: string | null;
     passwordHash?: string | null;
+    displayName?: string;
     nativeLanguage: string;
     targetLanguage: string;
     level: $Enums.TargetLevel;
     createdAt?: Date | string;
     updatedAt?: Date | string;
+    activeLearningLanguageId?: string | null;
     interests?: Prisma.UserInterestUncheckedCreateNestedManyWithoutUserInput;
     lists?: Prisma.VocabListUncheckedCreateNestedManyWithoutUserInput;
     reviews?: Prisma.VocabReviewUncheckedCreateNestedManyWithoutUserInput;
@@ -676,6 +985,7 @@ export type UserUncheckedCreateWithoutVocabsInput = {
     studySessions?: Prisma.StudySessionUncheckedCreateNestedManyWithoutUserInput;
     studyExercises?: Prisma.StudyExerciseUncheckedCreateNestedManyWithoutUserInput;
     studyAttempts?: Prisma.StudyAttemptUncheckedCreateNestedManyWithoutUserInput;
+    learningLanguages?: Prisma.UserLearningLanguageUncheckedCreateNestedManyWithoutUserInput;
 };
 export type UserCreateOrConnectWithoutVocabsInput = {
     where: Prisma.UserWhereUniqueInput;
@@ -694,6 +1004,7 @@ export type UserUpdateWithoutVocabsInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    displayName?: Prisma.StringFieldUpdateOperationsInput | string;
     nativeLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
     targetLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
     level?: Prisma.EnumTargetLevelFieldUpdateOperationsInput | $Enums.TargetLevel;
@@ -706,16 +1017,20 @@ export type UserUpdateWithoutVocabsInput = {
     studySessions?: Prisma.StudySessionUpdateManyWithoutUserNestedInput;
     studyExercises?: Prisma.StudyExerciseUpdateManyWithoutUserNestedInput;
     studyAttempts?: Prisma.StudyAttemptUpdateManyWithoutUserNestedInput;
+    learningLanguages?: Prisma.UserLearningLanguageUpdateManyWithoutUserNestedInput;
+    activeLearningLanguage?: Prisma.UserLearningLanguageUpdateOneWithoutActiveForUsersNestedInput;
 };
 export type UserUncheckedUpdateWithoutVocabsInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    displayName?: Prisma.StringFieldUpdateOperationsInput | string;
     nativeLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
     targetLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
     level?: Prisma.EnumTargetLevelFieldUpdateOperationsInput | $Enums.TargetLevel;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    activeLearningLanguageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     interests?: Prisma.UserInterestUncheckedUpdateManyWithoutUserNestedInput;
     lists?: Prisma.VocabListUncheckedUpdateManyWithoutUserNestedInput;
     reviews?: Prisma.VocabReviewUncheckedUpdateManyWithoutUserNestedInput;
@@ -723,11 +1038,13 @@ export type UserUncheckedUpdateWithoutVocabsInput = {
     studySessions?: Prisma.StudySessionUncheckedUpdateManyWithoutUserNestedInput;
     studyExercises?: Prisma.StudyExerciseUncheckedUpdateManyWithoutUserNestedInput;
     studyAttempts?: Prisma.StudyAttemptUncheckedUpdateManyWithoutUserNestedInput;
+    learningLanguages?: Prisma.UserLearningLanguageUncheckedUpdateManyWithoutUserNestedInput;
 };
 export type UserCreateWithoutReviewsInput = {
     id?: string;
     email?: string | null;
     passwordHash?: string | null;
+    displayName?: string;
     nativeLanguage: string;
     targetLanguage: string;
     level: $Enums.TargetLevel;
@@ -740,16 +1057,20 @@ export type UserCreateWithoutReviewsInput = {
     studySessions?: Prisma.StudySessionCreateNestedManyWithoutUserInput;
     studyExercises?: Prisma.StudyExerciseCreateNestedManyWithoutUserInput;
     studyAttempts?: Prisma.StudyAttemptCreateNestedManyWithoutUserInput;
+    learningLanguages?: Prisma.UserLearningLanguageCreateNestedManyWithoutUserInput;
+    activeLearningLanguage?: Prisma.UserLearningLanguageCreateNestedOneWithoutActiveForUsersInput;
 };
 export type UserUncheckedCreateWithoutReviewsInput = {
     id?: string;
     email?: string | null;
     passwordHash?: string | null;
+    displayName?: string;
     nativeLanguage: string;
     targetLanguage: string;
     level: $Enums.TargetLevel;
     createdAt?: Date | string;
     updatedAt?: Date | string;
+    activeLearningLanguageId?: string | null;
     interests?: Prisma.UserInterestUncheckedCreateNestedManyWithoutUserInput;
     lists?: Prisma.VocabListUncheckedCreateNestedManyWithoutUserInput;
     vocabs?: Prisma.VocabUncheckedCreateNestedManyWithoutUserInput;
@@ -757,6 +1078,7 @@ export type UserUncheckedCreateWithoutReviewsInput = {
     studySessions?: Prisma.StudySessionUncheckedCreateNestedManyWithoutUserInput;
     studyExercises?: Prisma.StudyExerciseUncheckedCreateNestedManyWithoutUserInput;
     studyAttempts?: Prisma.StudyAttemptUncheckedCreateNestedManyWithoutUserInput;
+    learningLanguages?: Prisma.UserLearningLanguageUncheckedCreateNestedManyWithoutUserInput;
 };
 export type UserCreateOrConnectWithoutReviewsInput = {
     where: Prisma.UserWhereUniqueInput;
@@ -775,6 +1097,7 @@ export type UserUpdateWithoutReviewsInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    displayName?: Prisma.StringFieldUpdateOperationsInput | string;
     nativeLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
     targetLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
     level?: Prisma.EnumTargetLevelFieldUpdateOperationsInput | $Enums.TargetLevel;
@@ -787,16 +1110,20 @@ export type UserUpdateWithoutReviewsInput = {
     studySessions?: Prisma.StudySessionUpdateManyWithoutUserNestedInput;
     studyExercises?: Prisma.StudyExerciseUpdateManyWithoutUserNestedInput;
     studyAttempts?: Prisma.StudyAttemptUpdateManyWithoutUserNestedInput;
+    learningLanguages?: Prisma.UserLearningLanguageUpdateManyWithoutUserNestedInput;
+    activeLearningLanguage?: Prisma.UserLearningLanguageUpdateOneWithoutActiveForUsersNestedInput;
 };
 export type UserUncheckedUpdateWithoutReviewsInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    displayName?: Prisma.StringFieldUpdateOperationsInput | string;
     nativeLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
     targetLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
     level?: Prisma.EnumTargetLevelFieldUpdateOperationsInput | $Enums.TargetLevel;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    activeLearningLanguageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     interests?: Prisma.UserInterestUncheckedUpdateManyWithoutUserNestedInput;
     lists?: Prisma.VocabListUncheckedUpdateManyWithoutUserNestedInput;
     vocabs?: Prisma.VocabUncheckedUpdateManyWithoutUserNestedInput;
@@ -804,11 +1131,13 @@ export type UserUncheckedUpdateWithoutReviewsInput = {
     studySessions?: Prisma.StudySessionUncheckedUpdateManyWithoutUserNestedInput;
     studyExercises?: Prisma.StudyExerciseUncheckedUpdateManyWithoutUserNestedInput;
     studyAttempts?: Prisma.StudyAttemptUncheckedUpdateManyWithoutUserNestedInput;
+    learningLanguages?: Prisma.UserLearningLanguageUncheckedUpdateManyWithoutUserNestedInput;
 };
 export type UserCreateWithoutProgressesInput = {
     id?: string;
     email?: string | null;
     passwordHash?: string | null;
+    displayName?: string;
     nativeLanguage: string;
     targetLanguage: string;
     level: $Enums.TargetLevel;
@@ -821,16 +1150,20 @@ export type UserCreateWithoutProgressesInput = {
     studySessions?: Prisma.StudySessionCreateNestedManyWithoutUserInput;
     studyExercises?: Prisma.StudyExerciseCreateNestedManyWithoutUserInput;
     studyAttempts?: Prisma.StudyAttemptCreateNestedManyWithoutUserInput;
+    learningLanguages?: Prisma.UserLearningLanguageCreateNestedManyWithoutUserInput;
+    activeLearningLanguage?: Prisma.UserLearningLanguageCreateNestedOneWithoutActiveForUsersInput;
 };
 export type UserUncheckedCreateWithoutProgressesInput = {
     id?: string;
     email?: string | null;
     passwordHash?: string | null;
+    displayName?: string;
     nativeLanguage: string;
     targetLanguage: string;
     level: $Enums.TargetLevel;
     createdAt?: Date | string;
     updatedAt?: Date | string;
+    activeLearningLanguageId?: string | null;
     interests?: Prisma.UserInterestUncheckedCreateNestedManyWithoutUserInput;
     lists?: Prisma.VocabListUncheckedCreateNestedManyWithoutUserInput;
     vocabs?: Prisma.VocabUncheckedCreateNestedManyWithoutUserInput;
@@ -838,6 +1171,7 @@ export type UserUncheckedCreateWithoutProgressesInput = {
     studySessions?: Prisma.StudySessionUncheckedCreateNestedManyWithoutUserInput;
     studyExercises?: Prisma.StudyExerciseUncheckedCreateNestedManyWithoutUserInput;
     studyAttempts?: Prisma.StudyAttemptUncheckedCreateNestedManyWithoutUserInput;
+    learningLanguages?: Prisma.UserLearningLanguageUncheckedCreateNestedManyWithoutUserInput;
 };
 export type UserCreateOrConnectWithoutProgressesInput = {
     where: Prisma.UserWhereUniqueInput;
@@ -856,6 +1190,7 @@ export type UserUpdateWithoutProgressesInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    displayName?: Prisma.StringFieldUpdateOperationsInput | string;
     nativeLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
     targetLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
     level?: Prisma.EnumTargetLevelFieldUpdateOperationsInput | $Enums.TargetLevel;
@@ -868,16 +1203,20 @@ export type UserUpdateWithoutProgressesInput = {
     studySessions?: Prisma.StudySessionUpdateManyWithoutUserNestedInput;
     studyExercises?: Prisma.StudyExerciseUpdateManyWithoutUserNestedInput;
     studyAttempts?: Prisma.StudyAttemptUpdateManyWithoutUserNestedInput;
+    learningLanguages?: Prisma.UserLearningLanguageUpdateManyWithoutUserNestedInput;
+    activeLearningLanguage?: Prisma.UserLearningLanguageUpdateOneWithoutActiveForUsersNestedInput;
 };
 export type UserUncheckedUpdateWithoutProgressesInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    displayName?: Prisma.StringFieldUpdateOperationsInput | string;
     nativeLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
     targetLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
     level?: Prisma.EnumTargetLevelFieldUpdateOperationsInput | $Enums.TargetLevel;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    activeLearningLanguageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     interests?: Prisma.UserInterestUncheckedUpdateManyWithoutUserNestedInput;
     lists?: Prisma.VocabListUncheckedUpdateManyWithoutUserNestedInput;
     vocabs?: Prisma.VocabUncheckedUpdateManyWithoutUserNestedInput;
@@ -885,11 +1224,13 @@ export type UserUncheckedUpdateWithoutProgressesInput = {
     studySessions?: Prisma.StudySessionUncheckedUpdateManyWithoutUserNestedInput;
     studyExercises?: Prisma.StudyExerciseUncheckedUpdateManyWithoutUserNestedInput;
     studyAttempts?: Prisma.StudyAttemptUncheckedUpdateManyWithoutUserNestedInput;
+    learningLanguages?: Prisma.UserLearningLanguageUncheckedUpdateManyWithoutUserNestedInput;
 };
 export type UserCreateWithoutStudySessionsInput = {
     id?: string;
     email?: string | null;
     passwordHash?: string | null;
+    displayName?: string;
     nativeLanguage: string;
     targetLanguage: string;
     level: $Enums.TargetLevel;
@@ -902,16 +1243,20 @@ export type UserCreateWithoutStudySessionsInput = {
     progresses?: Prisma.VocabProgressCreateNestedManyWithoutUserInput;
     studyExercises?: Prisma.StudyExerciseCreateNestedManyWithoutUserInput;
     studyAttempts?: Prisma.StudyAttemptCreateNestedManyWithoutUserInput;
+    learningLanguages?: Prisma.UserLearningLanguageCreateNestedManyWithoutUserInput;
+    activeLearningLanguage?: Prisma.UserLearningLanguageCreateNestedOneWithoutActiveForUsersInput;
 };
 export type UserUncheckedCreateWithoutStudySessionsInput = {
     id?: string;
     email?: string | null;
     passwordHash?: string | null;
+    displayName?: string;
     nativeLanguage: string;
     targetLanguage: string;
     level: $Enums.TargetLevel;
     createdAt?: Date | string;
     updatedAt?: Date | string;
+    activeLearningLanguageId?: string | null;
     interests?: Prisma.UserInterestUncheckedCreateNestedManyWithoutUserInput;
     lists?: Prisma.VocabListUncheckedCreateNestedManyWithoutUserInput;
     vocabs?: Prisma.VocabUncheckedCreateNestedManyWithoutUserInput;
@@ -919,6 +1264,7 @@ export type UserUncheckedCreateWithoutStudySessionsInput = {
     progresses?: Prisma.VocabProgressUncheckedCreateNestedManyWithoutUserInput;
     studyExercises?: Prisma.StudyExerciseUncheckedCreateNestedManyWithoutUserInput;
     studyAttempts?: Prisma.StudyAttemptUncheckedCreateNestedManyWithoutUserInput;
+    learningLanguages?: Prisma.UserLearningLanguageUncheckedCreateNestedManyWithoutUserInput;
 };
 export type UserCreateOrConnectWithoutStudySessionsInput = {
     where: Prisma.UserWhereUniqueInput;
@@ -937,6 +1283,7 @@ export type UserUpdateWithoutStudySessionsInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    displayName?: Prisma.StringFieldUpdateOperationsInput | string;
     nativeLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
     targetLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
     level?: Prisma.EnumTargetLevelFieldUpdateOperationsInput | $Enums.TargetLevel;
@@ -949,16 +1296,20 @@ export type UserUpdateWithoutStudySessionsInput = {
     progresses?: Prisma.VocabProgressUpdateManyWithoutUserNestedInput;
     studyExercises?: Prisma.StudyExerciseUpdateManyWithoutUserNestedInput;
     studyAttempts?: Prisma.StudyAttemptUpdateManyWithoutUserNestedInput;
+    learningLanguages?: Prisma.UserLearningLanguageUpdateManyWithoutUserNestedInput;
+    activeLearningLanguage?: Prisma.UserLearningLanguageUpdateOneWithoutActiveForUsersNestedInput;
 };
 export type UserUncheckedUpdateWithoutStudySessionsInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    displayName?: Prisma.StringFieldUpdateOperationsInput | string;
     nativeLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
     targetLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
     level?: Prisma.EnumTargetLevelFieldUpdateOperationsInput | $Enums.TargetLevel;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    activeLearningLanguageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     interests?: Prisma.UserInterestUncheckedUpdateManyWithoutUserNestedInput;
     lists?: Prisma.VocabListUncheckedUpdateManyWithoutUserNestedInput;
     vocabs?: Prisma.VocabUncheckedUpdateManyWithoutUserNestedInput;
@@ -966,11 +1317,13 @@ export type UserUncheckedUpdateWithoutStudySessionsInput = {
     progresses?: Prisma.VocabProgressUncheckedUpdateManyWithoutUserNestedInput;
     studyExercises?: Prisma.StudyExerciseUncheckedUpdateManyWithoutUserNestedInput;
     studyAttempts?: Prisma.StudyAttemptUncheckedUpdateManyWithoutUserNestedInput;
+    learningLanguages?: Prisma.UserLearningLanguageUncheckedUpdateManyWithoutUserNestedInput;
 };
 export type UserCreateWithoutStudyExercisesInput = {
     id?: string;
     email?: string | null;
     passwordHash?: string | null;
+    displayName?: string;
     nativeLanguage: string;
     targetLanguage: string;
     level: $Enums.TargetLevel;
@@ -983,16 +1336,20 @@ export type UserCreateWithoutStudyExercisesInput = {
     progresses?: Prisma.VocabProgressCreateNestedManyWithoutUserInput;
     studySessions?: Prisma.StudySessionCreateNestedManyWithoutUserInput;
     studyAttempts?: Prisma.StudyAttemptCreateNestedManyWithoutUserInput;
+    learningLanguages?: Prisma.UserLearningLanguageCreateNestedManyWithoutUserInput;
+    activeLearningLanguage?: Prisma.UserLearningLanguageCreateNestedOneWithoutActiveForUsersInput;
 };
 export type UserUncheckedCreateWithoutStudyExercisesInput = {
     id?: string;
     email?: string | null;
     passwordHash?: string | null;
+    displayName?: string;
     nativeLanguage: string;
     targetLanguage: string;
     level: $Enums.TargetLevel;
     createdAt?: Date | string;
     updatedAt?: Date | string;
+    activeLearningLanguageId?: string | null;
     interests?: Prisma.UserInterestUncheckedCreateNestedManyWithoutUserInput;
     lists?: Prisma.VocabListUncheckedCreateNestedManyWithoutUserInput;
     vocabs?: Prisma.VocabUncheckedCreateNestedManyWithoutUserInput;
@@ -1000,6 +1357,7 @@ export type UserUncheckedCreateWithoutStudyExercisesInput = {
     progresses?: Prisma.VocabProgressUncheckedCreateNestedManyWithoutUserInput;
     studySessions?: Prisma.StudySessionUncheckedCreateNestedManyWithoutUserInput;
     studyAttempts?: Prisma.StudyAttemptUncheckedCreateNestedManyWithoutUserInput;
+    learningLanguages?: Prisma.UserLearningLanguageUncheckedCreateNestedManyWithoutUserInput;
 };
 export type UserCreateOrConnectWithoutStudyExercisesInput = {
     where: Prisma.UserWhereUniqueInput;
@@ -1018,6 +1376,7 @@ export type UserUpdateWithoutStudyExercisesInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    displayName?: Prisma.StringFieldUpdateOperationsInput | string;
     nativeLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
     targetLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
     level?: Prisma.EnumTargetLevelFieldUpdateOperationsInput | $Enums.TargetLevel;
@@ -1030,16 +1389,20 @@ export type UserUpdateWithoutStudyExercisesInput = {
     progresses?: Prisma.VocabProgressUpdateManyWithoutUserNestedInput;
     studySessions?: Prisma.StudySessionUpdateManyWithoutUserNestedInput;
     studyAttempts?: Prisma.StudyAttemptUpdateManyWithoutUserNestedInput;
+    learningLanguages?: Prisma.UserLearningLanguageUpdateManyWithoutUserNestedInput;
+    activeLearningLanguage?: Prisma.UserLearningLanguageUpdateOneWithoutActiveForUsersNestedInput;
 };
 export type UserUncheckedUpdateWithoutStudyExercisesInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    displayName?: Prisma.StringFieldUpdateOperationsInput | string;
     nativeLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
     targetLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
     level?: Prisma.EnumTargetLevelFieldUpdateOperationsInput | $Enums.TargetLevel;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    activeLearningLanguageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     interests?: Prisma.UserInterestUncheckedUpdateManyWithoutUserNestedInput;
     lists?: Prisma.VocabListUncheckedUpdateManyWithoutUserNestedInput;
     vocabs?: Prisma.VocabUncheckedUpdateManyWithoutUserNestedInput;
@@ -1047,11 +1410,13 @@ export type UserUncheckedUpdateWithoutStudyExercisesInput = {
     progresses?: Prisma.VocabProgressUncheckedUpdateManyWithoutUserNestedInput;
     studySessions?: Prisma.StudySessionUncheckedUpdateManyWithoutUserNestedInput;
     studyAttempts?: Prisma.StudyAttemptUncheckedUpdateManyWithoutUserNestedInput;
+    learningLanguages?: Prisma.UserLearningLanguageUncheckedUpdateManyWithoutUserNestedInput;
 };
 export type UserCreateWithoutStudyAttemptsInput = {
     id?: string;
     email?: string | null;
     passwordHash?: string | null;
+    displayName?: string;
     nativeLanguage: string;
     targetLanguage: string;
     level: $Enums.TargetLevel;
@@ -1064,16 +1429,20 @@ export type UserCreateWithoutStudyAttemptsInput = {
     progresses?: Prisma.VocabProgressCreateNestedManyWithoutUserInput;
     studySessions?: Prisma.StudySessionCreateNestedManyWithoutUserInput;
     studyExercises?: Prisma.StudyExerciseCreateNestedManyWithoutUserInput;
+    learningLanguages?: Prisma.UserLearningLanguageCreateNestedManyWithoutUserInput;
+    activeLearningLanguage?: Prisma.UserLearningLanguageCreateNestedOneWithoutActiveForUsersInput;
 };
 export type UserUncheckedCreateWithoutStudyAttemptsInput = {
     id?: string;
     email?: string | null;
     passwordHash?: string | null;
+    displayName?: string;
     nativeLanguage: string;
     targetLanguage: string;
     level: $Enums.TargetLevel;
     createdAt?: Date | string;
     updatedAt?: Date | string;
+    activeLearningLanguageId?: string | null;
     interests?: Prisma.UserInterestUncheckedCreateNestedManyWithoutUserInput;
     lists?: Prisma.VocabListUncheckedCreateNestedManyWithoutUserInput;
     vocabs?: Prisma.VocabUncheckedCreateNestedManyWithoutUserInput;
@@ -1081,6 +1450,7 @@ export type UserUncheckedCreateWithoutStudyAttemptsInput = {
     progresses?: Prisma.VocabProgressUncheckedCreateNestedManyWithoutUserInput;
     studySessions?: Prisma.StudySessionUncheckedCreateNestedManyWithoutUserInput;
     studyExercises?: Prisma.StudyExerciseUncheckedCreateNestedManyWithoutUserInput;
+    learningLanguages?: Prisma.UserLearningLanguageUncheckedCreateNestedManyWithoutUserInput;
 };
 export type UserCreateOrConnectWithoutStudyAttemptsInput = {
     where: Prisma.UserWhereUniqueInput;
@@ -1099,6 +1469,7 @@ export type UserUpdateWithoutStudyAttemptsInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    displayName?: Prisma.StringFieldUpdateOperationsInput | string;
     nativeLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
     targetLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
     level?: Prisma.EnumTargetLevelFieldUpdateOperationsInput | $Enums.TargetLevel;
@@ -1111,11 +1482,65 @@ export type UserUpdateWithoutStudyAttemptsInput = {
     progresses?: Prisma.VocabProgressUpdateManyWithoutUserNestedInput;
     studySessions?: Prisma.StudySessionUpdateManyWithoutUserNestedInput;
     studyExercises?: Prisma.StudyExerciseUpdateManyWithoutUserNestedInput;
+    learningLanguages?: Prisma.UserLearningLanguageUpdateManyWithoutUserNestedInput;
+    activeLearningLanguage?: Prisma.UserLearningLanguageUpdateOneWithoutActiveForUsersNestedInput;
 };
 export type UserUncheckedUpdateWithoutStudyAttemptsInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    displayName?: Prisma.StringFieldUpdateOperationsInput | string;
+    nativeLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
+    targetLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
+    level?: Prisma.EnumTargetLevelFieldUpdateOperationsInput | $Enums.TargetLevel;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    activeLearningLanguageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    interests?: Prisma.UserInterestUncheckedUpdateManyWithoutUserNestedInput;
+    lists?: Prisma.VocabListUncheckedUpdateManyWithoutUserNestedInput;
+    vocabs?: Prisma.VocabUncheckedUpdateManyWithoutUserNestedInput;
+    reviews?: Prisma.VocabReviewUncheckedUpdateManyWithoutUserNestedInput;
+    progresses?: Prisma.VocabProgressUncheckedUpdateManyWithoutUserNestedInput;
+    studySessions?: Prisma.StudySessionUncheckedUpdateManyWithoutUserNestedInput;
+    studyExercises?: Prisma.StudyExerciseUncheckedUpdateManyWithoutUserNestedInput;
+    learningLanguages?: Prisma.UserLearningLanguageUncheckedUpdateManyWithoutUserNestedInput;
+};
+export type UserCreateManyActiveLearningLanguageInput = {
+    id?: string;
+    email?: string | null;
+    passwordHash?: string | null;
+    displayName?: string;
+    nativeLanguage: string;
+    targetLanguage: string;
+    level: $Enums.TargetLevel;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+};
+export type UserUpdateWithoutActiveLearningLanguageInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    displayName?: Prisma.StringFieldUpdateOperationsInput | string;
+    nativeLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
+    targetLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
+    level?: Prisma.EnumTargetLevelFieldUpdateOperationsInput | $Enums.TargetLevel;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    interests?: Prisma.UserInterestUpdateManyWithoutUserNestedInput;
+    lists?: Prisma.VocabListUpdateManyWithoutUserNestedInput;
+    vocabs?: Prisma.VocabUpdateManyWithoutUserNestedInput;
+    reviews?: Prisma.VocabReviewUpdateManyWithoutUserNestedInput;
+    progresses?: Prisma.VocabProgressUpdateManyWithoutUserNestedInput;
+    studySessions?: Prisma.StudySessionUpdateManyWithoutUserNestedInput;
+    studyExercises?: Prisma.StudyExerciseUpdateManyWithoutUserNestedInput;
+    studyAttempts?: Prisma.StudyAttemptUpdateManyWithoutUserNestedInput;
+    learningLanguages?: Prisma.UserLearningLanguageUpdateManyWithoutUserNestedInput;
+};
+export type UserUncheckedUpdateWithoutActiveLearningLanguageInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    displayName?: Prisma.StringFieldUpdateOperationsInput | string;
     nativeLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
     targetLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
     level?: Prisma.EnumTargetLevelFieldUpdateOperationsInput | $Enums.TargetLevel;
@@ -1128,6 +1553,19 @@ export type UserUncheckedUpdateWithoutStudyAttemptsInput = {
     progresses?: Prisma.VocabProgressUncheckedUpdateManyWithoutUserNestedInput;
     studySessions?: Prisma.StudySessionUncheckedUpdateManyWithoutUserNestedInput;
     studyExercises?: Prisma.StudyExerciseUncheckedUpdateManyWithoutUserNestedInput;
+    studyAttempts?: Prisma.StudyAttemptUncheckedUpdateManyWithoutUserNestedInput;
+    learningLanguages?: Prisma.UserLearningLanguageUncheckedUpdateManyWithoutUserNestedInput;
+};
+export type UserUncheckedUpdateManyWithoutActiveLearningLanguageInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    displayName?: Prisma.StringFieldUpdateOperationsInput | string;
+    nativeLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
+    targetLanguage?: Prisma.StringFieldUpdateOperationsInput | string;
+    level?: Prisma.EnumTargetLevelFieldUpdateOperationsInput | $Enums.TargetLevel;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
 /**
  * Count Type UserCountOutputType
@@ -1141,6 +1579,7 @@ export type UserCountOutputType = {
     studySessions: number;
     studyExercises: number;
     studyAttempts: number;
+    learningLanguages: number;
 };
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     interests?: boolean | UserCountOutputTypeCountInterestsArgs;
@@ -1151,6 +1590,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
     studySessions?: boolean | UserCountOutputTypeCountStudySessionsArgs;
     studyExercises?: boolean | UserCountOutputTypeCountStudyExercisesArgs;
     studyAttempts?: boolean | UserCountOutputTypeCountStudyAttemptsArgs;
+    learningLanguages?: boolean | UserCountOutputTypeCountLearningLanguagesArgs;
 };
 /**
  * UserCountOutputType without action
@@ -1209,15 +1649,23 @@ export type UserCountOutputTypeCountStudyExercisesArgs<ExtArgs extends runtime.T
 export type UserCountOutputTypeCountStudyAttemptsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     where?: Prisma.StudyAttemptWhereInput;
 };
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountLearningLanguagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.UserLearningLanguageWhereInput;
+};
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
     id?: boolean;
     email?: boolean;
     passwordHash?: boolean;
+    displayName?: boolean;
     nativeLanguage?: boolean;
     targetLanguage?: boolean;
     level?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
+    activeLearningLanguageId?: boolean;
     interests?: boolean | Prisma.User$interestsArgs<ExtArgs>;
     lists?: boolean | Prisma.User$listsArgs<ExtArgs>;
     vocabs?: boolean | Prisma.User$vocabsArgs<ExtArgs>;
@@ -1226,39 +1674,49 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
     studySessions?: boolean | Prisma.User$studySessionsArgs<ExtArgs>;
     studyExercises?: boolean | Prisma.User$studyExercisesArgs<ExtArgs>;
     studyAttempts?: boolean | Prisma.User$studyAttemptsArgs<ExtArgs>;
+    learningLanguages?: boolean | Prisma.User$learningLanguagesArgs<ExtArgs>;
+    activeLearningLanguage?: boolean | Prisma.User$activeLearningLanguageArgs<ExtArgs>;
     _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>;
 }, ExtArgs["result"]["user"]>;
 export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
     id?: boolean;
     email?: boolean;
     passwordHash?: boolean;
+    displayName?: boolean;
     nativeLanguage?: boolean;
     targetLanguage?: boolean;
     level?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
+    activeLearningLanguageId?: boolean;
+    activeLearningLanguage?: boolean | Prisma.User$activeLearningLanguageArgs<ExtArgs>;
 }, ExtArgs["result"]["user"]>;
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
     id?: boolean;
     email?: boolean;
     passwordHash?: boolean;
+    displayName?: boolean;
     nativeLanguage?: boolean;
     targetLanguage?: boolean;
     level?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
+    activeLearningLanguageId?: boolean;
+    activeLearningLanguage?: boolean | Prisma.User$activeLearningLanguageArgs<ExtArgs>;
 }, ExtArgs["result"]["user"]>;
 export type UserSelectScalar = {
     id?: boolean;
     email?: boolean;
     passwordHash?: boolean;
+    displayName?: boolean;
     nativeLanguage?: boolean;
     targetLanguage?: boolean;
     level?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
+    activeLearningLanguageId?: boolean;
 };
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "passwordHash" | "nativeLanguage" | "targetLanguage" | "level" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>;
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "passwordHash" | "displayName" | "nativeLanguage" | "targetLanguage" | "level" | "createdAt" | "updatedAt" | "activeLearningLanguageId", ExtArgs["result"]["user"]>;
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     interests?: boolean | Prisma.User$interestsArgs<ExtArgs>;
     lists?: boolean | Prisma.User$listsArgs<ExtArgs>;
@@ -1268,10 +1726,16 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
     studySessions?: boolean | Prisma.User$studySessionsArgs<ExtArgs>;
     studyExercises?: boolean | Prisma.User$studyExercisesArgs<ExtArgs>;
     studyAttempts?: boolean | Prisma.User$studyAttemptsArgs<ExtArgs>;
+    learningLanguages?: boolean | Prisma.User$learningLanguagesArgs<ExtArgs>;
+    activeLearningLanguage?: boolean | Prisma.User$activeLearningLanguageArgs<ExtArgs>;
     _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>;
 };
-export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {};
-export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {};
+export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    activeLearningLanguage?: boolean | Prisma.User$activeLearningLanguageArgs<ExtArgs>;
+};
+export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    activeLearningLanguage?: boolean | Prisma.User$activeLearningLanguageArgs<ExtArgs>;
+};
 export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     name: "User";
     objects: {
@@ -1283,16 +1747,20 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
         studySessions: Prisma.$StudySessionPayload<ExtArgs>[];
         studyExercises: Prisma.$StudyExercisePayload<ExtArgs>[];
         studyAttempts: Prisma.$StudyAttemptPayload<ExtArgs>[];
+        learningLanguages: Prisma.$UserLearningLanguagePayload<ExtArgs>[];
+        activeLearningLanguage: Prisma.$UserLearningLanguagePayload<ExtArgs> | null;
     };
     scalars: runtime.Types.Extensions.GetPayloadResult<{
         id: string;
         email: string | null;
         passwordHash: string | null;
+        displayName: string;
         nativeLanguage: string;
         targetLanguage: string;
         level: $Enums.TargetLevel;
         createdAt: Date;
         updatedAt: Date;
+        activeLearningLanguageId: string | null;
     }, ExtArgs["result"]["user"]>;
     composites: {};
 };
@@ -1630,6 +2098,8 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
     studySessions<T extends Prisma.User$studySessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$studySessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StudySessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
     studyExercises<T extends Prisma.User$studyExercisesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$studyExercisesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StudyExercisePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
     studyAttempts<T extends Prisma.User$studyAttemptsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$studyAttemptsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StudyAttemptPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    learningLanguages<T extends Prisma.User$learningLanguagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$learningLanguagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserLearningLanguagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    activeLearningLanguage<T extends Prisma.User$activeLearningLanguageArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$activeLearningLanguageArgs<ExtArgs>>): Prisma.Prisma__UserLearningLanguageClient<runtime.Types.Result.GetResult<Prisma.$UserLearningLanguagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1658,11 +2128,13 @@ export interface UserFieldRefs {
     readonly id: Prisma.FieldRef<"User", 'String'>;
     readonly email: Prisma.FieldRef<"User", 'String'>;
     readonly passwordHash: Prisma.FieldRef<"User", 'String'>;
+    readonly displayName: Prisma.FieldRef<"User", 'String'>;
     readonly nativeLanguage: Prisma.FieldRef<"User", 'String'>;
     readonly targetLanguage: Prisma.FieldRef<"User", 'String'>;
     readonly level: Prisma.FieldRef<"User", 'TargetLevel'>;
     readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>;
     readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>;
+    readonly activeLearningLanguageId: Prisma.FieldRef<"User", 'String'>;
 }
 /**
  * User findUnique
@@ -1907,6 +2379,10 @@ export type UserCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions
      */
     data: Prisma.UserCreateManyInput | Prisma.UserCreateManyInput[];
     skipDuplicates?: boolean;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.UserIncludeCreateManyAndReturn<ExtArgs> | null;
 };
 /**
  * User update
@@ -1974,6 +2450,10 @@ export type UserUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions
      * Limit how many Users to update.
      */
     limit?: number;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.UserIncludeUpdateManyAndReturn<ExtArgs> | null;
 };
 /**
  * User upsert
@@ -2221,6 +2701,47 @@ export type User$studyAttemptsArgs<ExtArgs extends runtime.Types.Extensions.Inte
     take?: number;
     skip?: number;
     distinct?: Prisma.StudyAttemptScalarFieldEnum | Prisma.StudyAttemptScalarFieldEnum[];
+};
+/**
+ * User.learningLanguages
+ */
+export type User$learningLanguagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserLearningLanguage
+     */
+    select?: Prisma.UserLearningLanguageSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the UserLearningLanguage
+     */
+    omit?: Prisma.UserLearningLanguageOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.UserLearningLanguageInclude<ExtArgs> | null;
+    where?: Prisma.UserLearningLanguageWhereInput;
+    orderBy?: Prisma.UserLearningLanguageOrderByWithRelationInput | Prisma.UserLearningLanguageOrderByWithRelationInput[];
+    cursor?: Prisma.UserLearningLanguageWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.UserLearningLanguageScalarFieldEnum | Prisma.UserLearningLanguageScalarFieldEnum[];
+};
+/**
+ * User.activeLearningLanguage
+ */
+export type User$activeLearningLanguageArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserLearningLanguage
+     */
+    select?: Prisma.UserLearningLanguageSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the UserLearningLanguage
+     */
+    omit?: Prisma.UserLearningLanguageOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.UserLearningLanguageInclude<ExtArgs> | null;
+    where?: Prisma.UserLearningLanguageWhereInput;
 };
 /**
  * User without action

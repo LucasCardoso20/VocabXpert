@@ -16,23 +16,15 @@ const apiClient = axios.create({
 // ✅ Interceptor para adicionar o x-user-id automaticamente
 apiClient.interceptors.request.use(
   async (config) => {
-    const userId = await appStorage.getItem('x-user-id'); // ✅ Usar appStorage.getItem
-if (userId) {
-  config.headers['x-user-id'] = userId;
-} else {
-  let newUserId = await appStorage.getItem('x-user-id'); // ✅ Usar appStorage.getItem
-  if (!newUserId) {
-    newUserId = 'uuid-v4-placeholder-' + Math.random().toString(36).substring(2, 15);
-    await appStorage.setItem('x-user-id', newUserId); // ✅ Usar appStorage.setItem
-    console.log('Generated and saved new x-user-id:', newUserId);
-  }
-  config.headers['x-user-id'] = newUserId;
-}
-return config;
+    const userId = await appStorage.getItem('x-user-id');
+
+    if (userId) {
+      config.headers['x-user-id'] = userId;
+    }
+
+    return config;
   },
-  (error) => {
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
 // ✅ Interceptor para tratamento de erros genéricos (opcional, mas recomendado)

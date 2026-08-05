@@ -14,23 +14,50 @@ enum TargetLevel {
 }
 
 model User {
-  id             String   @id @default(uuid())
-  email        String? @unique
-  passwordHash String?
+  id             String  @id @default(uuid())
+  email          String? @unique
+  passwordHash   String?
+  displayName    String   @default("Usuário")
   nativeLanguage String
+
+  // Campos legados: manter temporariamente durante a migração.
   targetLanguage String
   level          TargetLevel
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   interests      UserInterest[]
   lists          VocabList[]
   vocabs         Vocab[]
-  reviews VocabReview[]
-  progresses VocabProgress[]
+  reviews        VocabReview[]
+  progresses     VocabProgress[]
   studySessions  StudySession[]
   studyExercises StudyExercise[]
   studyAttempts  StudyAttempt[]
+
+  learningLanguages        UserLearningLanguage[] @relation("LearningLanguages")
+  activeLearningLanguageId String?
+  activeLearningLanguage   UserLearningLanguage?  @relation("ActiveLearningLanguage", fields: [activeLearningLanguageId], references: [id], onDelete: SetNull)
+}
+
+model UserLearningLanguage {
+  id       String      @id @default(uuid())
+  userId   String
+  language String
+  level    TargetLevel @default(BEGINNER)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation("LearningLanguages", fields: [userId], references: [id], onDelete: Cascade)
+
+  activeForUsers User[] @relation("ActiveLearningLanguage")
+
+  lists VocabList[]
+
+  @@unique([userId, language])
+  @@index([userId])
 }
 
 model Interest {
@@ -51,40 +78,45 @@ model UserInterest {
 }
 
 model VocabList {
-  id        String   @id @default(uuid())
+  id        String  @id @default(uuid())
   userId    String
   name      String
-  isDefault Boolean  @default(false)
+  isDefault Boolean @default(false)
+
+  learningLanguageId String?
+  learningLanguage   UserLearningLanguage? @relation(fields: [learningLanguageId], references: [id], onDelete: SetNull)
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  vocabs Vocab[]
+  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  vocabs        Vocab[]
   studySessions StudySession[]
-  
+
   @@index([userId])
+  @@index([learningLanguageId])
 }
 
 model Vocab {
-  id          String   @id @default(uuid())
-  userId      String
-  listId      String
-  word        String
-  translation String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id             String          @id @default(uuid())
+  userId         String
+  listId         String
+  word           String
+  translation    String?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
   wordNormalized String
-  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  list     VocabList @relation(fields: [listId], references: [id], onDelete: Cascade)
-  examples VocabExample[]
-  notes    VocabNote[]
-  reviews VocabReview[]
-  progresses VocabProgress[]
+  user           User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  list           VocabList       @relation(fields: [listId], references: [id], onDelete: Cascade)
+  examples       VocabExample[]
+  notes          VocabNote[]
+  reviews        VocabReview[]
+  progresses     VocabProgress[]
   studyExercises StudyExercise[]
 
+  @@unique([listId, wordNormalized])
   @@index([userId])
   @@index([listId])
-  @@unique([listId, wordNormalized])
 }
 
 model VocabExample {
@@ -92,7 +124,7 @@ model VocabExample {
   vocabId String
   text    String
 
-  vocab   Vocab  @relation(fields: [vocabId], references: [id], onDelete: Cascade)
+  vocab Vocab @relation(fields: [vocabId], references: [id], onDelete: Cascade)
 
   @@index([vocabId])
 }
@@ -104,7 +136,7 @@ model VocabNote {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  vocab     Vocab @relation(fields: [vocabId], references: [id], onDelete: Cascade)
+  vocab Vocab @relation(fields: [vocabId], references: [id], onDelete: Cascade)
 
   @@index([vocabId])
 }
@@ -129,18 +161,18 @@ model VocabReview {
 }
 
 model VocabProgress {
-  id        String   @id @default(uuid())
-  userId    String
-  vocabId   String
+  id      String @id @default(uuid())
+  userId  String
+  vocabId String
 
-  ease      Float    @default(2.5)  // fator de facilidade (SM-2-like)
-  interval  Int      @default(0)    // dias
-  repetitions Int    @default(0)
-  streak    Int      @default(0)
+  ease        Float @default(2.5) // fator de facilidade (SM-2-like)
+  interval    Int   @default(0) // dias
+  repetitions Int   @default(0)
+  streak      Int   @default(0)
 
-  lastOutcome ReviewOutcome?
+  lastOutcome    ReviewOutcome?
   lastReviewedAt DateTime?
-  nextDueAt  DateTime?
+  nextDueAt      DateTime?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -172,26 +204,25 @@ enum StudyScope {
 }
 
 model StudySession {
-  id           String      @id @default(uuid())
+  id           String       @id @default(uuid())
   userId       String
   listId       String
   exerciseType ExerciseType @default(RANDOM)
   scope        StudyScope   @default(DUE)
   limit        Int          @default(10)
-  
-  direction           String   @default("WORD_TO_TRANSLATION") // ✅ novo
-  vocabIds            Json?    // ✅ novo: string[]
-  currentIndex Int @default(0) // ✅ novo
 
-  createdAt    DateTime @default(now())
-  finishedAt   DateTime?
+  direction    String @default("WORD_TO_TRANSLATION") // ✅ novo
+  vocabIds     Json? // ✅ novo: string[]
+  currentIndex Int    @default(0) // ✅ novo
 
-  user   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  list   VocabList @relation(fields: [listId], references: [id], onDelete: Cascade)
+  createdAt  DateTime  @default(now())
+  finishedAt DateTime?
+
+  user      User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  list      VocabList       @relation(fields: [listId], references: [id], onDelete: Cascade)
   exercises StudyExercise[]
-  
+
   enabledExerciseTypes Json? // string[] com ExerciseType
-  
 
   @@index([userId, createdAt])
   @@index([listId, createdAt])
@@ -207,8 +238,8 @@ model StudyExercise {
   createdAt DateTime     @default(now())
 
   session StudySession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
-  user    User        @relation(fields: [userId], references: [id], onDelete: Cascade)
-  vocab   Vocab       @relation(fields: [vocabId], references: [id], onDelete: Cascade)
+  user    User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  vocab   Vocab        @relation(fields: [vocabId], references: [id], onDelete: Cascade)
 
   attempts StudyAttempt[]
 
@@ -218,24 +249,24 @@ model StudyExercise {
 }
 
 model StudyAttempt {
-  id         String   @id @default(uuid())
+  id         String @id @default(uuid())
   exerciseId String
   userId     String
 
-  response   Json
-  outcome    ReviewOutcome
+  response Json
+  outcome  ReviewOutcome
 
   // Avaliação IA
-  aiScore    Float?
-  aiFeedback String?
-  aiVerdict  String? // "CORRECT"/"PARTIAL"/"INCORRECT" etc
-  aiModel    String?
+  aiScore     Float?
+  aiFeedback  String?
+  aiVerdict   String? // "CORRECT"/"PARTIAL"/"INCORRECT" etc
+  aiModel     String?
   aiLatencyMs Int?
 
-  createdAt  DateTime @default(now())
+  createdAt DateTime @default(now())
 
   exercise StudyExercise @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
-  user     User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user     User          @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([exerciseId, createdAt])
   @@index([userId, createdAt])

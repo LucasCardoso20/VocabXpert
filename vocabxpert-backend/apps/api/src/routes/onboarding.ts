@@ -31,40 +31,80 @@ export const onboardingRoutes: FastifyPluginAsync = async (app) => {
     // 1) DB transaction
     const dbStartedAt = Date.now();
     const { userId, defaultListId } = await prisma.$transaction(async (tx: any) => {
-      const user = await tx.user.create({
-        data: {
-          email: null,
-          passwordHash: null,
-          nativeLanguage: body.nativeLanguage,
-          targetLanguage: body.targetLanguage,
-          level: body.level,
-          lists: { create: { name: "Lista Geral", isDefault: true } },
-        },
-        include: { lists: true },
-      });
+  // Mantemos targetLanguage e level temporariamente porque partes
+  // atuais do app e do Gemini ainda podem depender desses campos.
+  const user = await tx.user.create({
+    data: {
+      email: null,
+      passwordHash: null,
+      displayName: body.userName?.trim() || "Usuário",
+      nativeLanguage: body.nativeLanguage,
+      targetLanguage: body.targetLanguage,
+      level: body.level,
+    },
+    select: {
+      id: true,
+    },
+  });
 
-      if (interestNames.length > 0) {
-        const interests = await Promise.all(
-          interestNames.map((name) =>
-            tx.interest.upsert({
-              where: { name },
-              update: {},
-              create: { name },
-            })
-          )
-        );
+  // Cria o primeiro idioma de estudo do usuário.
+  const learningLanguage = await tx.userLearningLanguage.create({
+    data: {
+      userId: user.id,
+      language: body.targetLanguage,
+      level: body.level,
+    },
+    select: {
+      id: true,
+    },
+  });
 
-        await tx.userInterest.createMany({
-          data: interests.map((i) => ({ userId: user.id, interestId: i.id })),
-          skipDuplicates: true,
-        });
-      }
+  // O primeiro idioma criado já é o idioma ativo.
+  await tx.user.update({
+    where: { id: user.id },
+    data: {
+      activeLearningLanguageId: learningLanguage.id,
+    },
+  });
 
-      const defaultList = user.lists.find((l: any) => l.isDefault);
-      if (!defaultList) throw new Error("DEFAULT_LIST_NOT_CREATED");
+  // A Lista Geral pertence ao idioma escolhido no onboarding.
+  const defaultList = await tx.vocabList.create({
+    data: {
+      userId: user.id,
+      learningLanguageId: learningLanguage.id,
+      name: "Lista Geral",
+      isDefault: true,
+    },
+    select: {
+      id: true,
+    },
+  });
 
-      return { userId: user.id, defaultListId: defaultList.id };
+  if (interestNames.length > 0) {
+    const interests = await Promise.all(
+      interestNames.map((name) =>
+        tx.interest.upsert({
+          where: { name },
+          update: {},
+          create: { name },
+        })
+      )
+    );
+
+    await tx.userInterest.createMany({
+      data: interests.map((interest) => ({
+        userId: user.id,
+        interestId: interest.id,
+      })),
+      skipDuplicates: true,
     });
+  }
+
+  return {
+    userId: user.id,
+    defaultListId: defaultList.id,
+  };
+});
 
     const seedInitialVocabs = body.seedInitialVocabs ?? true;
 

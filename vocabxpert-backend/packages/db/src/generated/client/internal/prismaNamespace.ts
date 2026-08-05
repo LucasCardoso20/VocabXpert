@@ -385,6 +385,7 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 export const ModelName = {
   User: 'User',
+  UserLearningLanguage: 'UserLearningLanguage',
   Interest: 'Interest',
   UserInterest: 'UserInterest',
   VocabList: 'VocabList',
@@ -411,7 +412,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "interest" | "userInterest" | "vocabList" | "vocab" | "vocabExample" | "vocabNote" | "vocabReview" | "vocabProgress" | "studySession" | "studyExercise" | "studyAttempt"
+    modelProps: "user" | "userLearningLanguage" | "interest" | "userInterest" | "vocabList" | "vocab" | "vocabExample" | "vocabNote" | "vocabReview" | "vocabProgress" | "studySession" | "studyExercise" | "studyAttempt"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -486,6 +487,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.UserCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.UserCountAggregateOutputType> | number
+        }
+      }
+    }
+    UserLearningLanguage: {
+      payload: Prisma.$UserLearningLanguagePayload<ExtArgs>
+      fields: Prisma.UserLearningLanguageFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.UserLearningLanguageFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserLearningLanguagePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.UserLearningLanguageFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserLearningLanguagePayload>
+        }
+        findFirst: {
+          args: Prisma.UserLearningLanguageFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserLearningLanguagePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.UserLearningLanguageFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserLearningLanguagePayload>
+        }
+        findMany: {
+          args: Prisma.UserLearningLanguageFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserLearningLanguagePayload>[]
+        }
+        create: {
+          args: Prisma.UserLearningLanguageCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserLearningLanguagePayload>
+        }
+        createMany: {
+          args: Prisma.UserLearningLanguageCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.UserLearningLanguageCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserLearningLanguagePayload>[]
+        }
+        delete: {
+          args: Prisma.UserLearningLanguageDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserLearningLanguagePayload>
+        }
+        update: {
+          args: Prisma.UserLearningLanguageUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserLearningLanguagePayload>
+        }
+        deleteMany: {
+          args: Prisma.UserLearningLanguageDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.UserLearningLanguageUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.UserLearningLanguageUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserLearningLanguagePayload>[]
+        }
+        upsert: {
+          args: Prisma.UserLearningLanguageUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserLearningLanguagePayload>
+        }
+        aggregate: {
+          args: Prisma.UserLearningLanguageAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUserLearningLanguage>
+        }
+        groupBy: {
+          args: Prisma.UserLearningLanguageGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserLearningLanguageGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.UserLearningLanguageCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserLearningLanguageCountAggregateOutputType> | number
         }
       }
     }
@@ -1346,14 +1421,28 @@ export const UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
   passwordHash: 'passwordHash',
+  displayName: 'displayName',
   nativeLanguage: 'nativeLanguage',
   targetLanguage: 'targetLanguage',
+  level: 'level',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  activeLearningLanguageId: 'activeLearningLanguageId'
+} as const
+
+export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const UserLearningLanguageScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  language: 'language',
   level: 'level',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
-export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+export type UserLearningLanguageScalarFieldEnum = (typeof UserLearningLanguageScalarFieldEnum)[keyof typeof UserLearningLanguageScalarFieldEnum]
 
 
 export const InterestScalarFieldEnum = {
@@ -1377,6 +1466,7 @@ export const VocabListScalarFieldEnum = {
   userId: 'userId',
   name: 'name',
   isDefault: 'isDefault',
+  learningLanguageId: 'learningLanguageId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -1792,6 +1882,7 @@ export type PrismaClientOptions = ({
 }
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
+  userLearningLanguage?: Prisma.UserLearningLanguageOmit
   interest?: Prisma.InterestOmit
   userInterest?: Prisma.UserInterestOmit
   vocabList?: Prisma.VocabListOmit

@@ -2,6 +2,7 @@ import { z } from "zod";
 
 export const OnboardingBodySchema = z.object({
   nativeLanguage: z.string().min(1),
+  userName: z.string().trim().min(1).max(80).optional(),
   targetLanguage: z.string().min(1),
   level: z.enum(["BEGINNER", "INTERMEDIATE", "ADVANCED"]),
   interests: z.array(z.string().min(1)),

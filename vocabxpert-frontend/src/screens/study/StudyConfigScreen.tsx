@@ -452,6 +452,19 @@ export default function StudyConfigScreen() {
 </View>
 
       <Pressable
+  style={styles.reviewBtn}
+  onPress={() => router.push('/reviews')}
+>
+  <Ionicons
+    name="calendar-outline"
+    size={19}
+    color={colors.primary}
+  />
+
+  <Text style={styles.reviewBtnText}>Ver minhas revisões</Text>
+</Pressable>
+
+      <Pressable
         style={[
           styles.primaryBtn,
           (starting || lists.length === 0) && styles.primaryBtnDisabled,
@@ -474,11 +487,17 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.background,
   },
-  content: {
-    padding: spacing.s5,
-    paddingBottom: spacing.s6,
-    gap: spacing.s3,
-  },
+ content: {
+  padding: spacing.s5,
+
+  /**
+   * Reserva espaço para a barra inferior flutuante.
+   * Sem isso, os últimos botões ficam atrás do menu.
+   */
+  paddingBottom: 120,
+
+  gap: spacing.s3,
+},
   center: {
     flex: 1,
     backgroundColor: colors.background,
@@ -668,5 +687,22 @@ comingSoonText: {
   color: colors.muted,
   fontFamily: 'DM Sans SemiBold',
   fontSize: 10,
+},
+reviewBtn: {
+  minHeight: 50,
+  borderRadius: radio.full,
+  borderWidth: 1,
+  borderColor: colors.primary,
+  backgroundColor: colors.surface,
+  flexDirection: 'row',
+  alignItems: 'center',
+  justifyContent: 'center',
+  gap: spacing.s2,
+  marginTop: spacing.s2,
+},
+reviewBtnText: {
+  color: colors.primary,
+  fontFamily: 'DM Sans SemiBold',
+  fontSize: 14,
 },
 });

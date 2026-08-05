@@ -3,10 +3,12 @@ import { prisma } from "@vocabxpert/db";
 async function main() {
   const groups = await prisma.vocab.groupBy({
     by: ["listId", "wordNormalized"],
-    where: { wordNormalized: { not: null } },
+    where: { wordNormalized: { not: "" } },
 
     // retorna contagem por um campo (id é sempre não-null)
-    _count: { id: true },
+    _count: {
+      _all: true,
+    },
 
     // having filtra por CAMPO com agregação (não existe having: { _count: ... })
     having: {
@@ -27,7 +29,7 @@ async function main() {
     console.log({
       listId: g.listId,
       wordNormalized: g.wordNormalized,
-      count: g._count.id,
+      count: g._count._all,
     });
 
     const items = await prisma.vocab.findMany({

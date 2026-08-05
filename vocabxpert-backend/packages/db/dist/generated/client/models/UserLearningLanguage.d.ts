@@ -1,0 +1,1457 @@
+import type * as runtime from "@prisma/client/runtime/client";
+import type * as $Enums from "../enums.js";
+import type * as Prisma from "../internal/prismaNamespace.js";
+/**
+ * Model UserLearningLanguage
+ *
+ */
+export type UserLearningLanguageModel = runtime.Types.Result.DefaultSelection<Prisma.$UserLearningLanguagePayload>;
+export type AggregateUserLearningLanguage = {
+    _count: UserLearningLanguageCountAggregateOutputType | null;
+    _min: UserLearningLanguageMinAggregateOutputType | null;
+    _max: UserLearningLanguageMaxAggregateOutputType | null;
+};
+export type UserLearningLanguageMinAggregateOutputType = {
+    id: string | null;
+    userId: string | null;
+    language: string | null;
+    level: $Enums.TargetLevel | null;
+    createdAt: Date | null;
+    updatedAt: Date | null;
+};
+export type UserLearningLanguageMaxAggregateOutputType = {
+    id: string | null;
+    userId: string | null;
+    language: string | null;
+    level: $Enums.TargetLevel | null;
+    createdAt: Date | null;
+    updatedAt: Date | null;
+};
+export type UserLearningLanguageCountAggregateOutputType = {
+    id: number;
+    userId: number;
+    language: number;
+    level: number;
+    createdAt: number;
+    updatedAt: number;
+    _all: number;
+};
+export type UserLearningLanguageMinAggregateInputType = {
+    id?: true;
+    userId?: true;
+    language?: true;
+    level?: true;
+    createdAt?: true;
+    updatedAt?: true;
+};
+export type UserLearningLanguageMaxAggregateInputType = {
+    id?: true;
+    userId?: true;
+    language?: true;
+    level?: true;
+    createdAt?: true;
+    updatedAt?: true;
+};
+export type UserLearningLanguageCountAggregateInputType = {
+    id?: true;
+    userId?: true;
+    language?: true;
+    level?: true;
+    createdAt?: true;
+    updatedAt?: true;
+    _all?: true;
+};
+export type UserLearningLanguageAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserLearningLanguage to aggregate.
+     */
+    where?: Prisma.UserLearningLanguageWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of UserLearningLanguages to fetch.
+     */
+    orderBy?: Prisma.UserLearningLanguageOrderByWithRelationInput | Prisma.UserLearningLanguageOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the start position
+     */
+    cursor?: Prisma.UserLearningLanguageWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` UserLearningLanguages from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` UserLearningLanguages.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Count returned UserLearningLanguages
+    **/
+    _count?: true | UserLearningLanguageCountAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to find the minimum value
+    **/
+    _min?: UserLearningLanguageMinAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to find the maximum value
+    **/
+    _max?: UserLearningLanguageMaxAggregateInputType;
+};
+export type GetUserLearningLanguageAggregateType<T extends UserLearningLanguageAggregateArgs> = {
+    [P in keyof T & keyof AggregateUserLearningLanguage]: P extends '_count' | 'count' ? T[P] extends true ? number : Prisma.GetScalarType<T[P], AggregateUserLearningLanguage[P]> : Prisma.GetScalarType<T[P], AggregateUserLearningLanguage[P]>;
+};
+export type UserLearningLanguageGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.UserLearningLanguageWhereInput;
+    orderBy?: Prisma.UserLearningLanguageOrderByWithAggregationInput | Prisma.UserLearningLanguageOrderByWithAggregationInput[];
+    by: Prisma.UserLearningLanguageScalarFieldEnum[] | Prisma.UserLearningLanguageScalarFieldEnum;
+    having?: Prisma.UserLearningLanguageScalarWhereWithAggregatesInput;
+    take?: number;
+    skip?: number;
+    _count?: UserLearningLanguageCountAggregateInputType | true;
+    _min?: UserLearningLanguageMinAggregateInputType;
+    _max?: UserLearningLanguageMaxAggregateInputType;
+};
+export type UserLearningLanguageGroupByOutputType = {
+    id: string;
+    userId: string;
+    language: string;
+    level: $Enums.TargetLevel;
+    createdAt: Date;
+    updatedAt: Date;
+    _count: UserLearningLanguageCountAggregateOutputType | null;
+    _min: UserLearningLanguageMinAggregateOutputType | null;
+    _max: UserLearningLanguageMaxAggregateOutputType | null;
+};
+export type GetUserLearningLanguageGroupByPayload<T extends UserLearningLanguageGroupByArgs> = Prisma.PrismaPromise<Array<Prisma.PickEnumerable<UserLearningLanguageGroupByOutputType, T['by']> & {
+    [P in ((keyof T) & (keyof UserLearningLanguageGroupByOutputType))]: P extends '_count' ? T[P] extends boolean ? number : Prisma.GetScalarType<T[P], UserLearningLanguageGroupByOutputType[P]> : Prisma.GetScalarType<T[P], UserLearningLanguageGroupByOutputType[P]>;
+}>>;
+export type UserLearningLanguageWhereInput = {
+    AND?: Prisma.UserLearningLanguageWhereInput | Prisma.UserLearningLanguageWhereInput[];
+    OR?: Prisma.UserLearningLanguageWhereInput[];
+    NOT?: Prisma.UserLearningLanguageWhereInput | Prisma.UserLearningLanguageWhereInput[];
+    id?: Prisma.StringFilter<"UserLearningLanguage"> | string;
+    userId?: Prisma.StringFilter<"UserLearningLanguage"> | string;
+    language?: Prisma.StringFilter<"UserLearningLanguage"> | string;
+    level?: Prisma.EnumTargetLevelFilter<"UserLearningLanguage"> | $Enums.TargetLevel;
+    createdAt?: Prisma.DateTimeFilter<"UserLearningLanguage"> | Date | string;
+    updatedAt?: Prisma.DateTimeFilter<"UserLearningLanguage"> | Date | string;
+    user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
+    activeForUsers?: Prisma.UserListRelationFilter;
+    lists?: Prisma.VocabListListRelationFilter;
+};
+export type UserLearningLanguageOrderByWithRelationInput = {
+    id?: Prisma.SortOrder;
+    userId?: Prisma.SortOrder;
+    language?: Prisma.SortOrder;
+    level?: Prisma.SortOrder;
+    createdAt?: Prisma.SortOrder;
+    updatedAt?: Prisma.SortOrder;
+    user?: Prisma.UserOrderByWithRelationInput;
+    activeForUsers?: Prisma.UserOrderByRelationAggregateInput;
+    lists?: Prisma.VocabListOrderByRelationAggregateInput;
+};
+export type UserLearningLanguageWhereUniqueInput = Prisma.AtLeast<{
+    id?: string;
+    userId_language?: Prisma.UserLearningLanguageUserIdLanguageCompoundUniqueInput;
+    AND?: Prisma.UserLearningLanguageWhereInput | Prisma.UserLearningLanguageWhereInput[];
+    OR?: Prisma.UserLearningLanguageWhereInput[];
+    NOT?: Prisma.UserLearningLanguageWhereInput | Prisma.UserLearningLanguageWhereInput[];
+    userId?: Prisma.StringFilter<"UserLearningLanguage"> | string;
+    language?: Prisma.StringFilter<"UserLearningLanguage"> | string;
+    level?: Prisma.EnumTargetLevelFilter<"UserLearningLanguage"> | $Enums.TargetLevel;
+    createdAt?: Prisma.DateTimeFilter<"UserLearningLanguage"> | Date | string;
+    updatedAt?: Prisma.DateTimeFilter<"UserLearningLanguage"> | Date | string;
+    user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
+    activeForUsers?: Prisma.UserListRelationFilter;
+    lists?: Prisma.VocabListListRelationFilter;
+}, "id" | "userId_language">;
+export type UserLearningLanguageOrderByWithAggregationInput = {
+    id?: Prisma.SortOrder;
+    userId?: Prisma.SortOrder;
+    language?: Prisma.SortOrder;
+    level?: Prisma.SortOrder;
+    createdAt?: Prisma.SortOrder;
+    updatedAt?: Prisma.SortOrder;
+    _count?: Prisma.UserLearningLanguageCountOrderByAggregateInput;
+    _max?: Prisma.UserLearningLanguageMaxOrderByAggregateInput;
+    _min?: Prisma.UserLearningLanguageMinOrderByAggregateInput;
+};
+export type UserLearningLanguageScalarWhereWithAggregatesInput = {
+    AND?: Prisma.UserLearningLanguageScalarWhereWithAggregatesInput | Prisma.UserLearningLanguageScalarWhereWithAggregatesInput[];
+    OR?: Prisma.UserLearningLanguageScalarWhereWithAggregatesInput[];
+    NOT?: Prisma.UserLearningLanguageScalarWhereWithAggregatesInput | Prisma.UserLearningLanguageScalarWhereWithAggregatesInput[];
+    id?: Prisma.StringWithAggregatesFilter<"UserLearningLanguage"> | string;
+    userId?: Prisma.StringWithAggregatesFilter<"UserLearningLanguage"> | string;
+    language?: Prisma.StringWithAggregatesFilter<"UserLearningLanguage"> | string;
+    level?: Prisma.EnumTargetLevelWithAggregatesFilter<"UserLearningLanguage"> | $Enums.TargetLevel;
+    createdAt?: Prisma.DateTimeWithAggregatesFilter<"UserLearningLanguage"> | Date | string;
+    updatedAt?: Prisma.DateTimeWithAggregatesFilter<"UserLearningLanguage"> | Date | string;
+};
+export type UserLearningLanguageCreateInput = {
+    id?: string;
+    language: string;
+    level?: $Enums.TargetLevel;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    user: Prisma.UserCreateNestedOneWithoutLearningLanguagesInput;
+    activeForUsers?: Prisma.UserCreateNestedManyWithoutActiveLearningLanguageInput;
+    lists?: Prisma.VocabListCreateNestedManyWithoutLearningLanguageInput;
+};
+export type UserLearningLanguageUncheckedCreateInput = {
+    id?: string;
+    userId: string;
+    language: string;
+    level?: $Enums.TargetLevel;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    activeForUsers?: Prisma.UserUncheckedCreateNestedManyWithoutActiveLearningLanguageInput;
+    lists?: Prisma.VocabListUncheckedCreateNestedManyWithoutLearningLanguageInput;
+};
+export type UserLearningLanguageUpdateInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    language?: Prisma.StringFieldUpdateOperationsInput | string;
+    level?: Prisma.EnumTargetLevelFieldUpdateOperationsInput | $Enums.TargetLevel;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    user?: Prisma.UserUpdateOneRequiredWithoutLearningLanguagesNestedInput;
+    activeForUsers?: Prisma.UserUpdateManyWithoutActiveLearningLanguageNestedInput;
+    lists?: Prisma.VocabListUpdateManyWithoutLearningLanguageNestedInput;
+};
+export type UserLearningLanguageUncheckedUpdateInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    userId?: Prisma.StringFieldUpdateOperationsInput | string;
+    language?: Prisma.StringFieldUpdateOperationsInput | string;
+    level?: Prisma.EnumTargetLevelFieldUpdateOperationsInput | $Enums.TargetLevel;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    activeForUsers?: Prisma.UserUncheckedUpdateManyWithoutActiveLearningLanguageNestedInput;
+    lists?: Prisma.VocabListUncheckedUpdateManyWithoutLearningLanguageNestedInput;
+};
+export type UserLearningLanguageCreateManyInput = {
+    id?: string;
+    userId: string;
+    language: string;
+    level?: $Enums.TargetLevel;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+};
+export type UserLearningLanguageUpdateManyMutationInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    language?: Prisma.StringFieldUpdateOperationsInput | string;
+    level?: Prisma.EnumTargetLevelFieldUpdateOperationsInput | $Enums.TargetLevel;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+};
+export type UserLearningLanguageUncheckedUpdateManyInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    userId?: Prisma.StringFieldUpdateOperationsInput | string;
+    language?: Prisma.StringFieldUpdateOperationsInput | string;
+    level?: Prisma.EnumTargetLevelFieldUpdateOperationsInput | $Enums.TargetLevel;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+};
+export type UserLearningLanguageListRelationFilter = {
+    every?: Prisma.UserLearningLanguageWhereInput;
+    some?: Prisma.UserLearningLanguageWhereInput;
+    none?: Prisma.UserLearningLanguageWhereInput;
+};
+export type UserLearningLanguageNullableScalarRelationFilter = {
+    is?: Prisma.UserLearningLanguageWhereInput | null;
+    isNot?: Prisma.UserLearningLanguageWhereInput | null;
+};
+export type UserLearningLanguageOrderByRelationAggregateInput = {
+    _count?: Prisma.SortOrder;
+};
+export type UserLearningLanguageUserIdLanguageCompoundUniqueInput = {
+    userId: string;
+    language: string;
+};
+export type UserLearningLanguageCountOrderByAggregateInput = {
+    id?: Prisma.SortOrder;
+    userId?: Prisma.SortOrder;
+    language?: Prisma.SortOrder;
+    level?: Prisma.SortOrder;
+    createdAt?: Prisma.SortOrder;
+    updatedAt?: Prisma.SortOrder;
+};
+export type UserLearningLanguageMaxOrderByAggregateInput = {
+    id?: Prisma.SortOrder;
+    userId?: Prisma.SortOrder;
+    language?: Prisma.SortOrder;
+    level?: Prisma.SortOrder;
+    createdAt?: Prisma.SortOrder;
+    updatedAt?: Prisma.SortOrder;
+};
+export type UserLearningLanguageMinOrderByAggregateInput = {
+    id?: Prisma.SortOrder;
+    userId?: Prisma.SortOrder;
+    language?: Prisma.SortOrder;
+    level?: Prisma.SortOrder;
+    createdAt?: Prisma.SortOrder;
+    updatedAt?: Prisma.SortOrder;
+};
+export type UserLearningLanguageCreateNestedManyWithoutUserInput = {
+    create?: Prisma.XOR<Prisma.UserLearningLanguageCreateWithoutUserInput, Prisma.UserLearningLanguageUncheckedCreateWithoutUserInput> | Prisma.UserLearningLanguageCreateWithoutUserInput[] | Prisma.UserLearningLanguageUncheckedCreateWithoutUserInput[];
+    connectOrCreate?: Prisma.UserLearningLanguageCreateOrConnectWithoutUserInput | Prisma.UserLearningLanguageCreateOrConnectWithoutUserInput[];
+    createMany?: Prisma.UserLearningLanguageCreateManyUserInputEnvelope;
+    connect?: Prisma.UserLearningLanguageWhereUniqueInput | Prisma.UserLearningLanguageWhereUniqueInput[];
+};
+export type UserLearningLanguageCreateNestedOneWithoutActiveForUsersInput = {
+    create?: Prisma.XOR<Prisma.UserLearningLanguageCreateWithoutActiveForUsersInput, Prisma.UserLearningLanguageUncheckedCreateWithoutActiveForUsersInput>;
+    connectOrCreate?: Prisma.UserLearningLanguageCreateOrConnectWithoutActiveForUsersInput;
+    connect?: Prisma.UserLearningLanguageWhereUniqueInput;
+};
+export type UserLearningLanguageUncheckedCreateNestedManyWithoutUserInput = {
+    create?: Prisma.XOR<Prisma.UserLearningLanguageCreateWithoutUserInput, Prisma.UserLearningLanguageUncheckedCreateWithoutUserInput> | Prisma.UserLearningLanguageCreateWithoutUserInput[] | Prisma.UserLearningLanguageUncheckedCreateWithoutUserInput[];
+    connectOrCreate?: Prisma.UserLearningLanguageCreateOrConnectWithoutUserInput | Prisma.UserLearningLanguageCreateOrConnectWithoutUserInput[];
+    createMany?: Prisma.UserLearningLanguageCreateManyUserInputEnvelope;
+    connect?: Prisma.UserLearningLanguageWhereUniqueInput | Prisma.UserLearningLanguageWhereUniqueInput[];
+};
+export type UserLearningLanguageUpdateManyWithoutUserNestedInput = {
+    create?: Prisma.XOR<Prisma.UserLearningLanguageCreateWithoutUserInput, Prisma.UserLearningLanguageUncheckedCreateWithoutUserInput> | Prisma.UserLearningLanguageCreateWithoutUserInput[] | Prisma.UserLearningLanguageUncheckedCreateWithoutUserInput[];
+    connectOrCreate?: Prisma.UserLearningLanguageCreateOrConnectWithoutUserInput | Prisma.UserLearningLanguageCreateOrConnectWithoutUserInput[];
+    upsert?: Prisma.UserLearningLanguageUpsertWithWhereUniqueWithoutUserInput | Prisma.UserLearningLanguageUpsertWithWhereUniqueWithoutUserInput[];
+    createMany?: Prisma.UserLearningLanguageCreateManyUserInputEnvelope;
+    set?: Prisma.UserLearningLanguageWhereUniqueInput | Prisma.UserLearningLanguageWhereUniqueInput[];
+    disconnect?: Prisma.UserLearningLanguageWhereUniqueInput | Prisma.UserLearningLanguageWhereUniqueInput[];
+    delete?: Prisma.UserLearningLanguageWhereUniqueInput | Prisma.UserLearningLanguageWhereUniqueInput[];
+    connect?: Prisma.UserLearningLanguageWhereUniqueInput | Prisma.UserLearningLanguageWhereUniqueInput[];
+    update?: Prisma.UserLearningLanguageUpdateWithWhereUniqueWithoutUserInput | Prisma.UserLearningLanguageUpdateWithWhereUniqueWithoutUserInput[];
+    updateMany?: Prisma.UserLearningLanguageUpdateManyWithWhereWithoutUserInput | Prisma.UserLearningLanguageUpdateManyWithWhereWithoutUserInput[];
+    deleteMany?: Prisma.UserLearningLanguageScalarWhereInput | Prisma.UserLearningLanguageScalarWhereInput[];
+};
+export type UserLearningLanguageUpdateOneWithoutActiveForUsersNestedInput = {
+    create?: Prisma.XOR<Prisma.UserLearningLanguageCreateWithoutActiveForUsersInput, Prisma.UserLearningLanguageUncheckedCreateWithoutActiveForUsersInput>;
+    connectOrCreate?: Prisma.UserLearningLanguageCreateOrConnectWithoutActiveForUsersInput;
+    upsert?: Prisma.UserLearningLanguageUpsertWithoutActiveForUsersInput;
+    disconnect?: Prisma.UserLearningLanguageWhereInput | boolean;
+    delete?: Prisma.UserLearningLanguageWhereInput | boolean;
+    connect?: Prisma.UserLearningLanguageWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.UserLearningLanguageUpdateToOneWithWhereWithoutActiveForUsersInput, Prisma.UserLearningLanguageUpdateWithoutActiveForUsersInput>, Prisma.UserLearningLanguageUncheckedUpdateWithoutActiveForUsersInput>;
+};
+export type UserLearningLanguageUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: Prisma.XOR<Prisma.UserLearningLanguageCreateWithoutUserInput, Prisma.UserLearningLanguageUncheckedCreateWithoutUserInput> | Prisma.UserLearningLanguageCreateWithoutUserInput[] | Prisma.UserLearningLanguageUncheckedCreateWithoutUserInput[];
+    connectOrCreate?: Prisma.UserLearningLanguageCreateOrConnectWithoutUserInput | Prisma.UserLearningLanguageCreateOrConnectWithoutUserInput[];
+    upsert?: Prisma.UserLearningLanguageUpsertWithWhereUniqueWithoutUserInput | Prisma.UserLearningLanguageUpsertWithWhereUniqueWithoutUserInput[];
+    createMany?: Prisma.UserLearningLanguageCreateManyUserInputEnvelope;
+    set?: Prisma.UserLearningLanguageWhereUniqueInput | Prisma.UserLearningLanguageWhereUniqueInput[];
+    disconnect?: Prisma.UserLearningLanguageWhereUniqueInput | Prisma.UserLearningLanguageWhereUniqueInput[];
+    delete?: Prisma.UserLearningLanguageWhereUniqueInput | Prisma.UserLearningLanguageWhereUniqueInput[];
+    connect?: Prisma.UserLearningLanguageWhereUniqueInput | Prisma.UserLearningLanguageWhereUniqueInput[];
+    update?: Prisma.UserLearningLanguageUpdateWithWhereUniqueWithoutUserInput | Prisma.UserLearningLanguageUpdateWithWhereUniqueWithoutUserInput[];
+    updateMany?: Prisma.UserLearningLanguageUpdateManyWithWhereWithoutUserInput | Prisma.UserLearningLanguageUpdateManyWithWhereWithoutUserInput[];
+    deleteMany?: Prisma.UserLearningLanguageScalarWhereInput | Prisma.UserLearningLanguageScalarWhereInput[];
+};
+export type UserLearningLanguageCreateNestedOneWithoutListsInput = {
+    create?: Prisma.XOR<Prisma.UserLearningLanguageCreateWithoutListsInput, Prisma.UserLearningLanguageUncheckedCreateWithoutListsInput>;
+    connectOrCreate?: Prisma.UserLearningLanguageCreateOrConnectWithoutListsInput;
+    connect?: Prisma.UserLearningLanguageWhereUniqueInput;
+};
+export type UserLearningLanguageUpdateOneWithoutListsNestedInput = {
+    create?: Prisma.XOR<Prisma.UserLearningLanguageCreateWithoutListsInput, Prisma.UserLearningLanguageUncheckedCreateWithoutListsInput>;
+    connectOrCreate?: Prisma.UserLearningLanguageCreateOrConnectWithoutListsInput;
+    upsert?: Prisma.UserLearningLanguageUpsertWithoutListsInput;
+    disconnect?: Prisma.UserLearningLanguageWhereInput | boolean;
+    delete?: Prisma.UserLearningLanguageWhereInput | boolean;
+    connect?: Prisma.UserLearningLanguageWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.UserLearningLanguageUpdateToOneWithWhereWithoutListsInput, Prisma.UserLearningLanguageUpdateWithoutListsInput>, Prisma.UserLearningLanguageUncheckedUpdateWithoutListsInput>;
+};
+export type UserLearningLanguageCreateWithoutUserInput = {
+    id?: string;
+    language: string;
+    level?: $Enums.TargetLevel;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    activeForUsers?: Prisma.UserCreateNestedManyWithoutActiveLearningLanguageInput;
+    lists?: Prisma.VocabListCreateNestedManyWithoutLearningLanguageInput;
+};
+export type UserLearningLanguageUncheckedCreateWithoutUserInput = {
+    id?: string;
+    language: string;
+    level?: $Enums.TargetLevel;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    activeForUsers?: Prisma.UserUncheckedCreateNestedManyWithoutActiveLearningLanguageInput;
+    lists?: Prisma.VocabListUncheckedCreateNestedManyWithoutLearningLanguageInput;
+};
+export type UserLearningLanguageCreateOrConnectWithoutUserInput = {
+    where: Prisma.UserLearningLanguageWhereUniqueInput;
+    create: Prisma.XOR<Prisma.UserLearningLanguageCreateWithoutUserInput, Prisma.UserLearningLanguageUncheckedCreateWithoutUserInput>;
+};
+export type UserLearningLanguageCreateManyUserInputEnvelope = {
+    data: Prisma.UserLearningLanguageCreateManyUserInput | Prisma.UserLearningLanguageCreateManyUserInput[];
+    skipDuplicates?: boolean;
+};
+export type UserLearningLanguageCreateWithoutActiveForUsersInput = {
+    id?: string;
+    language: string;
+    level?: $Enums.TargetLevel;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    user: Prisma.UserCreateNestedOneWithoutLearningLanguagesInput;
+    lists?: Prisma.VocabListCreateNestedManyWithoutLearningLanguageInput;
+};
+export type UserLearningLanguageUncheckedCreateWithoutActiveForUsersInput = {
+    id?: string;
+    userId: string;
+    language: string;
+    level?: $Enums.TargetLevel;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    lists?: Prisma.VocabListUncheckedCreateNestedManyWithoutLearningLanguageInput;
+};
+export type UserLearningLanguageCreateOrConnectWithoutActiveForUsersInput = {
+    where: Prisma.UserLearningLanguageWhereUniqueInput;
+    create: Prisma.XOR<Prisma.UserLearningLanguageCreateWithoutActiveForUsersInput, Prisma.UserLearningLanguageUncheckedCreateWithoutActiveForUsersInput>;
+};
+export type UserLearningLanguageUpsertWithWhereUniqueWithoutUserInput = {
+    where: Prisma.UserLearningLanguageWhereUniqueInput;
+    update: Prisma.XOR<Prisma.UserLearningLanguageUpdateWithoutUserInput, Prisma.UserLearningLanguageUncheckedUpdateWithoutUserInput>;
+    create: Prisma.XOR<Prisma.UserLearningLanguageCreateWithoutUserInput, Prisma.UserLearningLanguageUncheckedCreateWithoutUserInput>;
+};
+export type UserLearningLanguageUpdateWithWhereUniqueWithoutUserInput = {
+    where: Prisma.UserLearningLanguageWhereUniqueInput;
+    data: Prisma.XOR<Prisma.UserLearningLanguageUpdateWithoutUserInput, Prisma.UserLearningLanguageUncheckedUpdateWithoutUserInput>;
+};
+export type UserLearningLanguageUpdateManyWithWhereWithoutUserInput = {
+    where: Prisma.UserLearningLanguageScalarWhereInput;
+    data: Prisma.XOR<Prisma.UserLearningLanguageUpdateManyMutationInput, Prisma.UserLearningLanguageUncheckedUpdateManyWithoutUserInput>;
+};
+export type UserLearningLanguageScalarWhereInput = {
+    AND?: Prisma.UserLearningLanguageScalarWhereInput | Prisma.UserLearningLanguageScalarWhereInput[];
+    OR?: Prisma.UserLearningLanguageScalarWhereInput[];
+    NOT?: Prisma.UserLearningLanguageScalarWhereInput | Prisma.UserLearningLanguageScalarWhereInput[];
+    id?: Prisma.StringFilter<"UserLearningLanguage"> | string;
+    userId?: Prisma.StringFilter<"UserLearningLanguage"> | string;
+    language?: Prisma.StringFilter<"UserLearningLanguage"> | string;
+    level?: Prisma.EnumTargetLevelFilter<"UserLearningLanguage"> | $Enums.TargetLevel;
+    createdAt?: Prisma.DateTimeFilter<"UserLearningLanguage"> | Date | string;
+    updatedAt?: Prisma.DateTimeFilter<"UserLearningLanguage"> | Date | string;
+};
+export type UserLearningLanguageUpsertWithoutActiveForUsersInput = {
+    update: Prisma.XOR<Prisma.UserLearningLanguageUpdateWithoutActiveForUsersInput, Prisma.UserLearningLanguageUncheckedUpdateWithoutActiveForUsersInput>;
+    create: Prisma.XOR<Prisma.UserLearningLanguageCreateWithoutActiveForUsersInput, Prisma.UserLearningLanguageUncheckedCreateWithoutActiveForUsersInput>;
+    where?: Prisma.UserLearningLanguageWhereInput;
+};
+export type UserLearningLanguageUpdateToOneWithWhereWithoutActiveForUsersInput = {
+    where?: Prisma.UserLearningLanguageWhereInput;
+    data: Prisma.XOR<Prisma.UserLearningLanguageUpdateWithoutActiveForUsersInput, Prisma.UserLearningLanguageUncheckedUpdateWithoutActiveForUsersInput>;
+};
+export type UserLearningLanguageUpdateWithoutActiveForUsersInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    language?: Prisma.StringFieldUpdateOperationsInput | string;
+    level?: Prisma.EnumTargetLevelFieldUpdateOperationsInput | $Enums.TargetLevel;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    user?: Prisma.UserUpdateOneRequiredWithoutLearningLanguagesNestedInput;
+    lists?: Prisma.VocabListUpdateManyWithoutLearningLanguageNestedInput;
+};
+export type UserLearningLanguageUncheckedUpdateWithoutActiveForUsersInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    userId?: Prisma.StringFieldUpdateOperationsInput | string;
+    language?: Prisma.StringFieldUpdateOperationsInput | string;
+    level?: Prisma.EnumTargetLevelFieldUpdateOperationsInput | $Enums.TargetLevel;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    lists?: Prisma.VocabListUncheckedUpdateManyWithoutLearningLanguageNestedInput;
+};
+export type UserLearningLanguageCreateWithoutListsInput = {
+    id?: string;
+    language: string;
+    level?: $Enums.TargetLevel;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    user: Prisma.UserCreateNestedOneWithoutLearningLanguagesInput;
+    activeForUsers?: Prisma.UserCreateNestedManyWithoutActiveLearningLanguageInput;
+};
+export type UserLearningLanguageUncheckedCreateWithoutListsInput = {
+    id?: string;
+    userId: string;
+    language: string;
+    level?: $Enums.TargetLevel;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    activeForUsers?: Prisma.UserUncheckedCreateNestedManyWithoutActiveLearningLanguageInput;
+};
+export type UserLearningLanguageCreateOrConnectWithoutListsInput = {
+    where: Prisma.UserLearningLanguageWhereUniqueInput;
+    create: Prisma.XOR<Prisma.UserLearningLanguageCreateWithoutListsInput, Prisma.UserLearningLanguageUncheckedCreateWithoutListsInput>;
+};
+export type UserLearningLanguageUpsertWithoutListsInput = {
+    update: Prisma.XOR<Prisma.UserLearningLanguageUpdateWithoutListsInput, Prisma.UserLearningLanguageUncheckedUpdateWithoutListsInput>;
+    create: Prisma.XOR<Prisma.UserLearningLanguageCreateWithoutListsInput, Prisma.UserLearningLanguageUncheckedCreateWithoutListsInput>;
+    where?: Prisma.UserLearningLanguageWhereInput;
+};
+export type UserLearningLanguageUpdateToOneWithWhereWithoutListsInput = {
+    where?: Prisma.UserLearningLanguageWhereInput;
+    data: Prisma.XOR<Prisma.UserLearningLanguageUpdateWithoutListsInput, Prisma.UserLearningLanguageUncheckedUpdateWithoutListsInput>;
+};
+export type UserLearningLanguageUpdateWithoutListsInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    language?: Prisma.StringFieldUpdateOperationsInput | string;
+    level?: Prisma.EnumTargetLevelFieldUpdateOperationsInput | $Enums.TargetLevel;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    user?: Prisma.UserUpdateOneRequiredWithoutLearningLanguagesNestedInput;
+    activeForUsers?: Prisma.UserUpdateManyWithoutActiveLearningLanguageNestedInput;
+};
+export type UserLearningLanguageUncheckedUpdateWithoutListsInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    userId?: Prisma.StringFieldUpdateOperationsInput | string;
+    language?: Prisma.StringFieldUpdateOperationsInput | string;
+    level?: Prisma.EnumTargetLevelFieldUpdateOperationsInput | $Enums.TargetLevel;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    activeForUsers?: Prisma.UserUncheckedUpdateManyWithoutActiveLearningLanguageNestedInput;
+};
+export type UserLearningLanguageCreateManyUserInput = {
+    id?: string;
+    language: string;
+    level?: $Enums.TargetLevel;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+};
+export type UserLearningLanguageUpdateWithoutUserInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    language?: Prisma.StringFieldUpdateOperationsInput | string;
+    level?: Prisma.EnumTargetLevelFieldUpdateOperationsInput | $Enums.TargetLevel;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    activeForUsers?: Prisma.UserUpdateManyWithoutActiveLearningLanguageNestedInput;
+    lists?: Prisma.VocabListUpdateManyWithoutLearningLanguageNestedInput;
+};
+export type UserLearningLanguageUncheckedUpdateWithoutUserInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    language?: Prisma.StringFieldUpdateOperationsInput | string;
+    level?: Prisma.EnumTargetLevelFieldUpdateOperationsInput | $Enums.TargetLevel;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    activeForUsers?: Prisma.UserUncheckedUpdateManyWithoutActiveLearningLanguageNestedInput;
+    lists?: Prisma.VocabListUncheckedUpdateManyWithoutLearningLanguageNestedInput;
+};
+export type UserLearningLanguageUncheckedUpdateManyWithoutUserInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    language?: Prisma.StringFieldUpdateOperationsInput | string;
+    level?: Prisma.EnumTargetLevelFieldUpdateOperationsInput | $Enums.TargetLevel;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+};
+/**
+ * Count Type UserLearningLanguageCountOutputType
+ */
+export type UserLearningLanguageCountOutputType = {
+    activeForUsers: number;
+    lists: number;
+};
+export type UserLearningLanguageCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    activeForUsers?: boolean | UserLearningLanguageCountOutputTypeCountActiveForUsersArgs;
+    lists?: boolean | UserLearningLanguageCountOutputTypeCountListsArgs;
+};
+/**
+ * UserLearningLanguageCountOutputType without action
+ */
+export type UserLearningLanguageCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserLearningLanguageCountOutputType
+     */
+    select?: Prisma.UserLearningLanguageCountOutputTypeSelect<ExtArgs> | null;
+};
+/**
+ * UserLearningLanguageCountOutputType without action
+ */
+export type UserLearningLanguageCountOutputTypeCountActiveForUsersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.UserWhereInput;
+};
+/**
+ * UserLearningLanguageCountOutputType without action
+ */
+export type UserLearningLanguageCountOutputTypeCountListsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.VocabListWhereInput;
+};
+export type UserLearningLanguageSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+    id?: boolean;
+    userId?: boolean;
+    language?: boolean;
+    level?: boolean;
+    createdAt?: boolean;
+    updatedAt?: boolean;
+    user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+    activeForUsers?: boolean | Prisma.UserLearningLanguage$activeForUsersArgs<ExtArgs>;
+    lists?: boolean | Prisma.UserLearningLanguage$listsArgs<ExtArgs>;
+    _count?: boolean | Prisma.UserLearningLanguageCountOutputTypeDefaultArgs<ExtArgs>;
+}, ExtArgs["result"]["userLearningLanguage"]>;
+export type UserLearningLanguageSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+    id?: boolean;
+    userId?: boolean;
+    language?: boolean;
+    level?: boolean;
+    createdAt?: boolean;
+    updatedAt?: boolean;
+    user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+}, ExtArgs["result"]["userLearningLanguage"]>;
+export type UserLearningLanguageSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+    id?: boolean;
+    userId?: boolean;
+    language?: boolean;
+    level?: boolean;
+    createdAt?: boolean;
+    updatedAt?: boolean;
+    user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+}, ExtArgs["result"]["userLearningLanguage"]>;
+export type UserLearningLanguageSelectScalar = {
+    id?: boolean;
+    userId?: boolean;
+    language?: boolean;
+    level?: boolean;
+    createdAt?: boolean;
+    updatedAt?: boolean;
+};
+export type UserLearningLanguageOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "language" | "level" | "createdAt" | "updatedAt", ExtArgs["result"]["userLearningLanguage"]>;
+export type UserLearningLanguageInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+    activeForUsers?: boolean | Prisma.UserLearningLanguage$activeForUsersArgs<ExtArgs>;
+    lists?: boolean | Prisma.UserLearningLanguage$listsArgs<ExtArgs>;
+    _count?: boolean | Prisma.UserLearningLanguageCountOutputTypeDefaultArgs<ExtArgs>;
+};
+export type UserLearningLanguageIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+};
+export type UserLearningLanguageIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+};
+export type $UserLearningLanguagePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    name: "UserLearningLanguage";
+    objects: {
+        user: Prisma.$UserPayload<ExtArgs>;
+        activeForUsers: Prisma.$UserPayload<ExtArgs>[];
+        lists: Prisma.$VocabListPayload<ExtArgs>[];
+    };
+    scalars: runtime.Types.Extensions.GetPayloadResult<{
+        id: string;
+        userId: string;
+        language: string;
+        level: $Enums.TargetLevel;
+        createdAt: Date;
+        updatedAt: Date;
+    }, ExtArgs["result"]["userLearningLanguage"]>;
+    composites: {};
+};
+export type UserLearningLanguageGetPayload<S extends boolean | null | undefined | UserLearningLanguageDefaultArgs> = runtime.Types.Result.GetResult<Prisma.$UserLearningLanguagePayload, S>;
+export type UserLearningLanguageCountArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = Omit<UserLearningLanguageFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+    select?: UserLearningLanguageCountAggregateInputType | true;
+};
+export interface UserLearningLanguageDelegate<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: {
+        types: Prisma.TypeMap<ExtArgs>['model']['UserLearningLanguage'];
+        meta: {
+            name: 'UserLearningLanguage';
+        };
+    };
+    /**
+     * Find zero or one UserLearningLanguage that matches the filter.
+     * @param {UserLearningLanguageFindUniqueArgs} args - Arguments to find a UserLearningLanguage
+     * @example
+     * // Get one UserLearningLanguage
+     * const userLearningLanguage = await prisma.userLearningLanguage.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends UserLearningLanguageFindUniqueArgs>(args: Prisma.SelectSubset<T, UserLearningLanguageFindUniqueArgs<ExtArgs>>): Prisma.Prisma__UserLearningLanguageClient<runtime.Types.Result.GetResult<Prisma.$UserLearningLanguagePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Find one UserLearningLanguage that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {UserLearningLanguageFindUniqueOrThrowArgs} args - Arguments to find a UserLearningLanguage
+     * @example
+     * // Get one UserLearningLanguage
+     * const userLearningLanguage = await prisma.userLearningLanguage.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends UserLearningLanguageFindUniqueOrThrowArgs>(args: Prisma.SelectSubset<T, UserLearningLanguageFindUniqueOrThrowArgs<ExtArgs>>): Prisma.Prisma__UserLearningLanguageClient<runtime.Types.Result.GetResult<Prisma.$UserLearningLanguagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Find the first UserLearningLanguage that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserLearningLanguageFindFirstArgs} args - Arguments to find a UserLearningLanguage
+     * @example
+     * // Get one UserLearningLanguage
+     * const userLearningLanguage = await prisma.userLearningLanguage.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends UserLearningLanguageFindFirstArgs>(args?: Prisma.SelectSubset<T, UserLearningLanguageFindFirstArgs<ExtArgs>>): Prisma.Prisma__UserLearningLanguageClient<runtime.Types.Result.GetResult<Prisma.$UserLearningLanguagePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Find the first UserLearningLanguage that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserLearningLanguageFindFirstOrThrowArgs} args - Arguments to find a UserLearningLanguage
+     * @example
+     * // Get one UserLearningLanguage
+     * const userLearningLanguage = await prisma.userLearningLanguage.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends UserLearningLanguageFindFirstOrThrowArgs>(args?: Prisma.SelectSubset<T, UserLearningLanguageFindFirstOrThrowArgs<ExtArgs>>): Prisma.Prisma__UserLearningLanguageClient<runtime.Types.Result.GetResult<Prisma.$UserLearningLanguagePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Find zero or more UserLearningLanguages that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserLearningLanguageFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all UserLearningLanguages
+     * const userLearningLanguages = await prisma.userLearningLanguage.findMany()
+     *
+     * // Get first 10 UserLearningLanguages
+     * const userLearningLanguages = await prisma.userLearningLanguage.findMany({ take: 10 })
+     *
+     * // Only select the `id`
+     * const userLearningLanguageWithIdOnly = await prisma.userLearningLanguage.findMany({ select: { id: true } })
+     *
+     */
+    findMany<T extends UserLearningLanguageFindManyArgs>(args?: Prisma.SelectSubset<T, UserLearningLanguageFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserLearningLanguagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>;
+    /**
+     * Create a UserLearningLanguage.
+     * @param {UserLearningLanguageCreateArgs} args - Arguments to create a UserLearningLanguage.
+     * @example
+     * // Create one UserLearningLanguage
+     * const UserLearningLanguage = await prisma.userLearningLanguage.create({
+     *   data: {
+     *     // ... data to create a UserLearningLanguage
+     *   }
+     * })
+     *
+     */
+    create<T extends UserLearningLanguageCreateArgs>(args: Prisma.SelectSubset<T, UserLearningLanguageCreateArgs<ExtArgs>>): Prisma.Prisma__UserLearningLanguageClient<runtime.Types.Result.GetResult<Prisma.$UserLearningLanguagePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Create many UserLearningLanguages.
+     * @param {UserLearningLanguageCreateManyArgs} args - Arguments to create many UserLearningLanguages.
+     * @example
+     * // Create many UserLearningLanguages
+     * const userLearningLanguage = await prisma.userLearningLanguage.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     */
+    createMany<T extends UserLearningLanguageCreateManyArgs>(args?: Prisma.SelectSubset<T, UserLearningLanguageCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>;
+    /**
+     * Create many UserLearningLanguages and returns the data saved in the database.
+     * @param {UserLearningLanguageCreateManyAndReturnArgs} args - Arguments to create many UserLearningLanguages.
+     * @example
+     * // Create many UserLearningLanguages
+     * const userLearningLanguage = await prisma.userLearningLanguage.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     * // Create many UserLearningLanguages and only return the `id`
+     * const userLearningLanguageWithIdOnly = await prisma.userLearningLanguage.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     *
+     */
+    createManyAndReturn<T extends UserLearningLanguageCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, UserLearningLanguageCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserLearningLanguagePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>;
+    /**
+     * Delete a UserLearningLanguage.
+     * @param {UserLearningLanguageDeleteArgs} args - Arguments to delete one UserLearningLanguage.
+     * @example
+     * // Delete one UserLearningLanguage
+     * const UserLearningLanguage = await prisma.userLearningLanguage.delete({
+     *   where: {
+     *     // ... filter to delete one UserLearningLanguage
+     *   }
+     * })
+     *
+     */
+    delete<T extends UserLearningLanguageDeleteArgs>(args: Prisma.SelectSubset<T, UserLearningLanguageDeleteArgs<ExtArgs>>): Prisma.Prisma__UserLearningLanguageClient<runtime.Types.Result.GetResult<Prisma.$UserLearningLanguagePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Update one UserLearningLanguage.
+     * @param {UserLearningLanguageUpdateArgs} args - Arguments to update one UserLearningLanguage.
+     * @example
+     * // Update one UserLearningLanguage
+     * const userLearningLanguage = await prisma.userLearningLanguage.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     *
+     */
+    update<T extends UserLearningLanguageUpdateArgs>(args: Prisma.SelectSubset<T, UserLearningLanguageUpdateArgs<ExtArgs>>): Prisma.Prisma__UserLearningLanguageClient<runtime.Types.Result.GetResult<Prisma.$UserLearningLanguagePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Delete zero or more UserLearningLanguages.
+     * @param {UserLearningLanguageDeleteManyArgs} args - Arguments to filter UserLearningLanguages to delete.
+     * @example
+     * // Delete a few UserLearningLanguages
+     * const { count } = await prisma.userLearningLanguage.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     *
+     */
+    deleteMany<T extends UserLearningLanguageDeleteManyArgs>(args?: Prisma.SelectSubset<T, UserLearningLanguageDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>;
+    /**
+     * Update zero or more UserLearningLanguages.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserLearningLanguageUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many UserLearningLanguages
+     * const userLearningLanguage = await prisma.userLearningLanguage.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     *
+     */
+    updateMany<T extends UserLearningLanguageUpdateManyArgs>(args: Prisma.SelectSubset<T, UserLearningLanguageUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>;
+    /**
+     * Update zero or more UserLearningLanguages and returns the data updated in the database.
+     * @param {UserLearningLanguageUpdateManyAndReturnArgs} args - Arguments to update many UserLearningLanguages.
+     * @example
+     * // Update many UserLearningLanguages
+     * const userLearningLanguage = await prisma.userLearningLanguage.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     * // Update zero or more UserLearningLanguages and only return the `id`
+     * const userLearningLanguageWithIdOnly = await prisma.userLearningLanguage.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     *
+     */
+    updateManyAndReturn<T extends UserLearningLanguageUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, UserLearningLanguageUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserLearningLanguagePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>;
+    /**
+     * Create or update one UserLearningLanguage.
+     * @param {UserLearningLanguageUpsertArgs} args - Arguments to update or create a UserLearningLanguage.
+     * @example
+     * // Update or create a UserLearningLanguage
+     * const userLearningLanguage = await prisma.userLearningLanguage.upsert({
+     *   create: {
+     *     // ... data to create a UserLearningLanguage
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the UserLearningLanguage we want to update
+     *   }
+     * })
+     */
+    upsert<T extends UserLearningLanguageUpsertArgs>(args: Prisma.SelectSubset<T, UserLearningLanguageUpsertArgs<ExtArgs>>): Prisma.Prisma__UserLearningLanguageClient<runtime.Types.Result.GetResult<Prisma.$UserLearningLanguagePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Count the number of UserLearningLanguages.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserLearningLanguageCountArgs} args - Arguments to filter UserLearningLanguages to count.
+     * @example
+     * // Count the number of UserLearningLanguages
+     * const count = await prisma.userLearningLanguage.count({
+     *   where: {
+     *     // ... the filter for the UserLearningLanguages we want to count
+     *   }
+     * })
+    **/
+    count<T extends UserLearningLanguageCountArgs>(args?: Prisma.Subset<T, UserLearningLanguageCountArgs>): Prisma.PrismaPromise<T extends runtime.Types.Utils.Record<'select', any> ? T['select'] extends true ? number : Prisma.GetScalarType<T['select'], UserLearningLanguageCountAggregateOutputType> : number>;
+    /**
+     * Allows you to perform aggregations operations on a UserLearningLanguage.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserLearningLanguageAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UserLearningLanguageAggregateArgs>(args: Prisma.Subset<T, UserLearningLanguageAggregateArgs>): Prisma.PrismaPromise<GetUserLearningLanguageAggregateType<T>>;
+    /**
+     * Group by UserLearningLanguage.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserLearningLanguageGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     *
+    **/
+    groupBy<T extends UserLearningLanguageGroupByArgs, HasSelectOrTake extends Prisma.Or<Prisma.Extends<'skip', Prisma.Keys<T>>, Prisma.Extends<'take', Prisma.Keys<T>>>, OrderByArg extends Prisma.True extends HasSelectOrTake ? {
+        orderBy: UserLearningLanguageGroupByArgs['orderBy'];
+    } : {
+        orderBy?: UserLearningLanguageGroupByArgs['orderBy'];
+    }, OrderFields extends Prisma.ExcludeUnderscoreKeys<Prisma.Keys<Prisma.MaybeTupleToUnion<T['orderBy']>>>, ByFields extends Prisma.MaybeTupleToUnion<T['by']>, ByValid extends Prisma.Has<ByFields, OrderFields>, HavingFields extends Prisma.GetHavingFields<T['having']>, HavingValid extends Prisma.Has<ByFields, HavingFields>, ByEmpty extends T['by'] extends never[] ? Prisma.True : Prisma.False, InputErrors extends ByEmpty extends Prisma.True ? `Error: "by" must not be empty.` : HavingValid extends Prisma.False ? {
+        [P in HavingFields]: P extends ByFields ? never : P extends string ? `Error: Field "${P}" used in "having" needs to be provided in "by".` : [
+            Error,
+            'Field ',
+            P,
+            ` in "having" needs to be provided in "by"`
+        ];
+    }[HavingFields] : 'take' extends Prisma.Keys<T> ? 'orderBy' extends Prisma.Keys<T> ? ByValid extends Prisma.True ? {} : {
+        [P in OrderFields]: P extends ByFields ? never : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+    }[OrderFields] : 'Error: If you provide "take", you also need to provide "orderBy"' : 'skip' extends Prisma.Keys<T> ? 'orderBy' extends Prisma.Keys<T> ? ByValid extends Prisma.True ? {} : {
+        [P in OrderFields]: P extends ByFields ? never : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+    }[OrderFields] : 'Error: If you provide "skip", you also need to provide "orderBy"' : ByValid extends Prisma.True ? {} : {
+        [P in OrderFields]: P extends ByFields ? never : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+    }[OrderFields]>(args: Prisma.SubsetIntersection<T, UserLearningLanguageGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserLearningLanguageGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>;
+    /**
+     * Fields of the UserLearningLanguage model
+     */
+    readonly fields: UserLearningLanguageFieldRefs;
+}
+/**
+ * The delegate class that acts as a "Promise-like" for UserLearningLanguage.
+ * Why is this prefixed with `Prisma__`?
+ * Because we want to prevent naming conflicts as mentioned in
+ * https://github.com/prisma/prisma-client-js/issues/707
+ */
+export interface Prisma__UserLearningLanguageClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise";
+    user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>;
+    activeForUsers<T extends Prisma.UserLearningLanguage$activeForUsersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserLearningLanguage$activeForUsersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    lists<T extends Prisma.UserLearningLanguage$listsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserLearningLanguage$listsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VocabListPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): runtime.Types.Utils.JsPromise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): runtime.Types.Utils.JsPromise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): runtime.Types.Utils.JsPromise<T>;
+}
+/**
+ * Fields of the UserLearningLanguage model
+ */
+export interface UserLearningLanguageFieldRefs {
+    readonly id: Prisma.FieldRef<"UserLearningLanguage", 'String'>;
+    readonly userId: Prisma.FieldRef<"UserLearningLanguage", 'String'>;
+    readonly language: Prisma.FieldRef<"UserLearningLanguage", 'String'>;
+    readonly level: Prisma.FieldRef<"UserLearningLanguage", 'TargetLevel'>;
+    readonly createdAt: Prisma.FieldRef<"UserLearningLanguage", 'DateTime'>;
+    readonly updatedAt: Prisma.FieldRef<"UserLearningLanguage", 'DateTime'>;
+}
+/**
+ * UserLearningLanguage findUnique
+ */
+export type UserLearningLanguageFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserLearningLanguage
+     */
+    select?: Prisma.UserLearningLanguageSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the UserLearningLanguage
+     */
+    omit?: Prisma.UserLearningLanguageOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.UserLearningLanguageInclude<ExtArgs> | null;
+    /**
+     * Filter, which UserLearningLanguage to fetch.
+     */
+    where: Prisma.UserLearningLanguageWhereUniqueInput;
+};
+/**
+ * UserLearningLanguage findUniqueOrThrow
+ */
+export type UserLearningLanguageFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserLearningLanguage
+     */
+    select?: Prisma.UserLearningLanguageSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the UserLearningLanguage
+     */
+    omit?: Prisma.UserLearningLanguageOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.UserLearningLanguageInclude<ExtArgs> | null;
+    /**
+     * Filter, which UserLearningLanguage to fetch.
+     */
+    where: Prisma.UserLearningLanguageWhereUniqueInput;
+};
+/**
+ * UserLearningLanguage findFirst
+ */
+export type UserLearningLanguageFindFirstArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserLearningLanguage
+     */
+    select?: Prisma.UserLearningLanguageSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the UserLearningLanguage
+     */
+    omit?: Prisma.UserLearningLanguageOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.UserLearningLanguageInclude<ExtArgs> | null;
+    /**
+     * Filter, which UserLearningLanguage to fetch.
+     */
+    where?: Prisma.UserLearningLanguageWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of UserLearningLanguages to fetch.
+     */
+    orderBy?: Prisma.UserLearningLanguageOrderByWithRelationInput | Prisma.UserLearningLanguageOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for searching for UserLearningLanguages.
+     */
+    cursor?: Prisma.UserLearningLanguageWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` UserLearningLanguages from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` UserLearningLanguages.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of UserLearningLanguages.
+     */
+    distinct?: Prisma.UserLearningLanguageScalarFieldEnum | Prisma.UserLearningLanguageScalarFieldEnum[];
+};
+/**
+ * UserLearningLanguage findFirstOrThrow
+ */
+export type UserLearningLanguageFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserLearningLanguage
+     */
+    select?: Prisma.UserLearningLanguageSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the UserLearningLanguage
+     */
+    omit?: Prisma.UserLearningLanguageOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.UserLearningLanguageInclude<ExtArgs> | null;
+    /**
+     * Filter, which UserLearningLanguage to fetch.
+     */
+    where?: Prisma.UserLearningLanguageWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of UserLearningLanguages to fetch.
+     */
+    orderBy?: Prisma.UserLearningLanguageOrderByWithRelationInput | Prisma.UserLearningLanguageOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for searching for UserLearningLanguages.
+     */
+    cursor?: Prisma.UserLearningLanguageWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` UserLearningLanguages from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` UserLearningLanguages.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of UserLearningLanguages.
+     */
+    distinct?: Prisma.UserLearningLanguageScalarFieldEnum | Prisma.UserLearningLanguageScalarFieldEnum[];
+};
+/**
+ * UserLearningLanguage findMany
+ */
+export type UserLearningLanguageFindManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserLearningLanguage
+     */
+    select?: Prisma.UserLearningLanguageSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the UserLearningLanguage
+     */
+    omit?: Prisma.UserLearningLanguageOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.UserLearningLanguageInclude<ExtArgs> | null;
+    /**
+     * Filter, which UserLearningLanguages to fetch.
+     */
+    where?: Prisma.UserLearningLanguageWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of UserLearningLanguages to fetch.
+     */
+    orderBy?: Prisma.UserLearningLanguageOrderByWithRelationInput | Prisma.UserLearningLanguageOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for listing UserLearningLanguages.
+     */
+    cursor?: Prisma.UserLearningLanguageWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` UserLearningLanguages from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` UserLearningLanguages.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of UserLearningLanguages.
+     */
+    distinct?: Prisma.UserLearningLanguageScalarFieldEnum | Prisma.UserLearningLanguageScalarFieldEnum[];
+};
+/**
+ * UserLearningLanguage create
+ */
+export type UserLearningLanguageCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserLearningLanguage
+     */
+    select?: Prisma.UserLearningLanguageSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the UserLearningLanguage
+     */
+    omit?: Prisma.UserLearningLanguageOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.UserLearningLanguageInclude<ExtArgs> | null;
+    /**
+     * The data needed to create a UserLearningLanguage.
+     */
+    data: Prisma.XOR<Prisma.UserLearningLanguageCreateInput, Prisma.UserLearningLanguageUncheckedCreateInput>;
+};
+/**
+ * UserLearningLanguage createMany
+ */
+export type UserLearningLanguageCreateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many UserLearningLanguages.
+     */
+    data: Prisma.UserLearningLanguageCreateManyInput | Prisma.UserLearningLanguageCreateManyInput[];
+    skipDuplicates?: boolean;
+};
+/**
+ * UserLearningLanguage createManyAndReturn
+ */
+export type UserLearningLanguageCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserLearningLanguage
+     */
+    select?: Prisma.UserLearningLanguageSelectCreateManyAndReturn<ExtArgs> | null;
+    /**
+     * Omit specific fields from the UserLearningLanguage
+     */
+    omit?: Prisma.UserLearningLanguageOmit<ExtArgs> | null;
+    /**
+     * The data used to create many UserLearningLanguages.
+     */
+    data: Prisma.UserLearningLanguageCreateManyInput | Prisma.UserLearningLanguageCreateManyInput[];
+    skipDuplicates?: boolean;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.UserLearningLanguageIncludeCreateManyAndReturn<ExtArgs> | null;
+};
+/**
+ * UserLearningLanguage update
+ */
+export type UserLearningLanguageUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserLearningLanguage
+     */
+    select?: Prisma.UserLearningLanguageSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the UserLearningLanguage
+     */
+    omit?: Prisma.UserLearningLanguageOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.UserLearningLanguageInclude<ExtArgs> | null;
+    /**
+     * The data needed to update a UserLearningLanguage.
+     */
+    data: Prisma.XOR<Prisma.UserLearningLanguageUpdateInput, Prisma.UserLearningLanguageUncheckedUpdateInput>;
+    /**
+     * Choose, which UserLearningLanguage to update.
+     */
+    where: Prisma.UserLearningLanguageWhereUniqueInput;
+};
+/**
+ * UserLearningLanguage updateMany
+ */
+export type UserLearningLanguageUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * The data used to update UserLearningLanguages.
+     */
+    data: Prisma.XOR<Prisma.UserLearningLanguageUpdateManyMutationInput, Prisma.UserLearningLanguageUncheckedUpdateManyInput>;
+    /**
+     * Filter which UserLearningLanguages to update
+     */
+    where?: Prisma.UserLearningLanguageWhereInput;
+    /**
+     * Limit how many UserLearningLanguages to update.
+     */
+    limit?: number;
+};
+/**
+ * UserLearningLanguage updateManyAndReturn
+ */
+export type UserLearningLanguageUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserLearningLanguage
+     */
+    select?: Prisma.UserLearningLanguageSelectUpdateManyAndReturn<ExtArgs> | null;
+    /**
+     * Omit specific fields from the UserLearningLanguage
+     */
+    omit?: Prisma.UserLearningLanguageOmit<ExtArgs> | null;
+    /**
+     * The data used to update UserLearningLanguages.
+     */
+    data: Prisma.XOR<Prisma.UserLearningLanguageUpdateManyMutationInput, Prisma.UserLearningLanguageUncheckedUpdateManyInput>;
+    /**
+     * Filter which UserLearningLanguages to update
+     */
+    where?: Prisma.UserLearningLanguageWhereInput;
+    /**
+     * Limit how many UserLearningLanguages to update.
+     */
+    limit?: number;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.UserLearningLanguageIncludeUpdateManyAndReturn<ExtArgs> | null;
+};
+/**
+ * UserLearningLanguage upsert
+ */
+export type UserLearningLanguageUpsertArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserLearningLanguage
+     */
+    select?: Prisma.UserLearningLanguageSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the UserLearningLanguage
+     */
+    omit?: Prisma.UserLearningLanguageOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.UserLearningLanguageInclude<ExtArgs> | null;
+    /**
+     * The filter to search for the UserLearningLanguage to update in case it exists.
+     */
+    where: Prisma.UserLearningLanguageWhereUniqueInput;
+    /**
+     * In case the UserLearningLanguage found by the `where` argument doesn't exist, create a new UserLearningLanguage with this data.
+     */
+    create: Prisma.XOR<Prisma.UserLearningLanguageCreateInput, Prisma.UserLearningLanguageUncheckedCreateInput>;
+    /**
+     * In case the UserLearningLanguage was found with the provided `where` argument, update it with this data.
+     */
+    update: Prisma.XOR<Prisma.UserLearningLanguageUpdateInput, Prisma.UserLearningLanguageUncheckedUpdateInput>;
+};
+/**
+ * UserLearningLanguage delete
+ */
+export type UserLearningLanguageDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserLearningLanguage
+     */
+    select?: Prisma.UserLearningLanguageSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the UserLearningLanguage
+     */
+    omit?: Prisma.UserLearningLanguageOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.UserLearningLanguageInclude<ExtArgs> | null;
+    /**
+     * Filter which UserLearningLanguage to delete.
+     */
+    where: Prisma.UserLearningLanguageWhereUniqueInput;
+};
+/**
+ * UserLearningLanguage deleteMany
+ */
+export type UserLearningLanguageDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserLearningLanguages to delete
+     */
+    where?: Prisma.UserLearningLanguageWhereInput;
+    /**
+     * Limit how many UserLearningLanguages to delete.
+     */
+    limit?: number;
+};
+/**
+ * UserLearningLanguage.activeForUsers
+ */
+export type UserLearningLanguage$activeForUsersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: Prisma.UserSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: Prisma.UserOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.UserInclude<ExtArgs> | null;
+    where?: Prisma.UserWhereInput;
+    orderBy?: Prisma.UserOrderByWithRelationInput | Prisma.UserOrderByWithRelationInput[];
+    cursor?: Prisma.UserWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.UserScalarFieldEnum | Prisma.UserScalarFieldEnum[];
+};
+/**
+ * UserLearningLanguage.lists
+ */
+export type UserLearningLanguage$listsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VocabList
+     */
+    select?: Prisma.VocabListSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the VocabList
+     */
+    omit?: Prisma.VocabListOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.VocabListInclude<ExtArgs> | null;
+    where?: Prisma.VocabListWhereInput;
+    orderBy?: Prisma.VocabListOrderByWithRelationInput | Prisma.VocabListOrderByWithRelationInput[];
+    cursor?: Prisma.VocabListWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.VocabListScalarFieldEnum | Prisma.VocabListScalarFieldEnum[];
+};
+/**
+ * UserLearningLanguage without action
+ */
+export type UserLearningLanguageDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserLearningLanguage
+     */
+    select?: Prisma.UserLearningLanguageSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the UserLearningLanguage
+     */
+    omit?: Prisma.UserLearningLanguageOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.UserLearningLanguageInclude<ExtArgs> | null;
+};
+//# sourceMappingURL=UserLearningLanguage.d.ts.map

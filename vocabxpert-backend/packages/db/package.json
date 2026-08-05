@@ -13,7 +13,7 @@
   },
   "scripts": {
     "dev": "tsc -w",
-    "prebuild": "prisma generate --config prisma.config.ts",
+    "prebuild": "prisma generate --config ../../prisma.config.ts",
     "build": "tsc",
     "typecheck": "tsc --noEmit"
   },

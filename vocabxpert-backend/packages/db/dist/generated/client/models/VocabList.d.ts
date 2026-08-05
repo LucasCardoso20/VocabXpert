@@ -15,6 +15,7 @@ export type VocabListMinAggregateOutputType = {
     userId: string | null;
     name: string | null;
     isDefault: boolean | null;
+    learningLanguageId: string | null;
     createdAt: Date | null;
     updatedAt: Date | null;
 };
@@ -23,6 +24,7 @@ export type VocabListMaxAggregateOutputType = {
     userId: string | null;
     name: string | null;
     isDefault: boolean | null;
+    learningLanguageId: string | null;
     createdAt: Date | null;
     updatedAt: Date | null;
 };
@@ -31,6 +33,7 @@ export type VocabListCountAggregateOutputType = {
     userId: number;
     name: number;
     isDefault: number;
+    learningLanguageId: number;
     createdAt: number;
     updatedAt: number;
     _all: number;
@@ -40,6 +43,7 @@ export type VocabListMinAggregateInputType = {
     userId?: true;
     name?: true;
     isDefault?: true;
+    learningLanguageId?: true;
     createdAt?: true;
     updatedAt?: true;
 };
@@ -48,6 +52,7 @@ export type VocabListMaxAggregateInputType = {
     userId?: true;
     name?: true;
     isDefault?: true;
+    learningLanguageId?: true;
     createdAt?: true;
     updatedAt?: true;
 };
@@ -56,6 +61,7 @@ export type VocabListCountAggregateInputType = {
     userId?: true;
     name?: true;
     isDefault?: true;
+    learningLanguageId?: true;
     createdAt?: true;
     updatedAt?: true;
     _all?: true;
@@ -127,6 +133,7 @@ export type VocabListGroupByOutputType = {
     userId: string;
     name: string;
     isDefault: boolean;
+    learningLanguageId: string | null;
     createdAt: Date;
     updatedAt: Date;
     _count: VocabListCountAggregateOutputType | null;
@@ -144,8 +151,10 @@ export type VocabListWhereInput = {
     userId?: Prisma.StringFilter<"VocabList"> | string;
     name?: Prisma.StringFilter<"VocabList"> | string;
     isDefault?: Prisma.BoolFilter<"VocabList"> | boolean;
+    learningLanguageId?: Prisma.StringNullableFilter<"VocabList"> | string | null;
     createdAt?: Prisma.DateTimeFilter<"VocabList"> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<"VocabList"> | Date | string;
+    learningLanguage?: Prisma.XOR<Prisma.UserLearningLanguageNullableScalarRelationFilter, Prisma.UserLearningLanguageWhereInput> | null;
     user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
     vocabs?: Prisma.VocabListRelationFilter;
     studySessions?: Prisma.StudySessionListRelationFilter;
@@ -155,8 +164,10 @@ export type VocabListOrderByWithRelationInput = {
     userId?: Prisma.SortOrder;
     name?: Prisma.SortOrder;
     isDefault?: Prisma.SortOrder;
+    learningLanguageId?: Prisma.SortOrderInput | Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
+    learningLanguage?: Prisma.UserLearningLanguageOrderByWithRelationInput;
     user?: Prisma.UserOrderByWithRelationInput;
     vocabs?: Prisma.VocabOrderByRelationAggregateInput;
     studySessions?: Prisma.StudySessionOrderByRelationAggregateInput;
@@ -169,8 +180,10 @@ export type VocabListWhereUniqueInput = Prisma.AtLeast<{
     userId?: Prisma.StringFilter<"VocabList"> | string;
     name?: Prisma.StringFilter<"VocabList"> | string;
     isDefault?: Prisma.BoolFilter<"VocabList"> | boolean;
+    learningLanguageId?: Prisma.StringNullableFilter<"VocabList"> | string | null;
     createdAt?: Prisma.DateTimeFilter<"VocabList"> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<"VocabList"> | Date | string;
+    learningLanguage?: Prisma.XOR<Prisma.UserLearningLanguageNullableScalarRelationFilter, Prisma.UserLearningLanguageWhereInput> | null;
     user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
     vocabs?: Prisma.VocabListRelationFilter;
     studySessions?: Prisma.StudySessionListRelationFilter;
@@ -180,6 +193,7 @@ export type VocabListOrderByWithAggregationInput = {
     userId?: Prisma.SortOrder;
     name?: Prisma.SortOrder;
     isDefault?: Prisma.SortOrder;
+    learningLanguageId?: Prisma.SortOrderInput | Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
     _count?: Prisma.VocabListCountOrderByAggregateInput;
@@ -194,6 +208,7 @@ export type VocabListScalarWhereWithAggregatesInput = {
     userId?: Prisma.StringWithAggregatesFilter<"VocabList"> | string;
     name?: Prisma.StringWithAggregatesFilter<"VocabList"> | string;
     isDefault?: Prisma.BoolWithAggregatesFilter<"VocabList"> | boolean;
+    learningLanguageId?: Prisma.StringNullableWithAggregatesFilter<"VocabList"> | string | null;
     createdAt?: Prisma.DateTimeWithAggregatesFilter<"VocabList"> | Date | string;
     updatedAt?: Prisma.DateTimeWithAggregatesFilter<"VocabList"> | Date | string;
 };
@@ -203,6 +218,7 @@ export type VocabListCreateInput = {
     isDefault?: boolean;
     createdAt?: Date | string;
     updatedAt?: Date | string;
+    learningLanguage?: Prisma.UserLearningLanguageCreateNestedOneWithoutListsInput;
     user: Prisma.UserCreateNestedOneWithoutListsInput;
     vocabs?: Prisma.VocabCreateNestedManyWithoutListInput;
     studySessions?: Prisma.StudySessionCreateNestedManyWithoutListInput;
@@ -212,6 +228,7 @@ export type VocabListUncheckedCreateInput = {
     userId: string;
     name: string;
     isDefault?: boolean;
+    learningLanguageId?: string | null;
     createdAt?: Date | string;
     updatedAt?: Date | string;
     vocabs?: Prisma.VocabUncheckedCreateNestedManyWithoutListInput;
@@ -223,6 +240,7 @@ export type VocabListUpdateInput = {
     isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    learningLanguage?: Prisma.UserLearningLanguageUpdateOneWithoutListsNestedInput;
     user?: Prisma.UserUpdateOneRequiredWithoutListsNestedInput;
     vocabs?: Prisma.VocabUpdateManyWithoutListNestedInput;
     studySessions?: Prisma.StudySessionUpdateManyWithoutListNestedInput;
@@ -232,6 +250,7 @@ export type VocabListUncheckedUpdateInput = {
     userId?: Prisma.StringFieldUpdateOperationsInput | string;
     name?: Prisma.StringFieldUpdateOperationsInput | string;
     isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    learningLanguageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     vocabs?: Prisma.VocabUncheckedUpdateManyWithoutListNestedInput;
@@ -242,6 +261,7 @@ export type VocabListCreateManyInput = {
     userId: string;
     name: string;
     isDefault?: boolean;
+    learningLanguageId?: string | null;
     createdAt?: Date | string;
     updatedAt?: Date | string;
 };
@@ -257,6 +277,7 @@ export type VocabListUncheckedUpdateManyInput = {
     userId?: Prisma.StringFieldUpdateOperationsInput | string;
     name?: Prisma.StringFieldUpdateOperationsInput | string;
     isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    learningLanguageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
@@ -273,6 +294,7 @@ export type VocabListCountOrderByAggregateInput = {
     userId?: Prisma.SortOrder;
     name?: Prisma.SortOrder;
     isDefault?: Prisma.SortOrder;
+    learningLanguageId?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
 };
@@ -281,6 +303,7 @@ export type VocabListMaxOrderByAggregateInput = {
     userId?: Prisma.SortOrder;
     name?: Prisma.SortOrder;
     isDefault?: Prisma.SortOrder;
+    learningLanguageId?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
 };
@@ -289,6 +312,7 @@ export type VocabListMinOrderByAggregateInput = {
     userId?: Prisma.SortOrder;
     name?: Prisma.SortOrder;
     isDefault?: Prisma.SortOrder;
+    learningLanguageId?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
 };
@@ -334,6 +358,44 @@ export type VocabListUncheckedUpdateManyWithoutUserNestedInput = {
     updateMany?: Prisma.VocabListUpdateManyWithWhereWithoutUserInput | Prisma.VocabListUpdateManyWithWhereWithoutUserInput[];
     deleteMany?: Prisma.VocabListScalarWhereInput | Prisma.VocabListScalarWhereInput[];
 };
+export type VocabListCreateNestedManyWithoutLearningLanguageInput = {
+    create?: Prisma.XOR<Prisma.VocabListCreateWithoutLearningLanguageInput, Prisma.VocabListUncheckedCreateWithoutLearningLanguageInput> | Prisma.VocabListCreateWithoutLearningLanguageInput[] | Prisma.VocabListUncheckedCreateWithoutLearningLanguageInput[];
+    connectOrCreate?: Prisma.VocabListCreateOrConnectWithoutLearningLanguageInput | Prisma.VocabListCreateOrConnectWithoutLearningLanguageInput[];
+    createMany?: Prisma.VocabListCreateManyLearningLanguageInputEnvelope;
+    connect?: Prisma.VocabListWhereUniqueInput | Prisma.VocabListWhereUniqueInput[];
+};
+export type VocabListUncheckedCreateNestedManyWithoutLearningLanguageInput = {
+    create?: Prisma.XOR<Prisma.VocabListCreateWithoutLearningLanguageInput, Prisma.VocabListUncheckedCreateWithoutLearningLanguageInput> | Prisma.VocabListCreateWithoutLearningLanguageInput[] | Prisma.VocabListUncheckedCreateWithoutLearningLanguageInput[];
+    connectOrCreate?: Prisma.VocabListCreateOrConnectWithoutLearningLanguageInput | Prisma.VocabListCreateOrConnectWithoutLearningLanguageInput[];
+    createMany?: Prisma.VocabListCreateManyLearningLanguageInputEnvelope;
+    connect?: Prisma.VocabListWhereUniqueInput | Prisma.VocabListWhereUniqueInput[];
+};
+export type VocabListUpdateManyWithoutLearningLanguageNestedInput = {
+    create?: Prisma.XOR<Prisma.VocabListCreateWithoutLearningLanguageInput, Prisma.VocabListUncheckedCreateWithoutLearningLanguageInput> | Prisma.VocabListCreateWithoutLearningLanguageInput[] | Prisma.VocabListUncheckedCreateWithoutLearningLanguageInput[];
+    connectOrCreate?: Prisma.VocabListCreateOrConnectWithoutLearningLanguageInput | Prisma.VocabListCreateOrConnectWithoutLearningLanguageInput[];
+    upsert?: Prisma.VocabListUpsertWithWhereUniqueWithoutLearningLanguageInput | Prisma.VocabListUpsertWithWhereUniqueWithoutLearningLanguageInput[];
+    createMany?: Prisma.VocabListCreateManyLearningLanguageInputEnvelope;
+    set?: Prisma.VocabListWhereUniqueInput | Prisma.VocabListWhereUniqueInput[];
+    disconnect?: Prisma.VocabListWhereUniqueInput | Prisma.VocabListWhereUniqueInput[];
+    delete?: Prisma.VocabListWhereUniqueInput | Prisma.VocabListWhereUniqueInput[];
+    connect?: Prisma.VocabListWhereUniqueInput | Prisma.VocabListWhereUniqueInput[];
+    update?: Prisma.VocabListUpdateWithWhereUniqueWithoutLearningLanguageInput | Prisma.VocabListUpdateWithWhereUniqueWithoutLearningLanguageInput[];
+    updateMany?: Prisma.VocabListUpdateManyWithWhereWithoutLearningLanguageInput | Prisma.VocabListUpdateManyWithWhereWithoutLearningLanguageInput[];
+    deleteMany?: Prisma.VocabListScalarWhereInput | Prisma.VocabListScalarWhereInput[];
+};
+export type VocabListUncheckedUpdateManyWithoutLearningLanguageNestedInput = {
+    create?: Prisma.XOR<Prisma.VocabListCreateWithoutLearningLanguageInput, Prisma.VocabListUncheckedCreateWithoutLearningLanguageInput> | Prisma.VocabListCreateWithoutLearningLanguageInput[] | Prisma.VocabListUncheckedCreateWithoutLearningLanguageInput[];
+    connectOrCreate?: Prisma.VocabListCreateOrConnectWithoutLearningLanguageInput | Prisma.VocabListCreateOrConnectWithoutLearningLanguageInput[];
+    upsert?: Prisma.VocabListUpsertWithWhereUniqueWithoutLearningLanguageInput | Prisma.VocabListUpsertWithWhereUniqueWithoutLearningLanguageInput[];
+    createMany?: Prisma.VocabListCreateManyLearningLanguageInputEnvelope;
+    set?: Prisma.VocabListWhereUniqueInput | Prisma.VocabListWhereUniqueInput[];
+    disconnect?: Prisma.VocabListWhereUniqueInput | Prisma.VocabListWhereUniqueInput[];
+    delete?: Prisma.VocabListWhereUniqueInput | Prisma.VocabListWhereUniqueInput[];
+    connect?: Prisma.VocabListWhereUniqueInput | Prisma.VocabListWhereUniqueInput[];
+    update?: Prisma.VocabListUpdateWithWhereUniqueWithoutLearningLanguageInput | Prisma.VocabListUpdateWithWhereUniqueWithoutLearningLanguageInput[];
+    updateMany?: Prisma.VocabListUpdateManyWithWhereWithoutLearningLanguageInput | Prisma.VocabListUpdateManyWithWhereWithoutLearningLanguageInput[];
+    deleteMany?: Prisma.VocabListScalarWhereInput | Prisma.VocabListScalarWhereInput[];
+};
 export type BoolFieldUpdateOperationsInput = {
     set?: boolean;
 };
@@ -367,6 +429,7 @@ export type VocabListCreateWithoutUserInput = {
     isDefault?: boolean;
     createdAt?: Date | string;
     updatedAt?: Date | string;
+    learningLanguage?: Prisma.UserLearningLanguageCreateNestedOneWithoutListsInput;
     vocabs?: Prisma.VocabCreateNestedManyWithoutListInput;
     studySessions?: Prisma.StudySessionCreateNestedManyWithoutListInput;
 };
@@ -374,6 +437,7 @@ export type VocabListUncheckedCreateWithoutUserInput = {
     id?: string;
     name: string;
     isDefault?: boolean;
+    learningLanguageId?: string | null;
     createdAt?: Date | string;
     updatedAt?: Date | string;
     vocabs?: Prisma.VocabUncheckedCreateNestedManyWithoutListInput;
@@ -408,8 +472,50 @@ export type VocabListScalarWhereInput = {
     userId?: Prisma.StringFilter<"VocabList"> | string;
     name?: Prisma.StringFilter<"VocabList"> | string;
     isDefault?: Prisma.BoolFilter<"VocabList"> | boolean;
+    learningLanguageId?: Prisma.StringNullableFilter<"VocabList"> | string | null;
     createdAt?: Prisma.DateTimeFilter<"VocabList"> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<"VocabList"> | Date | string;
+};
+export type VocabListCreateWithoutLearningLanguageInput = {
+    id?: string;
+    name: string;
+    isDefault?: boolean;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    user: Prisma.UserCreateNestedOneWithoutListsInput;
+    vocabs?: Prisma.VocabCreateNestedManyWithoutListInput;
+    studySessions?: Prisma.StudySessionCreateNestedManyWithoutListInput;
+};
+export type VocabListUncheckedCreateWithoutLearningLanguageInput = {
+    id?: string;
+    userId: string;
+    name: string;
+    isDefault?: boolean;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    vocabs?: Prisma.VocabUncheckedCreateNestedManyWithoutListInput;
+    studySessions?: Prisma.StudySessionUncheckedCreateNestedManyWithoutListInput;
+};
+export type VocabListCreateOrConnectWithoutLearningLanguageInput = {
+    where: Prisma.VocabListWhereUniqueInput;
+    create: Prisma.XOR<Prisma.VocabListCreateWithoutLearningLanguageInput, Prisma.VocabListUncheckedCreateWithoutLearningLanguageInput>;
+};
+export type VocabListCreateManyLearningLanguageInputEnvelope = {
+    data: Prisma.VocabListCreateManyLearningLanguageInput | Prisma.VocabListCreateManyLearningLanguageInput[];
+    skipDuplicates?: boolean;
+};
+export type VocabListUpsertWithWhereUniqueWithoutLearningLanguageInput = {
+    where: Prisma.VocabListWhereUniqueInput;
+    update: Prisma.XOR<Prisma.VocabListUpdateWithoutLearningLanguageInput, Prisma.VocabListUncheckedUpdateWithoutLearningLanguageInput>;
+    create: Prisma.XOR<Prisma.VocabListCreateWithoutLearningLanguageInput, Prisma.VocabListUncheckedCreateWithoutLearningLanguageInput>;
+};
+export type VocabListUpdateWithWhereUniqueWithoutLearningLanguageInput = {
+    where: Prisma.VocabListWhereUniqueInput;
+    data: Prisma.XOR<Prisma.VocabListUpdateWithoutLearningLanguageInput, Prisma.VocabListUncheckedUpdateWithoutLearningLanguageInput>;
+};
+export type VocabListUpdateManyWithWhereWithoutLearningLanguageInput = {
+    where: Prisma.VocabListScalarWhereInput;
+    data: Prisma.XOR<Prisma.VocabListUpdateManyMutationInput, Prisma.VocabListUncheckedUpdateManyWithoutLearningLanguageInput>;
 };
 export type VocabListCreateWithoutVocabsInput = {
     id?: string;
@@ -417,6 +523,7 @@ export type VocabListCreateWithoutVocabsInput = {
     isDefault?: boolean;
     createdAt?: Date | string;
     updatedAt?: Date | string;
+    learningLanguage?: Prisma.UserLearningLanguageCreateNestedOneWithoutListsInput;
     user: Prisma.UserCreateNestedOneWithoutListsInput;
     studySessions?: Prisma.StudySessionCreateNestedManyWithoutListInput;
 };
@@ -425,6 +532,7 @@ export type VocabListUncheckedCreateWithoutVocabsInput = {
     userId: string;
     name: string;
     isDefault?: boolean;
+    learningLanguageId?: string | null;
     createdAt?: Date | string;
     updatedAt?: Date | string;
     studySessions?: Prisma.StudySessionUncheckedCreateNestedManyWithoutListInput;
@@ -448,6 +556,7 @@ export type VocabListUpdateWithoutVocabsInput = {
     isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    learningLanguage?: Prisma.UserLearningLanguageUpdateOneWithoutListsNestedInput;
     user?: Prisma.UserUpdateOneRequiredWithoutListsNestedInput;
     studySessions?: Prisma.StudySessionUpdateManyWithoutListNestedInput;
 };
@@ -456,6 +565,7 @@ export type VocabListUncheckedUpdateWithoutVocabsInput = {
     userId?: Prisma.StringFieldUpdateOperationsInput | string;
     name?: Prisma.StringFieldUpdateOperationsInput | string;
     isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    learningLanguageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     studySessions?: Prisma.StudySessionUncheckedUpdateManyWithoutListNestedInput;
@@ -466,6 +576,7 @@ export type VocabListCreateWithoutStudySessionsInput = {
     isDefault?: boolean;
     createdAt?: Date | string;
     updatedAt?: Date | string;
+    learningLanguage?: Prisma.UserLearningLanguageCreateNestedOneWithoutListsInput;
     user: Prisma.UserCreateNestedOneWithoutListsInput;
     vocabs?: Prisma.VocabCreateNestedManyWithoutListInput;
 };
@@ -474,6 +585,7 @@ export type VocabListUncheckedCreateWithoutStudySessionsInput = {
     userId: string;
     name: string;
     isDefault?: boolean;
+    learningLanguageId?: string | null;
     createdAt?: Date | string;
     updatedAt?: Date | string;
     vocabs?: Prisma.VocabUncheckedCreateNestedManyWithoutListInput;
@@ -497,6 +609,7 @@ export type VocabListUpdateWithoutStudySessionsInput = {
     isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    learningLanguage?: Prisma.UserLearningLanguageUpdateOneWithoutListsNestedInput;
     user?: Prisma.UserUpdateOneRequiredWithoutListsNestedInput;
     vocabs?: Prisma.VocabUpdateManyWithoutListNestedInput;
 };
@@ -505,6 +618,7 @@ export type VocabListUncheckedUpdateWithoutStudySessionsInput = {
     userId?: Prisma.StringFieldUpdateOperationsInput | string;
     name?: Prisma.StringFieldUpdateOperationsInput | string;
     isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    learningLanguageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     vocabs?: Prisma.VocabUncheckedUpdateManyWithoutListNestedInput;
@@ -513,6 +627,7 @@ export type VocabListCreateManyUserInput = {
     id?: string;
     name: string;
     isDefault?: boolean;
+    learningLanguageId?: string | null;
     createdAt?: Date | string;
     updatedAt?: Date | string;
 };
@@ -522,6 +637,7 @@ export type VocabListUpdateWithoutUserInput = {
     isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    learningLanguage?: Prisma.UserLearningLanguageUpdateOneWithoutListsNestedInput;
     vocabs?: Prisma.VocabUpdateManyWithoutListNestedInput;
     studySessions?: Prisma.StudySessionUpdateManyWithoutListNestedInput;
 };
@@ -529,6 +645,7 @@ export type VocabListUncheckedUpdateWithoutUserInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     name?: Prisma.StringFieldUpdateOperationsInput | string;
     isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    learningLanguageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     vocabs?: Prisma.VocabUncheckedUpdateManyWithoutListNestedInput;
@@ -536,6 +653,43 @@ export type VocabListUncheckedUpdateWithoutUserInput = {
 };
 export type VocabListUncheckedUpdateManyWithoutUserInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    learningLanguageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+};
+export type VocabListCreateManyLearningLanguageInput = {
+    id?: string;
+    userId: string;
+    name: string;
+    isDefault?: boolean;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+};
+export type VocabListUpdateWithoutLearningLanguageInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    user?: Prisma.UserUpdateOneRequiredWithoutListsNestedInput;
+    vocabs?: Prisma.VocabUpdateManyWithoutListNestedInput;
+    studySessions?: Prisma.StudySessionUpdateManyWithoutListNestedInput;
+};
+export type VocabListUncheckedUpdateWithoutLearningLanguageInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    userId?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    vocabs?: Prisma.VocabUncheckedUpdateManyWithoutListNestedInput;
+    studySessions?: Prisma.StudySessionUncheckedUpdateManyWithoutListNestedInput;
+};
+export type VocabListUncheckedUpdateManyWithoutLearningLanguageInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    userId?: Prisma.StringFieldUpdateOperationsInput | string;
     name?: Prisma.StringFieldUpdateOperationsInput | string;
     isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -578,8 +732,10 @@ export type VocabListSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
     userId?: boolean;
     name?: boolean;
     isDefault?: boolean;
+    learningLanguageId?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
+    learningLanguage?: boolean | Prisma.VocabList$learningLanguageArgs<ExtArgs>;
     user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
     vocabs?: boolean | Prisma.VocabList$vocabsArgs<ExtArgs>;
     studySessions?: boolean | Prisma.VocabList$studySessionsArgs<ExtArgs>;
@@ -590,8 +746,10 @@ export type VocabListSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
     userId?: boolean;
     name?: boolean;
     isDefault?: boolean;
+    learningLanguageId?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
+    learningLanguage?: boolean | Prisma.VocabList$learningLanguageArgs<ExtArgs>;
     user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
 }, ExtArgs["result"]["vocabList"]>;
 export type VocabListSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -599,8 +757,10 @@ export type VocabListSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
     userId?: boolean;
     name?: boolean;
     isDefault?: boolean;
+    learningLanguageId?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
+    learningLanguage?: boolean | Prisma.VocabList$learningLanguageArgs<ExtArgs>;
     user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
 }, ExtArgs["result"]["vocabList"]>;
 export type VocabListSelectScalar = {
@@ -608,25 +768,30 @@ export type VocabListSelectScalar = {
     userId?: boolean;
     name?: boolean;
     isDefault?: boolean;
+    learningLanguageId?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
 };
-export type VocabListOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "name" | "isDefault" | "createdAt" | "updatedAt", ExtArgs["result"]["vocabList"]>;
+export type VocabListOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "name" | "isDefault" | "learningLanguageId" | "createdAt" | "updatedAt", ExtArgs["result"]["vocabList"]>;
 export type VocabListInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    learningLanguage?: boolean | Prisma.VocabList$learningLanguageArgs<ExtArgs>;
     user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
     vocabs?: boolean | Prisma.VocabList$vocabsArgs<ExtArgs>;
     studySessions?: boolean | Prisma.VocabList$studySessionsArgs<ExtArgs>;
     _count?: boolean | Prisma.VocabListCountOutputTypeDefaultArgs<ExtArgs>;
 };
 export type VocabListIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    learningLanguage?: boolean | Prisma.VocabList$learningLanguageArgs<ExtArgs>;
     user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
 };
 export type VocabListIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    learningLanguage?: boolean | Prisma.VocabList$learningLanguageArgs<ExtArgs>;
     user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
 };
 export type $VocabListPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     name: "VocabList";
     objects: {
+        learningLanguage: Prisma.$UserLearningLanguagePayload<ExtArgs> | null;
         user: Prisma.$UserPayload<ExtArgs>;
         vocabs: Prisma.$VocabPayload<ExtArgs>[];
         studySessions: Prisma.$StudySessionPayload<ExtArgs>[];
@@ -636,6 +801,7 @@ export type $VocabListPayload<ExtArgs extends runtime.Types.Extensions.InternalA
         userId: string;
         name: string;
         isDefault: boolean;
+        learningLanguageId: string | null;
         createdAt: Date;
         updatedAt: Date;
     }, ExtArgs["result"]["vocabList"]>;
@@ -967,6 +1133,7 @@ export interface VocabListDelegate<ExtArgs extends runtime.Types.Extensions.Inte
  */
 export interface Prisma__VocabListClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise";
+    learningLanguage<T extends Prisma.VocabList$learningLanguageArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.VocabList$learningLanguageArgs<ExtArgs>>): Prisma.Prisma__UserLearningLanguageClient<runtime.Types.Result.GetResult<Prisma.$UserLearningLanguagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
     user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>;
     vocabs<T extends Prisma.VocabList$vocabsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.VocabList$vocabsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VocabPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
     studySessions<T extends Prisma.VocabList$studySessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.VocabList$studySessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StudySessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
@@ -999,6 +1166,7 @@ export interface VocabListFieldRefs {
     readonly userId: Prisma.FieldRef<"VocabList", 'String'>;
     readonly name: Prisma.FieldRef<"VocabList", 'String'>;
     readonly isDefault: Prisma.FieldRef<"VocabList", 'Boolean'>;
+    readonly learningLanguageId: Prisma.FieldRef<"VocabList", 'String'>;
     readonly createdAt: Prisma.FieldRef<"VocabList", 'DateTime'>;
     readonly updatedAt: Prisma.FieldRef<"VocabList", 'DateTime'>;
 }
@@ -1383,6 +1551,24 @@ export type VocabListDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Int
      * Limit how many VocabLists to delete.
      */
     limit?: number;
+};
+/**
+ * VocabList.learningLanguage
+ */
+export type VocabList$learningLanguageArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserLearningLanguage
+     */
+    select?: Prisma.UserLearningLanguageSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the UserLearningLanguage
+     */
+    omit?: Prisma.UserLearningLanguageOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.UserLearningLanguageInclude<ExtArgs> | null;
+    where?: Prisma.UserLearningLanguageWhereInput;
 };
 /**
  * VocabList.vocabs

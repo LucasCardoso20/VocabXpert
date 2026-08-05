@@ -18,6 +18,8 @@ import formbody from "@fastify/formbody";
 import { userIdGuardPlugin } from "./plugins/userIdGuard.js";
 import { reviewsRoutes } from "./routes/reviews.js";
 import { tooltipRoutes } from "./routes/tooltip.js";
+import { progressRoutes } from "./routes/progress.ts";
+import { profileRoutes } from "./routes/profile.ts";
 
 const app = Fastify({
   logger: true
@@ -83,11 +85,14 @@ if (process.env.NODE_ENV !== "production") {
 app.register(onboardingRoutes);
 app.register(userContext);
 app.register(listsRoutes);
+app.register(profileRoutes);
 app.register(vocabsRoutes);
 app.register(studyRoutes);
 app.register(userIdGuardPlugin);
 app.register(reviewsRoutes);
 app.register(tooltipRoutes);
+app.register(progressRoutes);
+
 const port = Number(process.env.API_PORT ?? 3000);
 const host = "0.0.0.0";
 
