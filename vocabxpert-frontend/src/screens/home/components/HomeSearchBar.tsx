@@ -1,18 +1,21 @@
 import React from 'react';
 import { View, TextInput, Pressable, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useTranslation } from 'react-i18next'; // Importe o hook useTranslation
 import { colors } from '../../../theme/colors';
 import { spacing } from '../../../theme/spacing';
 import { radio } from '../../../theme/radio';
 
 export default function HomeSearchBar() {
+  const { t } = useTranslation(); // Inicialize o hook de tradução
+
   return (
     <View style={styles.wrap}>
       <View style={styles.searchBar}>
         <Ionicons name="search-outline" size={18} color={colors.light} />
         <TextInput
           style={styles.input}
-          placeholder="Buscar vocab..."
+          placeholder={t('home.searchBar.placeholder')}
           placeholderTextColor={colors.light}
         />
       </View>

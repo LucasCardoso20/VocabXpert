@@ -14,6 +14,7 @@ import { useProfile } from '@/src/contexts/ProfileContext';
 import { getShadow } from '@/src/theme/shadows';
 import { colors } from '@/src/theme/colors';
 import { spacing } from '@/src/theme/spacing';
+import { useRouter } from 'expo-router';
 
 const languageFlags: Record<string, string> = {
   en: '🇺🇸',
@@ -59,6 +60,7 @@ function getLanguageName(languageCode?: string) {
 
 export default function HomeHeader() {
   const insets = useSafeAreaInsets();
+  const router = useRouter();
 
   const {
     profile,
@@ -213,28 +215,45 @@ export default function HomeHeader() {
               );
             })}
 
-            <TouchableOpacity
-              style={styles.manageButton}
-              activeOpacity={0.8}
-              onPress={() => {
-                setIsLanguageModalOpen(false);
+            <View style={styles.modalFooter}>
+  <TouchableOpacity
+    style={styles.manageButton}
+    activeOpacity={0.8}
+    onPress={() => {
+      setIsLanguageModalOpen(false);
+      router.push('/profile');
+    }}
+  >
+    <Ionicons
+      name="person-outline"
+      size={18}
+      color={colors.primary}
+    />
 
-                /**
-                 * Aqui entrará a futura rota/tela de Perfil.
-                 * Não navegamos ainda porque ela ainda não foi criada.
-                 */
-              }}
-            >
-              <Ionicons
-                name="settings-outline"
-                size={18}
-                color={colors.primary}
-              />
+    <Text style={styles.manageButtonText}>
+      Meu perfil
+    </Text>
+  </TouchableOpacity>
 
-              <Text style={styles.manageButtonText}>
-                Gerenciar idiomas
-              </Text>
-            </TouchableOpacity>
+  <TouchableOpacity
+    style={styles.manageButton}
+    activeOpacity={0.8}
+    onPress={() => {
+      setIsLanguageModalOpen(false);
+      router.push('/languages');
+    }}
+  >
+    <Ionicons
+      name="language-outline"
+      size={18}
+      color={colors.primary}
+    />
+
+    <Text style={styles.manageButtonText}>
+      Gerenciar idiomas
+    </Text>
+  </TouchableOpacity>
+</View>
           </Pressable>
         </Pressable>
       </Modal>
@@ -358,7 +377,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-
+modalFooter: {
+  marginTop: spacing.s2,
+  gap: spacing.s2,
+},
   languageItem: {
     minHeight: 64,
     borderRadius: 16,

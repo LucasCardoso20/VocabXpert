@@ -26,6 +26,7 @@ import {
 import { colors } from '@/src/theme/colors';
 import { spacing } from '@/src/theme/spacing';
 import { radio } from '@/src/theme/radio';
+import { useTranslation } from 'react-i18next';
 
 type CreateVocabPayload = {
   listId: string;
@@ -57,6 +58,7 @@ async function createVocab(payload: CreateVocabPayload) {
 
 export default function CreateVocabScreen() {
   const router = useRouter();
+  const { t } = useTranslation(); // Adicionado o hook de tradução
 
   const [lists, setLists] = useState<ListItem[]>([]);
   const [loadingLists, setLoadingLists] = useState(true);
@@ -78,8 +80,8 @@ export default function CreateVocabScreen() {
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const selectedListName = useMemo(() => {
-    return lists.find((l) => l.id === selectedListId)?.name ?? 'Selecione a lista';
-  }, [lists, selectedListId]);
+    return lists.find((l) => l.id === selectedListId)?.name ?? t('createVocab.selectListPlaceholder'); // 'Selecione a lista'
+  }, [lists, selectedListId, t]);
 
   const loadLists = useCallback(async () => {
     setLoadingLists(true);
@@ -96,11 +98,14 @@ export default function CreateVocabScreen() {
       setSelectedListId(defaultList?.id ?? '');
     } catch (e) {
       console.error('Erro ao carregar listas:', e);
-      Alert.alert('Erro', 'Não foi possível carregar suas listas.');
+      Alert.alert(
+        t('common.error'), // 'Erro'
+        t('createVocab.errors.loadLists') // 'Não foi possível carregar suas listas.'
+      );
     } finally {
       setLoadingLists(false);
     }
-  }, []);
+  }, [t]);
 
   useEffect(() => {
     loadLists();
@@ -169,7 +174,10 @@ export default function CreateVocabScreen() {
   const handleCreateNewList = useCallback(async () => {
     const name = newListName.trim();
     if (!name) {
-      Alert.alert('Atenção', 'Digite um nome para a lista.');
+      Alert.alert(
+        t('common.attention'), // 'Atenção'
+        t('createVocab.createList.emptyNameMessage') // 'Digite um nome para a lista.'
+      );
       return;
     }
 
@@ -182,11 +190,14 @@ export default function CreateVocabScreen() {
       setCreateListOpen(false);
     } catch (e) {
       console.error('Erro ao criar lista:', e);
-      Alert.alert('Erro', 'Não foi possível criar a lista.');
+      Alert.alert(
+        t('common.error'), // 'Erro'
+        t('createVocab.createList.errorMessage') // 'Não foi possível criar a lista.'
+      );
     } finally {
       setCreatingList(false);
     }
-  }, [newListName]);
+  }, [newListName, t]);
 
   const handleSave = useCallback(async () => {
     if (!canSubmit) return;
@@ -201,28 +212,40 @@ export default function CreateVocabScreen() {
         examples: examples.map((t) => t.trim()).filter(Boolean),
       });
 
-      Alert.alert('Sucesso', 'Vocabulário criado com sucesso!');
+      Alert.alert(
+        t('common.success'), // 'Sucesso'
+        t('createVocab.save.successMessage') // 'Vocabulário criado com sucesso!'
+      );
       router.back();
     } catch (err: any) {
       const status = err?.response?.status;
       const apiError = err?.response?.data?.error;
 
       if (status === 409 || apiError === 'VOCAB_ALREADY_EXISTS') {
-        Alert.alert('Duplicado', 'Essa palavra já existe nessa lista.');
+        Alert.alert(
+          t('createVocab.save.duplicateTitle'), // 'Duplicado'
+          t('createVocab.save.duplicateMessage') // 'Essa palavra já existe nessa lista.'
+        );
         return;
       }
 
       if (status === 404 && apiError === 'LIST_NOT_FOUND') {
-        Alert.alert('Erro', 'Lista não encontrada. Atualize suas listas e tente novamente.');
+        Alert.alert(
+          t('common.error'), // 'Erro'
+          t('createVocab.save.listNotFoundMessage') // 'Lista não encontrada. Atualize suas listas e tente novamente.'
+        );
         return;
       }
 
       console.error('Erro ao salvar vocab:', err?.response?.data || err?.message || err);
-      Alert.alert('Erro', 'Não foi possível criar o vocabulário.');
+      Alert.alert(
+        t('common.error'), // 'Erro'
+        t('createVocab.save.genericErrorMessage') // 'Não foi possível criar o vocabulário.'
+      );
     } finally {
       setSaving(false);
     }
-  }, [canSubmit, selectedListId, word, translation, examples, router]);
+  }, [canSubmit, selectedListId, word, translation, examples, router, t]);
 
   if (loadingLists) {
     return (
@@ -239,12 +262,12 @@ export default function CreateVocabScreen() {
       keyboardShouldPersistTaps="handled"
       showsVerticalScrollIndicator={false}
     >
-      <Text style={styles.title}>Adicionar Vocab</Text>
+      <Text style={styles.title}>{t('createVocab.title')}</Text> {/* 'Adicionar Vocab' */}
 
-      <Text style={styles.label}>Palavra (EN)</Text>
+      <Text style={styles.label}>{t('createVocab.wordLabel')}</Text> {/* 'Palavra (EN)' */}
       <TextInput
         style={styles.input}
-        placeholder="ex: Appreciate"
+        placeholder={t('createVocab.wordPlaceholder')} // 'ex: Appreciate'
         placeholderTextColor={colors.light}
         value={word}
         onChangeText={setWord}
@@ -257,21 +280,21 @@ export default function CreateVocabScreen() {
       />
 
       <View style={styles.rowBetween}>
-        <Text style={styles.label}>Tradução (PT)</Text>
+        <Text style={styles.label}>{t('createVocab.translationLabel')}</Text> {/* 'Tradução (PT)' */}
         {previewLoading ? <ActivityIndicator size="small" color={colors.primary} /> : null}
       </View>
       <TextInput
         style={styles.input}
-        placeholder="ex: Apreciar"
+        placeholder={t('createVocab.translationPlaceholder')} // 'ex: Apreciar'
         placeholderTextColor={colors.light}
         value={translation}
         onChangeText={setTranslation}
       />
 
       <View style={styles.rowBetween}>
-        <Text style={styles.label}>Lista</Text>
+        <Text style={styles.label}>{t('createVocab.listLabel')}</Text> {/* 'Lista' */}
         <Pressable onPress={() => setCreateListOpen(true)} hitSlop={10}>
-          <Text style={styles.linkText}>+ Nova lista</Text>
+          <Text style={styles.linkText}>{t('createVocab.newListButton')}</Text> {/* '+ Nova lista' */}
         </Pressable>
       </View>
 
@@ -282,12 +305,12 @@ export default function CreateVocabScreen() {
         <Ionicons name="chevron-down" size={18} color={colors.muted} />
       </Pressable>
 
-      <Text style={[styles.label, { marginTop: spacing.s2 }]}>Exemplos (opcional)</Text>
+      <Text style={[styles.label, { marginTop: spacing.s2 }]}>{t('createVocab.examplesLabel')}</Text> {/* 'Exemplos (opcional)' */}
       {examples.map((ex, idx) => (
         <TextInput
           key={`ex-${idx}`}
           style={[styles.input, styles.exampleInput]}
-          placeholder={`Exemplo ${idx + 1}`}
+          placeholder={t('createVocab.examplePlaceholder', { index: idx + 1 })} // 'Exemplo {index}'
           placeholderTextColor={colors.light}
           value={ex}
           onChangeText={(v) => setExampleAt(idx, v)}
@@ -303,12 +326,12 @@ export default function CreateVocabScreen() {
         {saving ? (
           <ActivityIndicator color="#fff" />
         ) : (
-          <Text style={styles.saveBtnText}>Salvar Vocab</Text>
+          <Text style={styles.saveBtnText}>{t('createVocab.saveButton')}</Text> /* 'Salvar Vocab' */
         )}
       </Pressable>
 
       <Pressable style={styles.cancelBtnInline} onPress={() => router.back()}>
-        <Text style={styles.cancelBtnInlineText}>Cancelar</Text>
+        <Text style={styles.cancelBtnInlineText}>{t('common.cancel')}</Text> {/* 'Cancelar' */}
       </Pressable>
 
       {/* Modal: selecionar lista */}
@@ -320,7 +343,7 @@ export default function CreateVocabScreen() {
       >
         <View style={styles.overlay}>
           <View style={styles.modal}>
-            <Text style={styles.modalTitle}>Selecione a lista</Text>
+            <Text style={styles.modalTitle}>{t('createVocab.selectListModal.title')}</Text> {/* 'Selecione a lista' */}
 
             <ScrollView style={{ maxHeight: 360 }} contentContainerStyle={{ paddingVertical: 6 }}>
               {lists.map((list) => {
@@ -336,7 +359,7 @@ export default function CreateVocabScreen() {
                   >
                     <Text style={[styles.listItemText, active && styles.listItemTextActive]}>
                       {list.name}
-                      {list.isDefault ? ' • padrão' : ''}
+                      {list.isDefault ? t('createVocab.selectListModal.defaultSuffix') : ''} {/* ' • padrão' */}
                     </Text>
                     {active ? <Ionicons name="checkmark" size={16} color={colors.primary} /> : null}
                   </Pressable>
@@ -345,7 +368,7 @@ export default function CreateVocabScreen() {
             </ScrollView>
 
             <Pressable style={styles.modalCloseBtn} onPress={() => setListPickerOpen(false)}>
-              <Text style={styles.modalCloseBtnText}>Fechar</Text>
+              <Text style={styles.modalCloseBtnText}>{t('common.close')}</Text> {/* 'Fechar' */}
             </Pressable>
           </View>
         </View>
@@ -360,11 +383,11 @@ export default function CreateVocabScreen() {
       >
         <View style={styles.overlay}>
           <View style={styles.modal}>
-            <Text style={styles.modalTitle}>Criar nova lista</Text>
+            <Text style={styles.modalTitle}>{t('createVocab.createListModal.title')}</Text> {/* 'Criar nova lista' */}
 
             <TextInput
               style={styles.input}
-              placeholder="Nome da lista"
+              placeholder={t('createVocab.createListModal.namePlaceholder')} // 'Nome da lista'
               placeholderTextColor={colors.light}
               value={newListName}
               onChangeText={setNewListName}
@@ -377,7 +400,7 @@ export default function CreateVocabScreen() {
                 onPress={() => setCreateListOpen(false)}
                 disabled={creatingList}
               >
-                <Text style={styles.modalSecondaryBtnText}>Cancelar</Text>
+                <Text style={styles.modalSecondaryBtnText}>{t('common.cancel')}</Text> {/* 'Cancelar' */}
               </Pressable>
 
               <Pressable
@@ -388,7 +411,7 @@ export default function CreateVocabScreen() {
                 {creatingList ? (
                   <ActivityIndicator color="#fff" />
                 ) : (
-                  <Text style={styles.modalPrimaryBtnText}>Criar</Text>
+                  <Text style={styles.modalPrimaryBtnText}>{t('common.create')}</Text> /* 'Criar' */
                 )}
               </Pressable>
             </View>

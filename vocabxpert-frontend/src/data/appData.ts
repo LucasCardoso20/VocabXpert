@@ -1,0 +1,17 @@
+export const APP_INTERESTS = [
+  { id: 'tv_series', label: 'onboarding.interests.tv_series', icon: '📺' },
+  { id: 'football', label: 'onboarding.interests.football', icon: '⚽' },
+  { id: 'volleyball', label: 'onboarding.interests.volleyball', icon: '🏐' },
+  { id: 'basketball', label: 'onboarding.interests.basketball', icon: '🏀' },
+  { id: 'books', label: 'onboarding.interests.books', icon: '📚' },
+  { id: 'nature', label: 'onboarding.interests.nature', icon: '🌿' },
+  { id: 'meditation', label: 'onboarding.interests.meditation', icon: '🧘' },
+  { id: 'history', label: 'onboarding.interests.history', icon: '🏛️' },
+  { id: 'philosophy', label: 'onboarding.interests.philosophy', icon: '💭' },
+  { id: 'psychology', label: 'onboarding.interests.psychology', icon: '🧠' },
+  { id: 'technology', label: 'onboarding.interests.technology', icon: '💻' },
+  { id: 'music', label: 'onboarding.interests.music', icon: '🎵' },
+  { id: 'travel', label: 'onboarding.interests.travel', icon: '✈️' },
+  { id: 'cooking', label: 'onboarding.interests.cooking', icon: '🍳' },
+  { id: 'work', label: 'onboarding.interests.work', icon: '💼' },
+];

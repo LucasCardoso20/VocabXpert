@@ -3,6 +3,7 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { View, StyleSheet, Alert, Animated, Easing } from 'react-native';
 import { useRouter } from 'expo-router';
+import { useTranslation } from 'react-i18next'; // Importe o hook useTranslation
 import { appStorage } from '../../src/storage/appStorage';
 import apiClient from '../../src/api/client';
 
@@ -27,6 +28,7 @@ const TOTAL_STEPS = 3;
 
 const OnboardingFlow: React.FC = () => {
   const router = useRouter();
+  const { t } = useTranslation(); // Inicialize o hook de tradução
   const [currentStep, setCurrentStep] = useState(1);
   const [onboardingData, setOnboardingData] = useState<OnboardingData>({
     nativeLanguage: null,
@@ -69,17 +71,17 @@ useEffect(() => {
     // Basic validation for each step
     if (currentStep === 1) {
       if (!onboardingData.nativeLanguage || !onboardingData.targetLanguage) {
-        Alert.alert('Atenção', 'Por favor, selecione seu idioma nativo e o idioma que deseja aprender.');
+        Alert.alert(t('onboarding.flow.alerts.attentionTitle'), t('onboarding.flow.alerts.selectLanguages')); // Usando a chave de tradução
         return;
       }
     } else if (currentStep === 2) {
       if (!onboardingData.level) {
-        Alert.alert('Atenção', 'Por favor, selecione seu nível no idioma.');
+        Alert.alert(t('onboarding.flow.alerts.attentionTitle'), t('onboarding.flow.alerts.selectLevel')); // Usando a chave de tradução
         return;
       }
     } else if (currentStep === 3) {
       if (onboardingData.interests.length === 0) {
-        Alert.alert('Atenção', 'Por favor, selecione pelo menos um interesse.');
+        Alert.alert(t('onboarding.flow.alerts.attentionTitle'), t('onboarding.flow.alerts.selectInterest')); // Usando a chave de tradução
         return;
       }
       // Last step, submit data
@@ -108,11 +110,11 @@ useEffect(() => {
         await appStorage.setItem('default-list-id', defaultListId); // Salvar a lista padrão
         await appStorage.setItem('onboarded', 'true');
 
-        Alert.alert('Sucesso!', 'Seu perfil foi criado com sucesso!');
+        Alert.alert(t('onboarding.flow.alerts.successTitle'), t('onboarding.flow.alerts.successMessage')); // Usando a chave de tradução
         router.replace('/(tabs)'); // Redireciona para a tela principal
       } catch (error: any) {
         console.error('Erro no onboarding:', error.response?.data || error.message);
-        Alert.alert('Erro', 'Não foi possível completar o onboarding. Tente novamente.');
+        Alert.alert(t('onboarding.flow.alerts.errorTitle'), t('onboarding.flow.alerts.errorMessage')); // Usando a chave de tradução
       } finally {
         setLoading(false);
       }

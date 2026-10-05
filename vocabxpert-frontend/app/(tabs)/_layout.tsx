@@ -1,10 +1,13 @@
 import React from 'react';
 import { Tabs } from 'expo-router';
+import { useTranslation } from 'react-i18next'; // Importe o hook useTranslation
 
 import CustomTabBar from '@/src/components/layout/CustomTabBar';
 import HomeHeader from '@/src/components/layout/HomeHeader';
 
 export default function TabsLayout() {
+  const { t } = useTranslation(); // Inicialize o hook de tradução
+
   return (
     <Tabs
       tabBar={(props) => <CustomTabBar {...props} />}
@@ -16,7 +19,7 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Início',
+          title: t('tabs.home'), // Usando a chave de tradução
           headerShown: true,
           header: () => <HomeHeader />,
         }}
@@ -25,21 +28,21 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="study"
         options={{
-          title: 'Estudar',
+          title: t('tabs.study'), // Usando a chave de tradução
         }}
       />
 
       <Tabs.Screen
         name="reviews"
         options={{
-          title: 'Revisões',
+          title: t('tabs.reviews'), // Usando a chave de tradução
         }}
       />
 
       <Tabs.Screen
         name="progress"
         options={{
-          title: 'Progresso',
+          title: t('tabs.progress'), // Usando a chave de tradução
         }}
       />
     </Tabs>

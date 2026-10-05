@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, ScrollView, TouchableOpacity } from 'react-native';
+import { useTranslation } from 'react-i18next'; // Importe o hook useTranslation
 import SelectionBox from '../../src/components/onboarding/SelectionBox';
 import LanguageDropdown from '../../src/components/onboarding/LanguageDropdown';
 import SearchIcon from '../../src/components/icons/SearchIcon';
@@ -34,6 +35,7 @@ const OnboardingStep1: React.FC<Step1Props> = ({
   currentStep,
   totalSteps,
 }) => {
+  const { t } = useTranslation(); // Inicialize o hook de tradução
   const [searchQuery, setSearchQuery] = useState('');
   const progress = (currentStep / totalSteps) * 100;
 
@@ -45,21 +47,21 @@ const OnboardingStep1: React.FC<Step1Props> = ({
 
   return (
     <View style={styles.fullScreen}>
-      
+
       <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
-        <Text style={styles.title}>Qual é o seu idioma nativo?</Text>
+        <Text style={styles.title}>{t('onboarding.step1.nativeLanguageTitle')}</Text>
         <LanguageDropdown
-          label="Idioma Nativo"
+          label={t('onboarding.step1.nativeLanguageLabel')}
           selectedLanguageId={nativeLanguage}
           onSelectLanguage={onNativeLanguageChange}
         />
 
-        <Text style={styles.title}>Qual idioma você quer aprender?</Text>
+        <Text style={styles.title}>{t('onboarding.step1.targetLanguageTitle')}</Text>
         <View style={[styles.searchInputContainer, getShadow('sh1')]}>
           <SearchIcon color={colors.light} size={18} />
           <TextInput
             style={styles.searchInput}
-            placeholder="Pesquisar..."
+            placeholder={t('onboarding.step1.searchPlaceholder')}
             placeholderTextColor={colors.light}
             value={searchQuery}
             onChangeText={setSearchQuery}
@@ -78,7 +80,7 @@ const OnboardingStep1: React.FC<Step1Props> = ({
           ))}
         </View>
       </ScrollView>
-      <OnboardingButton label="Continuar" onPress={onNext} isDisabled={isNextDisabled} />
+      <OnboardingButton label={t('onboarding.step1.continueButton')} onPress={onNext} isDisabled={isNextDisabled} />
     </View>
   );
 };

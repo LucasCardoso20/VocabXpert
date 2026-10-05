@@ -22,8 +22,10 @@ import {
   type VocabListDetail,
   type VocabListItem,
 } from '../../src/screens/lists/services/vocabListDetailService';
+import { useTranslation } from 'react-i18next';
 
 export default function VocabListDetailScreen() {
+  const { t } = useTranslation(); // Inicialize o hook de tradução
   const router = useRouter();
   const { listId } = useLocalSearchParams<{ listId: string }>();
 
@@ -50,16 +52,16 @@ export default function VocabListDetailScreen() {
 
         const apiError = e?.response?.data?.error;
         if (apiError === 'LIST_NOT_FOUND') {
-          setError('Lista não encontrada (ou não pertence ao usuário).');
+          setError(t('vocabListDetail.errors.notFound')); // Traduzido
         } else {
-          setError('Não foi possível carregar esta lista.');
+          setError(t('vocabListDetail.errors.loadFailed')); // Traduzido
         }
       } finally {
         setLoading(false);
         setRefreshing(false);
       }
     },
-    [listId]
+    [listId, t] // Adicione 't' como dependência
   );
 
   useFocusEffect(
@@ -73,11 +75,10 @@ export default function VocabListDetailScreen() {
     const q = query.trim().toLowerCase();
     if (!q) return items;
 
-    return items.filter((v) => {
-      const word = (v.word ?? '').toLowerCase();
-      const translation = (v.translation ?? '').toLowerCase();
-      return word.includes(q) || translation.includes(q);
-    });
+    return items.filter(
+      (item) =>
+        item.word.toLowerCase().includes(q) || item.translation?.toLowerCase().includes(q) // Adicionado '?' para safe navigation
+    );
   }, [data?.items, query]);
 
   const renderItem = useCallback(
@@ -95,6 +96,7 @@ export default function VocabListDetailScreen() {
           <Text style={styles.word} numberOfLines={1}>
             {item.word}
           </Text>
+          {/* Correção para 'item.translation' is possibly 'null'. */}
           {!!item.translation && (
             <Text style={styles.translation} numberOfLines={1}>
               {item.translation}
@@ -112,6 +114,7 @@ export default function VocabListDetailScreen() {
     return (
       <View style={styles.center}>
         <ActivityIndicator size="large" color={colors.primary} />
+        <Text style={styles.primaryBtnText}>{t('common.loading')}</Text> {/* Traduzido */}
       </View>
     );
   }
@@ -119,14 +122,14 @@ export default function VocabListDetailScreen() {
   if (error || !data) {
     return (
       <View style={styles.center}>
-        <Text style={styles.errorText}>{error ?? 'Lista não encontrada.'}</Text>
+        <Text style={styles.errorText}>{error ?? t('vocabListDetail.errors.noData')}</Text> {/* Traduzido */}
 
         <Pressable style={styles.primaryBtn} onPress={() => load(false)}>
-          <Text style={styles.primaryBtnText}>Tentar novamente</Text>
+          <Text style={styles.primaryBtnText}>{t('common.tryAgain')}</Text> {/* Traduzido */}
         </Pressable>
 
         <Pressable style={styles.secondaryBtn} onPress={() => router.back()}>
-          <Text style={styles.secondaryBtnText}>Voltar</Text>
+          <Text style={styles.secondaryBtnText}>{t('common.back')}</Text> {/* Traduzido */}
         </Pressable>
       </View>
     );
@@ -145,7 +148,7 @@ export default function VocabListDetailScreen() {
             {data.name}
           </Text>
           <Text style={styles.headerSubtitle}>
-            {data.items.length} {data.items.length === 1 ? 'palavra' : 'palavras'}
+            {t('vocabListDetail.subtitle', { count: data.items.length })} {/* Traduzido com pluralização */}
           </Text>
         </View>
 
@@ -169,7 +172,7 @@ export default function VocabListDetailScreen() {
         <Ionicons name="search" size={16} color={colors.muted} />
         <TextInput
           style={styles.searchInput}
-          placeholder="Buscar palavra ou tradução..."
+          placeholder={t('vocabListDetail.searchPlaceholder')} // Traduzido
           placeholderTextColor={colors.light}
           value={query}
           onChangeText={setQuery}
@@ -193,9 +196,11 @@ export default function VocabListDetailScreen() {
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={() => load(true)} />}
         ListEmptyComponent={
           <View style={styles.empty}>
-            <Text style={styles.emptyTitle}>Nada por aqui ainda</Text>
+            <Text style={styles.emptyTitle}>
+              {query.trim() ? t('vocabListDetail.empty.noResultsTitle') : t('vocabListDetail.empty.title')} {/* Traduzido */}
+            </Text>
             <Text style={styles.emptyText}>
-              {query.trim() ? 'Nenhum resultado para sua busca.' : 'Adicione sua primeira palavra nesta lista.'}
+              {query.trim() ? t('vocabListDetail.empty.noResultsText') : t('vocabListDetail.empty.addFirstVocab')} {/* Traduzido */}
             </Text>
 
             {!query.trim() && (
@@ -208,7 +213,7 @@ export default function VocabListDetailScreen() {
                   })
                 }
               >
-                <Text style={styles.primaryBtnText}>Adicionar vocab</Text>
+                <Text style={styles.primaryBtnText}>{t('vocabListDetail.empty.addVocabButton')}</Text> {/* Traduzido */}
               </Pressable>
             )}
           </View>
@@ -217,7 +222,6 @@ export default function VocabListDetailScreen() {
     </View>
   );
 }
-
 const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: colors.background },
 

@@ -28,7 +28,8 @@ import {
   type StudyScope,
 } from './services/studyService';
 import { Ionicons } from '@expo/vector-icons';
-
+import { useProfile } from '@/src/contexts/ProfileContext';
+import { useTranslation } from 'react-i18next';
 const INITIAL_SUPPORTED_TYPES: ConcreteExerciseType[] = [
   'FLASHCARD',
   'MULTIPLE_CHOICE_TRANSLATION',
@@ -53,14 +54,14 @@ const IMPLEMENTED_EXERCISE_TYPES: SessionExerciseType[] = [
 ];
 
 const scopeLabels: Record<StudyScope, string> = {
-  DUE: 'Pendentes',
-  ALL: 'Todas',
-  LAST_10: 'Últimas 10',
+  DUE: 'Pendentes', // Manter como string literal ou chave de tradução se for traduzível
+  ALL: 'Todas', // Manter como string literal ou chave de tradução se for traduzível
+  LAST_10: 'Últimas 10', // Manter como string literal ou chave de tradução se for traduzível
 };
 
 const directionLabels: Record<StudyDirection, string> = {
-  WORD_TO_TRANSLATION: 'Palavra → Tradução',
-  TRANSLATION_TO_WORD: 'Tradução → Palavra',
+  WORD_TO_TRANSLATION: 'Palavra → Tradução', // Manter como string literal ou chave de tradução se for traduzível
+  TRANSLATION_TO_WORD: 'Tradução → Palavra', // Manter como string literal ou chave de tradução se for traduzível
 };
 
 type ExerciseOption = {
@@ -129,6 +130,8 @@ const EXERCISE_OPTIONS: ExerciseOption[] = [
 
 export default function StudyConfigScreen() {
   const router = useRouter();
+  const { activeLanguage, isLoadingProfile } = useProfile();
+  const { t } = useTranslation(); // Adicionado o hook de tradução
 
   const [loading, setLoading] = useState(true);
   const [starting, setStarting] = useState(false);
@@ -195,21 +198,25 @@ export default function StudyConfigScreen() {
         err?.response?.data ?? err?.message ?? err
       );
 
-      setError('Não foi possível carregar as configurações de estudo.');
+      setError(t('studyConfig.errors.loadConfig')); // 'Não foi possível carregar as configurações de estudo.'
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [activeLanguage?.id, t]); // Adicionado 't' como dependência
 
   useEffect(() => {
-    loadScreenData();
-  }, [loadScreenData]);
+  if (isLoadingProfile || !activeLanguage?.id) {
+    return;
+  }
+
+  void loadScreenData();
+}, [activeLanguage?.id, isLoadingProfile, loadScreenData]);
 
   const startSession = useCallback(async () => {
     if (!selectedListId) {
       Alert.alert(
-        'Selecione uma lista',
-        'Você precisa escolher uma lista antes de iniciar o estudo.'
+        t('studyConfig.startSession.selectListTitle'), // 'Selecione uma lista'
+        t('studyConfig.startSession.selectListMessage') // 'Você precisa escolher uma lista antes de iniciar o estudo.'
       );
       return;
     }
@@ -229,8 +236,8 @@ export default function StudyConfigScreen() {
 
       if (!session.firstExercise) {
         Alert.alert(
-          'Nada para estudar',
-          'Esta seleção não encontrou vocabulários disponíveis para estudo.'
+          t('studyConfig.startSession.noVocabTitle'), // 'Nada para estudar'
+          t('studyConfig.startSession.noVocabMessage') // 'Esta seleção não encontrou vocabulários disponíveis para estudo.'
         );
         return;
       }
@@ -256,26 +263,26 @@ export default function StudyConfigScreen() {
 
       if (apiError === 'LIST_NOT_FOUND') {
         Alert.alert(
-          'Lista indisponível',
-          'A lista selecionada não foi encontrada ou não pertence a este usuário.'
+          t('studyConfig.startSession.listNotFoundTitle'), // 'Lista indisponível'
+          t('studyConfig.startSession.listNotFoundMessage') // 'A lista selecionada não foi encontrada ou não pertence a este usuário.'
         );
         return;
       }
 
       Alert.alert(
-        'Erro ao iniciar',
-        'Não foi possível criar a sua sessão de estudo.'
+        t('studyConfig.startSession.genericErrorTitle'), // 'Erro ao iniciar'
+        t('studyConfig.startSession.genericErrorMessage') // 'Não foi possível criar a sua sessão de estudo.'
       );
     } finally {
       setStarting(false);
     }
-  }, [direction, exerciseType, limit, router, scope, selectedListId]);
+  }, [direction, exerciseType, limit, router, scope, selectedListId, t]); // Adicionado 't' como dependência
 
   if (loading) {
     return (
       <View style={styles.center}>
         <ActivityIndicator size="large" color={colors.primary} />
-        <Text style={styles.loadingText}>Preparando seu estudo...</Text>
+        <Text style={styles.loadingText}>{t('studyConfig.loadingText')}</Text> {/* 'Preparando seu estudo...' */}
       </View>
     );
   }
@@ -286,7 +293,7 @@ export default function StudyConfigScreen() {
         <Text style={styles.errorText}>{error}</Text>
 
         <Pressable style={styles.primaryBtn} onPress={loadScreenData}>
-          <Text style={styles.primaryBtnText}>Tentar novamente</Text>
+          <Text style={styles.primaryBtnText}>{t('common.tryAgain')}</Text> {/* 'Tentar novamente' */}
         </Pressable>
       </View>
     );
@@ -299,18 +306,18 @@ export default function StudyConfigScreen() {
       showsVerticalScrollIndicator={false}
     >
       <View>
-        <Text style={styles.title}>Hora de estudar</Text>
+        <Text style={styles.title}>{t('studyConfig.title')}</Text> {/* 'Hora de estudar' */}
         <Text style={styles.subtitle}>
-          Configure uma sessão rápida e mantenha o vocabulário afiado.
+          {t('studyConfig.subtitle')} {/* 'Configure uma sessão rápida e mantenha o vocabulário afiado.' */}
         </Text>
       </View>
 
       <View style={styles.card}>
-        <Text style={styles.sectionTitle}>Lista de vocabulários</Text>
+        <Text style={styles.sectionTitle}>{t('studyConfig.listSection.title')}</Text> {/* 'Lista de vocabulários' */}
 
         {lists.length === 0 ? (
           <Text style={styles.emptyText}>
-            Você ainda não possui listas para estudar.
+            {t('studyConfig.listSection.emptyState')} {/* 'Você ainda não possui listas para estudar.' */}
           </Text>
         ) : (
           <View style={styles.chipsWrap}>
@@ -337,13 +344,13 @@ export default function StudyConfigScreen() {
 
         {!!selectedList && (
           <Text style={styles.helperText}>
-            Selecionada: {selectedList.name}
+            {t('studyConfig.listSection.selectedList', { listName: selectedList.name })} {/* 'Selecionada: {listName}' */}
           </Text>
         )}
       </View>
 
       <View style={styles.card}>
-        <Text style={styles.sectionTitle}>O que revisar?</Text>
+        <Text style={styles.sectionTitle}>{t('studyConfig.reviewSection.title')}</Text> {/* 'O que revisar?' */}
 
         <View style={styles.chipsWrap}>
           {(config?.scopes ?? ['DUE', 'ALL', 'LAST_10']).map((item) => {
@@ -356,7 +363,7 @@ export default function StudyConfigScreen() {
                 onPress={() => setScope(item)}
               >
                 <Text style={[styles.chipText, active && styles.chipTextActive]}>
-                  {scopeLabels[item]}
+                  {t(`studyConfig.reviewSection.scope.${item}`)} {/* Ex: 'Pendentes', 'Todas', 'Últimas 10' */}
                 </Text>
               </Pressable>
             );
@@ -364,7 +371,7 @@ export default function StudyConfigScreen() {
         </View>
 
         <Text style={[styles.sectionTitle, styles.subSectionTitle]}>
-          Quantidade
+          {t('studyConfig.reviewSection.quantityTitle')} {/* 'Quantidade' */}
         </Text>
 
         <View style={styles.chipsWrap}>
@@ -378,7 +385,7 @@ export default function StudyConfigScreen() {
                 onPress={() => setLimit(amount)}
               >
                 <Text style={[styles.chipText, active && styles.chipTextActive]}>
-                  {amount} palavras
+                  {t('studyConfig.reviewSection.quantityWords', { count: amount })} {/* '{count} palavras' */}
                 </Text>
               </Pressable>
             );
@@ -387,7 +394,7 @@ export default function StudyConfigScreen() {
       </View>
 
       <View style={styles.card}>
-        <Text style={styles.sectionTitle}>Direção</Text>
+        <Text style={styles.sectionTitle}>{t('studyConfig.directionSection.title')}</Text> {/* 'Direção' */}
 
         <View style={styles.chipsWrap}>
           {(
@@ -402,7 +409,7 @@ export default function StudyConfigScreen() {
                 onPress={() => setDirection(item)}
               >
                 <Text style={[styles.chipText, active && styles.chipTextActive]}>
-                  {directionLabels[item]}
+                  {t(`studyConfig.directionSection.option.${item}`)} {/* Ex: 'Palavra → Tradução' */}
                 </Text>
               </Pressable>
             );
@@ -411,7 +418,7 @@ export default function StudyConfigScreen() {
       </View>
 
          <View style={styles.card}>
-  <Text style={styles.sectionTitle}>Formato do exercício</Text>
+  <Text style={styles.sectionTitle}>{t('studyConfig.exerciseFormatSection.title')}</Text> {/* 'Formato do exercício' */}
 
   <View style={styles.chipsWrap}>
   {EXERCISE_OPTIONS.filter((option) =>
@@ -431,7 +438,7 @@ export default function StudyConfigScreen() {
             active && styles.chipTextActive,
           ]}
         >
-          {option.title}
+          {t(`studyConfig.exerciseFormatSection.option.${option.type}`)} {/* Ex: 'Aleatório', 'Flashcards' */}
         </Text>
       </Pressable>
     );
@@ -440,14 +447,14 @@ export default function StudyConfigScreen() {
 
 <Text style={styles.helperText}>
   {exerciseType === 'RANDOM'
-    ? 'No modo aleatório, a sessão alterna entre os formatos implementados.'
-    : 'A sessão usará somente o formato selecionado.'}
+    ? t('studyConfig.exerciseFormatSection.randomModeDescription') // 'No modo aleatório, a sessão alterna entre os formatos implementados.'
+    : t('studyConfig.exerciseFormatSection.selectedModeDescription')} // 'A sessão usará somente o formato selecionado.'
 </Text>
 
   <Text style={styles.helperText}>
     {exerciseType === 'RANDOM'
-      ? 'No modo aleatório, o sistema alterna entre os formatos disponíveis.'
-      : 'A sessão usará somente o formato selecionado.'}
+      ? t('studyConfig.exerciseFormatSection.randomModeDescriptionAlt') // 'No modo aleatório, o sistema alterna entre os formatos disponíveis.'
+      : t('studyConfig.exerciseFormatSection.selectedModeDescriptionAlt')} // 'A sessão usará somente o formato selecionado.'
   </Text>
 </View>
 
@@ -461,7 +468,7 @@ export default function StudyConfigScreen() {
     color={colors.primary}
   />
 
-  <Text style={styles.reviewBtnText}>Ver minhas revisões</Text>
+  <Text style={styles.reviewBtnText}>{t('studyConfig.viewReviewsButton')}</Text> {/* 'Ver minhas revisões' */}
 </Pressable>
 
       <Pressable
@@ -473,10 +480,10 @@ export default function StudyConfigScreen() {
         disabled={starting || lists.length === 0}
       >
         {starting ? (
-          <ActivityIndicator size="small" color="#fff" />
-        ) : (
-          <Text style={styles.primaryBtnText}>Iniciar sessão</Text>
-        )}
+  <ActivityIndicator size="small" color="#fff" />
+) : (
+  <Text style={styles.primaryBtnText}>{t('studyConfig.startButton')}</Text> /* 'Iniciar estudo' */
+)}
       </Pressable>
     </ScrollView>
   );

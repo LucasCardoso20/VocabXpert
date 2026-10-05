@@ -1,0 +1,440 @@
+{
+  "rootLayout": {
+    "titles": {
+      "profile": "Perfil",
+      "languages": "Idiomas"
+    }
+  },
+  "addVocab": {
+    "title": "Adicionar Vocabulário",
+    "selectListPlaceholder": "Selecione a lista",
+    "alerts": {
+      "errorTitle": "Erro",
+      "loadListsFailed": "Não foi possível carregar as listas. Por favor, tente novamente.",
+      "attentionTitle": "Atenção",
+      "listNameRequired": "O nome da lista é obrigatório.",
+      "createListFailed": "Não foi possível criar a lista. Por favor, tente novamente.",
+      "successTitle": "Sucesso!",
+      "successMessage": "Vocabulário salvo com sucesso!",
+      "duplicateTitle": "Entrada Duplicada",
+      "duplicateMessage": "Esta palavra já existe nesta lista.",
+      "listNotFound": "Lista não encontrada.",
+      "saveFailed": "Não foi possível salvar o vocabulário. Por favor, tente novamente."
+    },
+    "wordLabel": "Palavra",
+    "wordPlaceholder": "Digite a palavra",
+    "translationLabel": "Tradução",
+    "translationPlaceholder": "Digite a tradução",
+    "listLabel": "Lista",
+    "newListLink": "Criar nova lista",
+    "examplesLabel": "Exemplos",
+    "examplePlaceholder": "Adicione uma frase de exemplo",
+    "saveButton": "Salvar",
+    "cancelButton": "Cancelar",
+    "modals": {
+      "selectListTitle": "Selecionar uma Lista",
+      "defaultSuffix": " (Padrão)",
+      "close": "Fechar",
+      "createListTitle": "Criar Nova Lista",
+      "listNamePlaceholder": "Digite o nome da lista",
+      "cancel": "Cancelar",
+      "create": "Criar"
+    }
+  },
+  "tabs": {
+    "home": "Início",
+    "study": "Estudar",
+    "reviews": "Revisões",
+    "progress": "Progresso"
+  },
+  "vocab": {
+    "detail": {
+      "badge": "Vocabulário",
+      "title": "Detalhes da Palavra",
+      "listenPronunciation": "Ouvir Pronúncia",
+      "tabs": {
+        "examples": "Exemplos",
+        "notes": "Notas"
+      },
+      "practiceWord": "Praticar Palavra"
+    }
+  },
+  "vocabListDetail": {
+    "errors": {
+      "notFound": "Lista não encontrada (ou não pertence ao usuário).",
+      "loadFailed": "Não foi possível carregar esta lista.",
+      "noData": "Nenhum dado disponível para esta lista."
+    },
+    "subtitle_one": "{{count}} vocabulário",
+    "subtitle_other": "{{count}} vocabulários",
+    "searchPlaceholder": "Buscar palavra ou tradução...",
+    "empty": {
+      "noResultsTitle": "Nenhum resultado encontrado",
+      "noResultsText": "Nenhum vocabulário corresponde à sua busca.",
+      "title": "Nada aqui ainda",
+      "text": "Adicione seu primeiro vocabulário a esta lista!",
+      "addVocabButton": "Adicionar Vocabulário"
+    },
+    "deleteAlert": {
+      "title": "Excluir Vocabulário",
+      "message": "Tem certeza que deseja excluir este vocabulário?",
+      "confirm": "Excluir",
+      "cancel": "Cancelar"
+    },
+    "editButton": "Editar",
+    "deleteButton": "Excluir",
+    "addButton": "Adicionar Novo"
+  },
+  "profile": {
+    "loadingProfile": "Carregando perfil...",
+    "errors": {
+      "loadFailed": "Não foi possível carregar os dados do perfil.",
+      "updateFailed": "Não foi possível atualizar o perfil. Por favor, tente novamente."
+    },
+    "title": "Meu Perfil",
+    "subtitle": "Gerencie suas informações pessoais e preferências.",
+    "displayNameSection": {
+      "title": "Nome de Exibição",
+      "editButton": "Editar Nome"
+    },
+    "nativeLanguageSection": {
+      "title": "Idioma Nativo",
+      "editButton": "Editar Idioma"
+    },
+    "interestsSection": {
+      "title": "Interesses",
+      "editButton": "Editar Interesses"
+    },
+    "manageLanguagesButton": "Gerenciar Idiomas",
+    "saveButton": "Salvar",
+    "cancelButton": "Cancelar",
+    "editNameModal": {
+      "title": "Editar Nome de Exibição",
+      "subtitle": "Atualize o nome que aparece no seu perfil.",
+      "placeholder": "Digite seu nome de exibição"
+    },
+    "editNativeLanguageModal": {
+      "title": "Editar Idioma Nativo",
+      "subtitle": "Selecione o idioma que você já domina."
+    },
+    "editInterestsModal": {
+      "title": "Editar Interesses",
+      "subtitle": "Escolha os temas que você mais gosta para personalizar seu aprendizado."
+    },
+    "customInterest": {
+      "addCustomInterestButton": "Adicionar Interesse Personalizado",
+      "placeholder": "Digite o novo interesse",
+      "addButton": "Adicionar",
+      "errors": {
+        "addFailed": "Não foi possível adicionar o interesse personalizado.",
+        "alreadyExists": "Este interesse já existe.",
+        "emptyName": "O nome do interesse não pode ser vazio."
+      }
+    }
+  },
+  "home": {
+    "loading": "Carregando dados da página inicial...",
+    "title": "Bem-vindo(a) de volta, {{displayName}}!",
+    "subtitle": "Pronto para aprender algo novo hoje?",
+    "studyButton": "Iniciar Estudo",
+    "reviewsButton": "Iniciar Revisões",
+    "addVocabButton": "Adicionar Vocabulário",
+    "listsSection": {
+      "title": "Minhas Listas",
+      "empty": "Nenhuma lista ainda. Crie uma para começar a aprender!",
+      "viewAll": "Ver Todas as Listas"
+    },
+    "progressSection": {
+      "title": "Seu Progresso",
+      "totalVocab": "Vocabulário Total",
+      "wordsToReview": "Palavras para Revisar",
+      "wordsLearning": "Palavras Aprendendo",
+      "wordsMastered": "Palavras Dominadas",
+      "viewProgress": "Ver Progresso Completo"
+    },
+    "searchBar": {
+      "placeholder": "Buscar vocabulário..."
+    },
+    "myVocabs": {
+      "title": "Meus Vocabulários",
+      "empty": "Você ainda não adicionou nenhum vocabulário.",
+      "testKnowledge": "Testar Conhecimento"
+    },
+    "vocabLists": {
+      "title": "Listas de Vocabulário",
+      "flashcardsCount_one": "{{count}} flashcard",
+      "flashcardsCount_other": "{{count}} flashcards"
+    }
+  },
+  "languagesScreen": {
+    "alerts": {
+      "activateErrorTitle": "Erro de Ativação",
+      "activateErrorMessage": "Não foi possível ativar o idioma. Por favor, tente novamente.",
+      "selectLanguageTitle": "Selecionar Idioma",
+      "selectLanguageMessage": "Por favor, selecione um idioma para adicionar.",
+      "alreadyAddedTitle": "Idioma Já Adicionado",
+      "alreadyAddedMessage": "Este idioma já foi adicionado ao seu perfil.",
+      "addErrorTitle": "Erro ao Adicionar Idioma",
+      "addErrorMessage": "Não foi possível adicionar o idioma. Por favor, tente novamente.",
+      "updateErrorTitle": "Erro ao Atualizar Idioma",
+      "updateErrorMessage": "Não foi possível atualizar o idioma. Por favor, tente novamente."
+    },
+    "loading": "Carregando idiomas...",
+    "title": "Meus Idiomas",
+    "subtitle": "Gerencie os idiomas que você está aprendendo.",
+    "infoText": "Toque em um idioma para ativá-lo para estudo.",
+    "listsCount_one": "{{count}} lista",
+    "listsCount_many": "{{count}} listas",
+    "listsCount_other": "{{count}} listas",
+    "activeBadge": "Ativo",
+    "activateButton": "Ativar",
+    "levelButton": "Nível",
+    "addLanguage": "Adicionar Idioma",
+    "goToProfile": "Ir para Perfil",
+    "addModal": {
+      "subtitle": "Adicione um novo idioma para aprender.",
+      "languageLabel": "Idioma",
+      "levelLabel": "Seu Nível",
+      "useNowTitle": "Usar como idioma ativo?",
+      "useNowDescription": "Este idioma será definido como seu idioma de estudo ativo."
+    },
+    "editModal": {
+      "title": "Editar Idioma",
+      "subtitle": "Atualize suas configurações de idioma."
+    },
+    "languageNames": {
+      "en": "Inglês",
+      "es": "Espanhol",
+      "fr": "Francês",
+      "it": "Italiano",
+      "de": "Alemão",
+      "ja": "Japonês",
+      "ko": "Coreano",
+      "zh": "Chinês",
+      "pt": "Português"
+    },
+    "levels": {
+      "beginner": {
+        "label": "Iniciante",
+        "description": "Começando, aprendendo frases básicas e gramática."
+      },
+      "intermediate": {
+        "label": "Intermediário",
+        "description": "Consegue conversar, entende a maioria dos textos comuns."
+      },
+      "advanced": {
+        "label": "Avançado",
+        "description": "Fluente na maioria das situações, consegue ler textos complexos."
+      }
+    }
+  },
+  "common": {
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "edit": "Editar",
+    "delete": "Excluir",
+    "add": "Adicionar",
+    "close": "Fechar",
+    "confirm": "Confirmar",
+    "attention": "Atenção",
+    "error": "Erro",
+    "success": "Sucesso",
+    "loading": "Carregando...",
+    "retry": "Tentar Novamente",
+    "back": "Voltar",
+    "create": "Criar"
+  },
+  "progressScreen": {
+    "alerts": {
+      "loadFailed": "Não foi possível carregar os dados de progresso.",
+      "noData": "Nenhum dado de progresso disponível ainda. Comece a estudar para ver seu progresso!",
+      "noReviews": "Nenhuma revisão ainda. Continue estudando para gerar revisões!",
+      "noActivity": "Nenhuma atividade recente. Nada precisa da sua atenção."
+    },
+    "loading": "Carregando progresso...",
+    "retryButton": "Tentar Novamente",
+    "title": "Meu Progresso",
+    "subtitle": "Acompanhe sua jornada de aprendizado.",
+    "score": {
+      "label": "Pontuação",
+      "title": "Pontuação Geral"
+    },
+    "summary": {
+      "total": "Vocabulário Total",
+      "reviews": "Revisões Concluídas",
+      "pending": "Revisões Pendentes",
+      "learning": "Aprendendo"
+    },
+    "activity": {
+      "title": "Atividade",
+      "subtitle": "Sua atividade de aprendizado recente."
+    },
+    "reviewsButton": "Ir para Revisões",
+    "studyButton": "Iniciar Estudo",
+    "streak": {
+      "startNow": "Começar agora",
+      "zero": "0 dias"
+    },
+    "performance": {
+      "empty": "Nenhum dado de desempenho ainda."
+    },
+    "attention": {
+      "title": "Sua Atenção",
+      "subtitle": "Itens que precisam da sua atenção.",
+      "empty": "Nenhum item precisa da sua atenção."
+    }
+  },
+  "reviewScreen": {
+    "date": {
+      "never": "Nunca",
+      "invalid": "Data Inválida"
+    },
+    "item": {
+      "repetitionsLabel": "Repetições",
+      "streakLabel": "Sequência",
+      "intervalLabel": "Intervalo",
+      "intervalValue_one": "{{count}} dia",
+      "intervalValue_other": "{{count}} dias",
+      "notStudiedYet": "Não estudado ainda",
+      "nextReview": "Próxima Revisão"
+    },
+    "errors": {
+      "loadFailed": "Não foi possível carregar as revisões.",
+      "listChangeFailed": "Não foi possível mudar a lista de revisão."
+    },
+    "alerts": {
+      "selectListTitle": "Selecionar Lista",
+      "selectListMessage": "Por favor, selecione uma lista para revisar.",
+      "noWordsTitle": "Nenhuma Palavra para Revisar",
+      "noWordsMessage": "Nenhuma palavra disponível para revisão nesta lista.",
+      "startErrorTitle": "Erro ao Iniciar Revisão",
+      "startErrorMessage": "Não foi possível iniciar a sessão de revisão. Por favor, tente novamente."
+    },
+    "loading": "Carregando revisões...",
+    "retry": "Tentar Novamente",
+    "title": "Revisões",
+    "subtitle": "Gerencie suas revisões de vocabulário.",
+    "progressButton": {
+      "accessibilityLabel": "Ver Progresso",
+      "label": "Progresso"
+    },
+    "lists": {
+      "title": "Listas de Revisão",
+      "empty": "Nenhuma lista com revisões ainda.",
+      "showingProgressOf": "Mostrando progresso de:"
+    },
+    "summary": {
+      "due": "Vencidas",
+      "new": "Novas",
+      "learning": "Aprendendo",
+      "scheduled": "Agendadas"
+    },
+    "buttons": {
+      "reviewPendingAndNew": "Revisar Pendentes e Novas"
+    },
+    "allDone": "Tudo pronto por enquanto!",
+    "wordsList": {
+      "title": "Palavras em Revisão",
+      "count_one": "{{count}} palavra",
+      "count_other": "{{count}} palavras",
+      "empty": "Nenhuma palavra nesta lista de revisão."
+    }
+  },
+  "studyConfig": {
+    "errors": {
+      "loadConfig": "Não foi possível carregar a configuração de estudo."
+    },
+    "startSession": {
+      "selectListTitle": "Selecionar Lista",
+      "selectListMessage": "Por favor, selecione uma lista para iniciar o estudo.",
+      "noVocabTitle": "Nenhum Vocabulário",
+      "noVocabMessage": "Nenhum vocabulário na lista selecionada.",
+      "listNotFoundTitle": "Lista Não Encontrada",
+      "listNotFoundMessage": "A lista selecionada não pôde ser encontrada.",
+      "genericErrorTitle": "Erro ao Iniciar Sessão",
+      "genericErrorMessage": "Ocorreu um erro ao tentar iniciar a sessão."
+    },
+    "loadingText": "Carregando configuração...",
+    "title": "Configuração de Estudo",
+    "subtitle": "Configure sua próxima sessão de estudo.",
+    "listSection": {
+      "title": "Selecionar Lista",
+      "emptyState": "Nenhuma lista disponível. Crie uma primeiro!",
+      "selectedList": "Lista Selecionada:"
+    },
+    "reviewSection": {
+      "title": "Quantidade de Revisão",
+      "quantityTitle": "Número de palavras para revisar",
+      "quantityWords_one": "{{count}} palavra",
+      "quantityWords_other": "{{count}} palavras",
+      "scope": {
+        "LAST_10": "Últimas 10 palavras",
+        "ALL": "Todas as palavras",
+        "DUE": "Apenas palavras vencidas",
+        "NEW": "Apenas palavras novas"
+      }
+    },
+    "directionSection": {
+      "title": "Direção do Estudo",
+      "option": {
+        "WORD_TO_TRANSLATION": "Palavra para Tradução",
+        "TRANSLATION_TO_WORD": "Tradução para Palavra"
+      }
+    },
+    "exerciseFormatSection": {
+      "title": "Formato do Exercício",
+      "randomModeDescription": "Misture todos os tipos de exercício para uma sessão variada.",
+      "selectedModeDescription": "Foque em tipos de exercício específicos.",
+      "randomModeDescriptionAlt": "Aleatório",
+      "selectedModeDescriptionAlt": "Selecionado",
+      "option": {
+        "RANDOM": "Aleatório",
+        "FLASHCARD": "Flashcard",
+        "MULTIPLE_CHOICE_TRANSLATION": "Múltipla Escolha (Tradução)",
+        "CLOZE": "Completar Lacunas",
+        "CHOOSE_CORRECT_EXAMPLE": "Escolher Exemplo Correto",
+        "WORD_ORDER": "Ordem das Palavras",
+        "DICTATION": "Ditado",
+        "MATCH": "Combinar",
+        "CREATE_SENTENCE": "Criar Frase"
+      }
+    },
+    "viewReviewsButton": "Ver Revisões",
+    "startButton": "Iniciar Estudo"
+  },
+  "createVocab": {
+    "selectListPlaceholder": "Selecione uma lista",
+    "errors": {
+      "loadLists": "Não foi possível carregar as listas."
+    },
+    "createList": {
+      "emptyNameMessage": "O nome da lista não pode ser vazio.",
+      "errorMessage": "Não foi possível criar a lista."
+    },
+    "save": {
+      "successMessage": "Vocabulário salvo com sucesso!",
+      "duplicateTitle": "Entrada Duplicada",
+      "duplicateMessage": "Esta palavra já existe nesta lista.",
+      "listNotFoundMessage": "Lista não encontrada.",
+      "genericErrorMessage": "Não foi possível salvar o vocabulário."
+    },
+    "title": "Adicionar Vocabulário",
+    "wordLabel": "Palavra",
+    "wordPlaceholder": "Digite a palavra",
+    "translationLabel": "Tradução",
+    "translationPlaceholder": "Digite a tradução",
+    "listLabel": "Lista",
+    "newListButton": "Criar Nova Lista",
+    "examplesLabel": "Exemplos",
+    "examplePlaceholder": "Adicione uma frase de exemplo",
+    "saveButton": "Salvar",
+    "selectListModal": {
+      "title": "Selecionar uma Lista",
+      "defaultSuffix": " (Padrão)"
+    },
+    "createListModal": {
+      "title": "Criar Nova Lista",
+      "namePlaceholder": "Digite o nome da lista"
+    }
+  }
+}

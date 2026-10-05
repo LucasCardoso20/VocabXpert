@@ -19,56 +19,83 @@ type ApiVocab = {
 
 export async function fetchHomeData(): Promise<HomeData> {
   const userId = await appStorage.getItem('x-user-id');
-  const storedDefaultListId = await appStorage.getItem('default-list-id');
 
   if (!userId) {
     throw new Error('x-user-id não encontrado no appStorage');
   }
 
-  const headers = { 'x-user-id': userId };
+  const headers = {
+    'x-user-id': userId,
+  };
 
-  // 1) listas do usuário
+  // 1) Busca somente as listas do idioma ativo.
   const listsResponse = await apiClient.get('/lists', { headers });
   const rawLists: ApiList[] = listsResponse.data?.items ?? [];
 
-  // escolhe a lista default (prioriza SecureStore, depois isDefault)
-  const fallbackDefault = rawLists.find((l) => l.isDefault)?.id ?? rawLists[0]?.id;
-  const defaultListId = storedDefaultListId || fallbackDefault;
+  /**
+   * IMPORTANTE:
+   *
+   * Não usamos mais "default-list-id" salvo no storage.
+   * Esse ID pode pertencer ao idioma anteriormente ativo.
+   *
+   * Exemplo:
+   * - inglês ativo → default-list-id = ID da Lista Geral inglesa
+   * - usuário ativa espanhol
+   * - esse ID inglês não pode ser usado no contexto espanhol
+   */
+  const defaultList =
+    rawLists.find((list) => list.isDefault) ??
+    rawLists[0] ??
+    null;
 
-  // 2) vocabs da lista default (para "My Vocabs")
+  // 2) Busca os vocabulários da lista padrão DO IDIOMA ATIVO.
   let defaultVocabs: ApiVocab[] = [];
-  if (defaultListId) {
-    const vocabsResponse = await apiClient.get(`/lists/${defaultListId}/vocabs`, { headers });
+
+  if (defaultList) {
+    const vocabsResponse = await apiClient.get(
+      `/lists/${defaultList.id}/vocabs`,
+      { headers }
+    );
+
     defaultVocabs = vocabsResponse.data?.items ?? [];
   }
 
-  // 3) contar vocabs de cada lista (temporário até backend devolver count no /lists)
+  // 3) Conta os vocabulários de cada lista do idioma ativo.
   const countsByListId = new Map<string, number>();
+
   const countRequests = await Promise.allSettled(
-    rawLists.map((list) => apiClient.get(`/lists/${list.id}/vocabs`, { headers }))
+    rawLists.map((list) =>
+      apiClient.get(`/lists/${list.id}/vocabs`, { headers })
+    )
   );
 
   rawLists.forEach((list, index) => {
     const result = countRequests[index];
+
     if (result.status === 'fulfilled') {
       const items: ApiVocab[] = result.value.data?.items ?? [];
+
       countsByListId.set(list.id, items.length);
-    } else {
-      countsByListId.set(list.id, 0);
+      return;
     }
+
+    countsByListId.set(list.id, 0);
   });
 
-  const vocabs: VocabCard[] = defaultVocabs.slice(0, 10).map((v) => ({
-    id: v.id,
-    word: v.word,
-    translation: v.translation ?? '-',
+  const vocabs: VocabCard[] = defaultVocabs.slice(0, 10).map((vocab) => ({
+    id: vocab.id,
+    word: vocab.word,
+    translation: vocab.translation ?? '-',
   }));
 
-  const lists: VocabList[] = rawLists.map((l) => ({
-    id: l.id,
-    title: l.name,
-    count: countsByListId.get(l.id) ?? 0,
+  const lists: VocabList[] = rawLists.map((list) => ({
+    id: list.id,
+    title: list.name,
+    count: countsByListId.get(list.id) ?? 0,
   }));
 
-  return { vocabs, lists };
+  return {
+    vocabs,
+    lists,
+  };
 }

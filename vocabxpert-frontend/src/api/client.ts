@@ -1,19 +1,19 @@
 // src/api/client.ts
 
 import axios from 'axios';
-import { appStorage } from '../storage/appStorage'; // ✅ URL base do seu backend
-const API_BASE_URL = 'http://192.168.0.12:3000'; // Verifique se este IP ainda está correto!
+import { appStorage } from '../storage/appStorage';
+
+const API_BASE_URL = 'http://192.168.100.51:3000';
 
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },
-  timeout: 15000, // Tempo limite de 1.5 segundos
-  withCredentials: false, // ✅ Incluir cookies e credenciais
+  timeout: 15000,
+  withCredentials: false,
 });
 
-// ✅ Interceptor para adicionar o x-user-id automaticamente
 apiClient.interceptors.request.use(
   async (config) => {
     const userId = await appStorage.getItem('x-user-id');
@@ -27,7 +27,6 @@ apiClient.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// ✅ Interceptor para tratamento de erros genéricos (opcional, mas recomendado)
 apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
@@ -40,6 +39,7 @@ apiClient.interceptors.response.use(
     } else {
       console.error('API Error Message:', error.message);
     }
+
     return Promise.reject(error);
   }
 );

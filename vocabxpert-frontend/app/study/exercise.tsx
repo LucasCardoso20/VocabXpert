@@ -33,6 +33,7 @@ import {
   type SubmitAttemptResponse,
   type Issue,
 } from '../../src/screens/study/services/studyService';
+import { useTranslation } from 'react-i18next';
 
 type ChoicePayload = {
   prompt?: string;
@@ -93,6 +94,8 @@ type CreateSentencePayload = {
   };
 };
 
+type TranslateFn = (key: string, options?: Record<string, unknown>) => string;
+
 function createWordOrderTokens(tokens: string[]): WordOrderToken[] {
   return tokens.map((value, index) => ({
     id: `${index}-${value}`,
@@ -115,76 +118,77 @@ function isChoiceExercise(
   );
 }
 
-function getChoiceInstruction(type: ChoiceExerciseType) {
+function getChoiceInstruction(type: ChoiceExerciseType, t: TranslateFn) {
   if (type === 'MULTIPLE_CHOICE_TRANSLATION') {
-    return 'Escolha a resposta correta';
+    return t('study.exercise.choiceInstruction.multipleChoice');
   }
 
   if (type === 'CLOZE') {
-    return 'Complete a frase';
+    return t('study.exercise.choiceInstruction.cloze');
   }
 
-  return 'Escolha o exemplo correto';
+  return t('study.exercise.choiceInstruction.chooseExample');
 }
 
 function getChoicePrompt(
   type: ChoiceExerciseType,
-  payload: ChoicePayload | null
+  payload: ChoicePayload | null,
+  t: TranslateFn
 ) {
   if (type === 'MULTIPLE_CHOICE_TRANSLATION') {
-    return payload?.prompt ?? 'Palavra indisponível';
+    return payload?.prompt ?? t('study.exercise.choicePrompt.wordUnavailable');
   }
 
   if (type === 'CLOZE') {
-    return payload?.sentence ?? 'Frase indisponível';
+    return payload?.sentence ?? t('study.exercise.choicePrompt.sentenceUnavailable');
   }
 
   if (payload?.word) {
-    return `Qual frase usa “${payload.word}” corretamente?`;
+    return t('study.exercise.choicePrompt.chooseExampleWithWord', { word: payload.word });
   }
 
-  return 'Escolha a frase correta.';
+  return t('study.exercise.choicePrompt.chooseExampleDefault');
 }
 
-function getExerciseLabel(type: StudyExercise['type']) {
-  if (type === 'FLASHCARD') return 'Flashcard';
+function getExerciseLabel(type: StudyExercise['type'], t: TranslateFn) {
+  if (type === 'FLASHCARD') return t('study.exercise.label.flashcard');
 
   if (type === 'MULTIPLE_CHOICE_TRANSLATION') {
-    return 'Múltipla escolha';
+    return t('study.exercise.label.multipleChoice');
   }
 
   if (type === 'CLOZE') {
-    return 'Complete a frase';
+    return t('study.exercise.label.cloze');
   }
 
   if (type === 'CHOOSE_CORRECT_EXAMPLE') {
-    return 'Exemplo correto';
+    return t('study.exercise.label.chooseExample');
   }
 
   if (type === 'WORD_ORDER') {
-    return 'Ordene as palavras';
+    return t('study.exercise.label.wordOrder');
   }
 
   if (type === 'MATCH') {
-    return 'Associar pares';
+    return t('study.exercise.label.match');
   }
 
   if (type === 'DICTATION') {
-    return 'Ditado';
+    return t('study.exercise.label.dictation');
   }
 
   if (type === 'CREATE_SENTENCE') {
-  return 'Criar frase';
+  return t('study.exercise.label.createSentence');
 }
 
-  return 'Exercício';
+  return t('study.exercise.label.default');
 }
 
-function getVerdictTitle(verdict: SubmitAttemptResponse['verdict']) {
-  if (verdict === 'CORRECT') return 'Muito bem!';
-  if (verdict === 'PARTIAL') return 'Quase lá!';
-  if (verdict === 'INCORRECT') return 'Continue praticando';
-  return 'Avaliação indisponível';
+function getVerdictTitle(verdict: SubmitAttemptResponse['verdict'], t: TranslateFn) {
+  if (verdict === 'CORRECT') return t('study.exercise.verdict.correct');
+  if (verdict === 'PARTIAL') return t('study.exercise.verdict.partial');
+  if (verdict === 'INCORRECT') return t('study.exercise.verdict.incorrect');
+  return t('study.exercise.verdict.unavailable');
 }
 
 function normalizeWordOrderToken(value: string) {
@@ -198,15 +202,15 @@ function normalizeWordOrderToken(value: string) {
     .replace(/\s+/g, ' ');
 }
 
-function formatNextReviewDate(dateValue: string | null) {
+function formatNextReviewDate(dateValue: string | null, t: TranslateFn) {
   if (!dateValue) {
-    return 'A data será definida em breve.';
+    return t('study.exercise.nextReview.pending');
   }
 
   const date = new Date(dateValue);
 
   if (Number.isNaN(date.getTime())) {
-    return 'Data indisponível.';
+    return t('study.exercise.nextReview.invalid');
   }
 
   return date.toLocaleDateString('pt-BR', {
@@ -226,13 +230,13 @@ function getExerciseDirection(exercise: StudyExercise | null) {
   return payload.direction ?? null;
 }
 
-function getDirectionLabel(direction: string | null) {
+function getDirectionLabel(direction: string | null, t: TranslateFn) {
   if (direction === 'WORD_TO_TRANSLATION') {
-    return 'Palavra → Tradução';
+    return t('study.exercise.direction.wordToTranslation');
   }
 
   if (direction === 'TRANSLATION_TO_WORD') {
-    return 'Tradução → Palavra';
+    return t('study.exercise.direction.translationToWord');
   }
 
   return null;
@@ -240,6 +244,7 @@ function getDirectionLabel(direction: string | null) {
 
 export default function ExerciseScreen() {
   const router = useRouter();
+  const { t } = useTranslation(); // Inicialize o hook de tradução
   const params = useLocalSearchParams<{
     sessionId?: string | string[];
   }>();
@@ -256,7 +261,7 @@ export default function ExerciseScreen() {
   const [attempt, setAttempt] = useState<SubmitAttemptResponse | null>(null);
   const [finished, setFinished] = useState(false);
 
-  const directionLabel = getDirectionLabel(getExerciseDirection(exercise));
+  const directionLabel = getDirectionLabel(getExerciseDirection(exercise), t);
 
   const [selectedOptionIndex, setSelectedOptionIndex] = useState<number | null>(
     null
@@ -282,7 +287,7 @@ const [dictationRate, setDictationRate] = useState<0.62 | 0.82>(0.82);
 const [createdSentence, setCreatedSentence] = useState('');
   const loadInitialExercise = useCallback(async () => {
     if (!sessionId) {
-      setError('Identificador da sessão não encontrado.');
+      setError(t('study.exercise.errors.sessionNotFound'));
       setLoading(false);
       return;
     }
@@ -301,7 +306,7 @@ const [createdSentence, setCreatedSentence] = useState('');
 
       if (!cachedExercise) {
         setError(
-          'Não foi possível recuperar o primeiro exercício desta sessão. Inicie uma nova sessão de estudo.'
+          t('study.exercise.errors.initialExerciseNotFound')
         );
         return;
       }
@@ -319,11 +324,11 @@ const [createdSentence, setCreatedSentence] = useState('');
         err?.response?.data ?? err?.message ?? err
       );
 
-      setError('Não foi possível carregar o exercício.');
+      setError(t('study.exercise.errors.loadExerciseFailed'));
     } finally {
       setLoading(false);
     }
-  }, [sessionId]);
+  }, [sessionId, t]);
 
   useEffect(() => {
     const initializeStudySession = async () => {
@@ -425,13 +430,13 @@ const speakDictation = useCallback(
     const locale = dictationPayload?.locale?.trim();
 
     if (!text) {
-      setError('Não foi possível carregar o texto deste ditado.');
+      setError(t('study.exercise.errors.dictationTextMissing'));
       return;
     }
 
     if (!locale) {
       setError(
-        'Este ditado não possui um idioma configurado para reprodução.'
+        t('study.exercise.errors.dictationLocaleMissing')
       );
       return;
     }
@@ -447,10 +452,10 @@ const speakDictation = useCallback(
     } catch (err) {
       console.warn('[ExerciseScreen] dictation speech error:', err);
 
-      setError('Não foi possível reproduzir o áudio do ditado.');
+      setError(t('study.exercise.errors.dictationPlaybackFailed'));
     }
   },
-  [dictationPayload]
+  [dictationPayload, t]
 );
 
 const playDictation = useCallback(async () => {
@@ -595,8 +600,8 @@ const selectMatchTranslation = (translation: string) => {
     if (isChoiceExercise(exercise.type)) {
       if (selectedOptionIndex === null) {
         Alert.alert(
-          'Escolha uma resposta',
-          'Selecione uma das alternativas.'
+          t('study.exercise.alerts.chooseAnswerTitle'),
+          t('study.exercise.alerts.chooseAnswerMessage')
         );
         return;
       }
@@ -609,8 +614,8 @@ const selectMatchTranslation = (translation: string) => {
 
       if (!answer) {
         Alert.alert(
-          'Digite uma resposta',
-          'Preencha sua resposta antes de continuar.'
+          t('study.exercise.alerts.typeAnswerTitle'),
+          t('study.exercise.alerts.typeAnswerMessage')
         );
         return;
       }
@@ -621,16 +626,16 @@ const selectMatchTranslation = (translation: string) => {
     } else if (exercise.type === 'WORD_ORDER') {
       if (wordOrderAnswerTokens.length === 0) {
         Alert.alert(
-          'Monte a frase',
-          'Toque nas palavras para colocá-las na ordem correta.'
+          t('study.exercise.alerts.buildSentenceTitle'),
+          t('study.exercise.alerts.buildSentenceMessage')
         );
         return;
       }
 
       if (wordOrderAvailableTokens.length > 0) {
         Alert.alert(
-          'Frase incompleta',
-          'Use todas as palavras antes de verificar a resposta.'
+          t('study.exercise.alerts.incompleteSentenceTitle'),
+          t('study.exercise.alerts.incompleteSentenceMessage')
         );
         return;
       }
@@ -644,14 +649,14 @@ const selectMatchTranslation = (translation: string) => {
     : 0;
 
   if (totalWords === 0) {
-    setError('Não foi possível carregar os pares deste exercício.');
+    setError(t('study.exercise.errors.matchPairsNotLoaded'));
     return;
   }
 
   if (matchSelections.length !== totalWords) {
     Alert.alert(
-      'Complete todos os pares',
-      'Associe cada palavra à sua tradução antes de verificar a resposta.'
+      t('study.exercise.alerts.completeAllPairsTitle'),
+      t('study.exercise.alerts.completeAllPairsMessage')
     );
     return;
   }
@@ -664,8 +669,8 @@ const selectMatchTranslation = (translation: string) => {
 
   if (!text) {
     Alert.alert(
-      'Digite o que ouviu',
-      'Ouça o áudio e escreva a frase antes de verificar sua resposta.'
+      t('study.exercise.alerts.typeWhatYouHeardTitle'),
+      t('study.exercise.alerts.typeWhatYouHeardMessage')
     );
     return;
   }
@@ -678,8 +683,8 @@ const selectMatchTranslation = (translation: string) => {
 
   if (!sentence) {
     Alert.alert(
-      'Escreva uma frase',
-      'Crie uma frase antes de verificar sua resposta.'
+      t('study.exercise.alerts.writeSentenceTitle'),
+      t('study.exercise.alerts.writeSentenceMessage')
     );
     return;
   }
@@ -689,7 +694,7 @@ const selectMatchTranslation = (translation: string) => {
   };
 } else {
   setError(
-    `O tipo ${exercise.type} ainda não está disponível nesta etapa.`
+    t('study.exercise.errors.typeNotAvailable', { type: exercise.type })
   );
   return;
 }
@@ -737,11 +742,11 @@ const selectMatchTranslation = (translation: string) => {
       const apiError = err?.response?.data?.error;
 
       if (apiError === 'INVALID_RESPONSE_SHAPE') {
-        setError('A resposta enviada não possui o formato esperado.');
+        setError(t('study.exercise.errors.invalidResponseShape'));
       } else if (apiError === 'EXERCISE_NOT_FOUND') {
-        setError('Este exercício não existe mais ou não pertence ao usuário.');
+        setError(t('study.exercise.errors.exerciseNotFound'));
       } else {
-        setError('Não foi possível avaliar sua resposta.');
+        setError(t('study.exercise.errors.evaluateFailed'));
       }
     } finally {
       setSubmitting(false);
@@ -757,6 +762,7 @@ const selectMatchTranslation = (translation: string) => {
   selectedOptionIndex,
   sessionId,
   submitting,
+  t,
   wordOrderAnswerTokens,
   wordOrderAvailableTokens,
 ]);
@@ -802,11 +808,11 @@ const selectMatchTranslation = (translation: string) => {
         err?.response?.data ?? err?.message ?? err
       );
 
-      setError('Não foi possível carregar o próximo exercício.');
+      setError(t('study.exercise.errors.nextExerciseFailed'));
     } finally {
       setLoadingNext(false);
     }
-  }, [loadingNext, sessionId]);
+  }, [loadingNext, sessionId, t]);
 
   const skipCurrentExercise = useCallback(async () => {
   if (!sessionId || submitting || loadingNext || attempt) {
@@ -827,7 +833,7 @@ const selectMatchTranslation = (translation: string) => {
     await loadNextExercise();
   } catch (err) {
     console.warn('[ExerciseScreen] skip exercise error:', err);
-    setError('Não foi possível pular este exercício.');
+    setError(t('study.exercise.errors.skipFailed'));
   }
 }, [
   attempt,
@@ -836,6 +842,7 @@ const selectMatchTranslation = (translation: string) => {
   loadingNext,
   sessionId,
   submitting,
+  t,
 ]);
 
   const endSession = useCallback(() => {
@@ -845,15 +852,15 @@ const selectMatchTranslation = (translation: string) => {
     }
 
     Alert.alert(
-      'Encerrar sessão?',
-      'O seu progresso já respondido foi salvo.',
+      t('study.exercise.alerts.endSessionTitle'),
+      t('study.exercise.alerts.endSessionMessage'),
       [
         {
-          text: 'Continuar estudando',
+          text: t('study.exercise.alerts.continueStudying'),
           style: 'cancel',
         },
         {
-          text: 'Encerrar',
+          text: t('study.exercise.alerts.endSessionConfirm'),
           style: 'destructive',
           onPress: async () => {
             try {
@@ -867,13 +874,13 @@ const selectMatchTranslation = (translation: string) => {
         },
       ]
     );
-  }, [router, sessionId]);
+  }, [router, sessionId, t]);
 
   if (loading) {
     return (
       <View style={styles.center}>
         <ActivityIndicator size="large" color={colors.primary} />
-        <Text style={styles.loadingText}>Preparando exercício...</Text>
+        <Text style={styles.loadingText}>{t('study.exercise.loadingText')}</Text>
       </View>
     );
   }
@@ -887,7 +894,7 @@ const selectMatchTranslation = (translation: string) => {
           style={styles.primaryBtn}
           onPress={() => router.replace('/study')}
         >
-          <Text style={styles.primaryBtnText}>Voltar para estudos</Text>
+          <Text style={styles.primaryBtnText}>{t('study.exercise.backToStudy')}</Text>
         </Pressable>
       </View>
     );
@@ -900,18 +907,17 @@ const selectMatchTranslation = (translation: string) => {
           <Ionicons name="checkmark" size={32} color="#fff" />
         </View>
 
-        <Text style={styles.finishTitle}>Sessão concluída!</Text>
+        <Text style={styles.finishTitle}>{t('study.exercise.finishTitle')}</Text>
 
         <Text style={styles.finishText}>
-          Seu progresso foi salvo. Cada resposta ajuda o sistema a organizar
-          suas próximas revisões.
+          {t('study.exercise.finishText')}
         </Text>
 
         <Pressable
           style={styles.primaryBtn}
           onPress={() => router.replace('/study')}
         >
-          <Text style={styles.primaryBtnText}>Voltar para estudos</Text>
+          <Text style={styles.primaryBtnText}>{t('study.exercise.backToStudy')}</Text>
         </Pressable>
       </View>
     );
@@ -921,7 +927,7 @@ const selectMatchTranslation = (translation: string) => {
     return (
       <View style={styles.center}>
         <Text style={styles.errorText}>
-          Nenhum exercício disponível nesta sessão.
+          {t('study.exercise.noExerciseAvailable')}
         </Text>
       </View>
     );
@@ -944,7 +950,7 @@ const unsupported =
 
           <View style={styles.headerTitleContainer}>
             <Text style={styles.headerTitle}>
-              {getExerciseLabel(exercise.type)}
+              {getExerciseLabel(exercise.type, t)}
             </Text>
 
             {!!directionLabel && (
@@ -964,21 +970,20 @@ const unsupported =
         {unsupported ? (
           <View style={styles.exerciseCard}>
             <Text style={styles.exerciseTitle}>
-              Tipo de exercício ainda em construção
+              {t('study.exercise.unsupported.title')}
             </Text>
 
             <Text style={styles.exerciseDescription}>
-              O backend gerou um exercício do tipo:{' '}
+              {t('study.exercise.unsupported.description1')}{' '}
               <Text style={styles.boldText}>{exercise.type}</Text>.
             </Text>
 
             <Text style={styles.exerciseDescription}>
-              Nesta primeira etapa, escolha Flashcards, Múltipla Escolha ou
-              Aleatório.
+              {t('study.exercise.unsupported.description2')}
             </Text>
 
             <Pressable style={styles.primaryBtn} onPress={endSession}>
-              <Text style={styles.primaryBtnText}>Encerrar sessão</Text>
+              <Text style={styles.primaryBtnText}>{t('study.exercise.endSessionButton')}</Text>
             </Pressable>
           </View>
         ) : (
@@ -986,18 +991,18 @@ const unsupported =
             {isChoiceExercise(exercise.type) && (
               <View style={styles.exerciseCard}>
                 <Text style={styles.eyebrow}>
-                  {getChoiceInstruction(exercise.type)}
+                  {getChoiceInstruction(exercise.type, t)}
                 </Text>
 
                 <View style={styles.hero}>
                   <Text style={styles.heroText}>
-                    {getChoicePrompt(exercise.type, choicePayload)}
+                    {getChoicePrompt(exercise.type, choicePayload, t)}
                   </Text>
                 </View>
 
                 {!choicePayload?.options?.length ? (
                   <Text style={styles.inlineError}>
-                    Não foi possível carregar as alternativas deste exercício.
+                    {t('study.exercise.choice.optionsUnavailable')}
                   </Text>
                 ) : (
                   <View style={styles.options}>
@@ -1048,11 +1053,11 @@ const unsupported =
 
             {exercise.type === 'FLASHCARD' && (
               <View style={styles.exerciseCard}>
-                <Text style={styles.eyebrow}>Digite a resposta correta</Text>
+                <Text style={styles.eyebrow}>{t('study.exercise.flashcard.eyebrow')}</Text>
 
                 <View style={styles.hero}>
                   <Text style={styles.heroText}>
-                    {flashcardPayload?.front ?? 'Palavra'}
+                    {flashcardPayload?.front ?? t('study.exercise.flashcard.defaultWord')}
                   </Text>
                 </View>
 
@@ -1064,7 +1069,7 @@ const unsupported =
 
                 <TextInput
                   style={styles.answerInput}
-                  placeholder="Digite sua resposta..."
+                  placeholder={t('study.exercise.flashcard.placeholder')}
                   placeholderTextColor={colors.light}
                   value={flashcardAnswer}
                   onChangeText={setFlashcardAnswer}
@@ -1079,7 +1084,7 @@ const unsupported =
 
             {exercise.type === 'DICTATION' && (
   <View style={styles.exerciseCard}>
-    <Text style={styles.eyebrow}>Ouça e escreva o que você ouviu</Text>
+    <Text style={styles.eyebrow}>{t('study.exercise.dictation.eyebrow')}</Text>
 
     <View style={styles.dictationAudioArea}>
       <View style={styles.dictationAudioIcon}>
@@ -1090,15 +1095,15 @@ const unsupported =
         />
       </View>
 
-      <Text style={styles.dictationAudioTitle}>Ditado em áudio</Text>
+      <Text style={styles.dictationAudioTitle}>{t('study.exercise.dictation.audioTitle')}</Text>
 
       <Text style={styles.dictationAudioDescription}>
-        Ouça a frase com atenção e escreva exatamente o que você escutou.
+        {t('study.exercise.dictation.audioDescription')}
       </Text>
 
                     <View style={styles.dictationActions}>
                       <View style={styles.dictationSpeedSection}>
-  <Text style={styles.dictationSpeedLabel}>Velocidade do áudio</Text>
+  <Text style={styles.dictationSpeedLabel}>{t('study.exercise.dictation.speedLabel')}</Text>
 
   <View style={styles.dictationSpeedOptions}>
     <Pressable
@@ -1122,7 +1127,7 @@ const unsupported =
           dictationRate === 0.82 && styles.dictationSpeedButtonTextActive,
         ]}
       >
-        Normal
+        {t('study.exercise.dictation.speedNormal')}
       </Text>
     </Pressable>
 
@@ -1147,7 +1152,7 @@ const unsupported =
           dictationRate === 0.62 && styles.dictationSpeedButtonTextActive,
         ]}
       >
-        Mais devagar
+        {t('study.exercise.dictation.speedSlow')}
       </Text>
     </Pressable>
   </View>
@@ -1166,7 +1171,7 @@ const unsupported =
     />
 
     <Text style={styles.dictationReplayButtonText}>
-      Ouvir novamente
+      {t('study.exercise.dictation.replay')}
     </Text>
   </Pressable>
 
@@ -1188,7 +1193,7 @@ const unsupported =
     />
 
     <Text style={styles.dictationSkipButtonText}>
-      {loadingNext ? 'Pulando...' : 'Pular este exercício'}
+      {loadingNext ? t('study.exercise.dictation.skipping') : t('study.exercise.dictation.skip')}
     </Text>
   </Pressable>
 </View>
@@ -1203,14 +1208,14 @@ const unsupported =
         />
 
         <Text style={styles.dictationHintText}>
-          Dica: {dictationPayload.hintTranslation}
+          {t('study.exercise.dictation.hint', { hint: dictationPayload.hintTranslation })}
         </Text>
       </View>
     )}
 
     <TextInput
       style={styles.dictationInput}
-      placeholder="Digite o que você ouviu..."
+      placeholder={t('study.exercise.dictation.placeholder')}
       placeholderTextColor={colors.light}
       value={dictationAnswer}
       onChangeText={setDictationAnswer}
@@ -1228,12 +1233,12 @@ const unsupported =
 {exercise.type === 'CREATE_SENTENCE' && (
   <View style={styles.exerciseCard}>
     <Text style={styles.eyebrow}>
-      Crie uma frase usando esta palavra
+      {t('study.exercise.createSentence.eyebrow')}
     </Text>
 
     <View style={styles.createSentenceWordCard}>
       <Text style={styles.createSentenceWord}>
-        {createSentencePayload?.word ?? 'Palavra'}
+        {createSentencePayload?.word ?? t('study.exercise.createSentence.defaultWord')}
       </Text>
 
       {!!createSentencePayload?.translation && (
@@ -1252,7 +1257,7 @@ const unsupported =
         />
 
         <Text style={styles.createSentenceRequirementText}>
-          Use a palavra na sua frase.
+          {t('study.exercise.createSentence.requirementUseWord')}
         </Text>
       </View>
 
@@ -1265,8 +1270,9 @@ const unsupported =
           />
 
           <Text style={styles.createSentenceRequirementText}>
-            Use pelo menos{' '}
-            {createSentencePayload?.constraints?.minWords} palavras.
+            {t('study.exercise.createSentence.requirementMinWords', {
+              count: createSentencePayload?.constraints?.minWords,
+            })}
           </Text>
         </View>
       )}
@@ -1279,14 +1285,14 @@ const unsupported =
         />
 
         <Text style={styles.createSentenceRequirementText}>
-          Escreva no idioma que está estudando.
+          {t('study.exercise.createSentence.requirementLanguage')}
         </Text>
       </View>
     </View>
 
     <TextInput
       style={styles.createSentenceInput}
-      placeholder="Escreva sua frase aqui..."
+      placeholder={t('study.exercise.createSentence.placeholder')}
       placeholderTextColor={colors.light}
       value={createdSentence}
       onChangeText={setCreatedSentence}
@@ -1303,23 +1309,23 @@ const unsupported =
         .trim()
         .split(/\s+/)
         .filter(Boolean).length}{' '}
-      palavras
+      {t('study.exercise.createSentence.wordCount')}
     </Text>
   </View>
 )}
 
             {exercise.type === 'WORD_ORDER' && (
   <View style={styles.exerciseCard}>
-    <Text style={styles.eyebrow}>Monte a frase correta</Text>
+    <Text style={styles.eyebrow}>{t('study.exercise.wordOrder.eyebrow')}</Text>
 
     <Text style={styles.wordOrderInstruction}>
-      Toque nas palavras para organizá-las na ordem certa.
+      {t('study.exercise.wordOrder.instruction')}
     </Text>
 
     <View style={styles.wordOrderAnswerArea}>
       {wordOrderAnswerTokens.length === 0 ? (
         <Text style={styles.wordOrderEmptyText}>
-          Toque nas palavras abaixo para formar a frase.
+          {t('study.exercise.wordOrder.emptyText')}
         </Text>
       ) : (
         <View style={styles.wordOrderTokensWrap}>
@@ -1345,7 +1351,7 @@ const unsupported =
     </View>
 
     <Text style={styles.wordOrderSectionLabel}>
-      Palavras disponíveis
+      {t('study.exercise.wordOrder.availableLabel')}
     </Text>
 
     <View style={styles.wordOrderTokensWrap}>
@@ -1370,21 +1376,20 @@ const unsupported =
 
 {exercise.type === 'MATCH' && (
   <View style={styles.exerciseCard}>
-    <Text style={styles.eyebrow}>Associe cada palavra à tradução</Text>
+    <Text style={styles.eyebrow}>{t('study.exercise.match.eyebrow')}</Text>
 
     <Text style={styles.matchInstruction}>
-      Primeiro selecione uma palavra. Depois toque na tradução
-      correspondente.
+      {t('study.exercise.match.instruction')}
     </Text>
 
     {!matchPayload?.left?.length || !matchPayload?.right?.length ? (
       <Text style={styles.inlineError}>
-        Não foi possível carregar os pares deste exercício.
+        {t('study.exercise.match.pairsUnavailable')}
       </Text>
     ) : (
       <View style={styles.matchColumns}>
         <View style={styles.matchColumn}>
-          <Text style={styles.matchColumnTitle}>Palavras</Text>
+          <Text style={styles.matchColumnTitle}>{t('study.exercise.match.wordsColumn')}</Text>
 
           <View style={styles.matchItems}>
             {matchPayload.left.map((word, index) => {
@@ -1433,7 +1438,7 @@ const unsupported =
         </View>
 
         <View style={styles.matchColumn}>
-          <Text style={styles.matchColumnTitle}>Traduções</Text>
+          <Text style={styles.matchColumnTitle}>{t('study.exercise.match.translationsColumn')}</Text>
 
           <View style={styles.matchItems}>
             {matchPayload.right.map((translation, index) => {
@@ -1486,7 +1491,10 @@ const unsupported =
 
     {matchSelections.length > 0 && (
       <Text style={styles.matchProgressText}>
-        {matchSelections.length} de {matchPayload?.left?.length} pares associados
+        {t('study.exercise.match.progress', {
+          matched: matchSelections.length,
+          total: matchPayload?.left?.length,
+        })}
       </Text>
     )}
   </View>
@@ -1506,10 +1514,10 @@ const unsupported =
                 {submitting ? (
                   <View style={styles.loadingRow}>
                     <ActivityIndicator size="small" color="#fff" />
-                    <Text style={styles.primaryBtnText}>Avaliando...</Text>
+                    <Text style={styles.primaryBtnText}>{t('study.exercise.evaluating')}</Text>
                   </View>
                 ) : (
-                  <Text style={styles.primaryBtnText}>Verificar resposta</Text>
+                  <Text style={styles.primaryBtnText}>{t('study.exercise.checkAnswer')}</Text>
                 )}
               </Pressable>
             ) : (
@@ -1522,13 +1530,13 @@ const unsupported =
                 ]}
               >
                 <Text style={styles.feedbackTitle}>
-                  {getVerdictTitle(attempt.verdict)}
+                  {getVerdictTitle(attempt.verdict, t)}
                 </Text>
 
                 <Text style={styles.feedbackText}>{attempt.feedback}</Text>
 
                 <Text style={styles.feedbackMeta}>
-                  Pontuação: {Math.round(attempt.score * 100)}%
+                  {t('study.exercise.score', { score: Math.round(attempt.score * 100) })}
                 </Text>
                 <View style={styles.reviewSchedule}>
   <Ionicons
@@ -1550,8 +1558,8 @@ const unsupported =
     ]}
   >
     {attempt.outcome === 'KNOWN'
-      ? `Próxima revisão: ${formatNextReviewDate(attempt.nextDueAt)}`
-      : 'Esta palavra voltará em breve para reforçar seu aprendizado.'}
+      ? t('study.exercise.nextReviewDate', { date: formatNextReviewDate(attempt.nextDueAt, t) })
+      : t('study.exercise.reviewSoon')}
   </Text>
 </View>
 
@@ -1561,11 +1569,11 @@ const unsupported =
   matchPayload.pairs.length > 0 && (
     <View style={styles.matchCorrection}>
       <Text style={styles.matchCorrectionTitle}>
-        Correção dos pares
+        {t('study.exercise.match.correctionTitle')}
       </Text>
 
       <Text style={styles.matchCorrectionDescription}>
-        Veja quais associações ficaram corretas e quais precisam ser revisadas.
+        {t('study.exercise.match.correctionDescription')}
       </Text>
 
       <View style={styles.matchCorrectionList}>
@@ -1628,14 +1636,14 @@ const unsupported =
               ) : (
                 <>
                   <Text style={styles.matchCorrectionUserAnswer}>
-                    Sua resposta:{' '}
+                    {t('study.exercise.match.yourAnswer')}{' '}
                     <Text style={styles.matchCorrectionWrongAnswer}>
-                      {userTranslation ?? 'não associado'}
+                      {userTranslation ?? t('study.exercise.match.notMatched')}
                     </Text>
                   </Text>
 
                   <Text style={styles.matchCorrectionExpectedAnswer}>
-                    Correto: {pair.translation}
+                    {t('study.exercise.match.correctAnswer', { translation: pair.translation })}
                   </Text>
                 </>
               )}
@@ -1658,7 +1666,7 @@ const unsupported =
         />
 
         <Text style={styles.dictationCorrectAnswerTitle}>
-          Frase correta
+          {t('study.exercise.dictation.correctAnswerTitle')}
         </Text>
       </View>
 
@@ -1674,7 +1682,7 @@ const unsupported =
       {!!attempt.correctedSentence && (
         <View style={styles.createSentenceCorrectedBlock}>
           <Text style={styles.createSentenceCorrectedTitle}>
-            Sugestão de correção
+            {t('study.exercise.createSentence.correctionTitle')}
           </Text>
           <Text style={styles.createSentenceCorrectedText}>
             {attempt.correctedSentence}
@@ -1685,7 +1693,7 @@ const unsupported =
       {Array.isArray(attempt.issues) && attempt.issues.length > 0 && (
         <View style={styles.createSentenceIssuesBlock}>
           <Text style={styles.createSentenceIssuesTitle}>
-            Pontos a melhorar
+            {t('study.exercise.createSentence.issuesTitle')}
           </Text>
               {attempt.issues.map((issue: Issue, index: number) => ( // <-- AGORA COM O TIPO CORRETO
               <View
@@ -1712,12 +1720,11 @@ const unsupported =
   wordOrderAnswerTokens.length > 0 && (
     <View style={styles.wordOrderCorrection}>
       <Text style={styles.wordOrderCorrectionTitle}>
-        Sua ordem
+        {t('study.exercise.wordOrder.correctionTitle')}
       </Text>
 
       <Text style={styles.wordOrderCorrectionDescription}>
-        Verde indica uma palavra na posição correta. Vermelho indica
-        que ela precisa mudar de posição.
+        {t('study.exercise.wordOrder.correctionDescription')}
       </Text>
 
       <View style={styles.wordOrderCorrectionTokens}>
@@ -1763,7 +1770,7 @@ const unsupported =
           />
 
           <Text style={styles.wordOrderCorrectAnswerTitle}>
-            Ordem correta
+            {t('study.exercise.wordOrder.correctAnswerTitle')}
           </Text>
         </View>
 
@@ -1785,7 +1792,7 @@ const unsupported =
                   {loadingNext ? (
                     <ActivityIndicator size="small" color="#fff" />
                   ) : (
-                    <Text style={styles.primaryBtnText}>Próximo exercício</Text>
+                    <Text style={styles.primaryBtnText}>{t('study.exercise.nextExercise')}</Text>
                   )}
                 </Pressable>
               </View>

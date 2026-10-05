@@ -14,6 +14,7 @@ import { colors } from '../../../theme/colors';
 import { spacing } from '../../../theme/spacing';
 import { radio } from '../../../theme/radio';
 import { VocabCard } from '../types';
+import { useTranslation } from 'react-i18next';
 
 function chunk<T>(arr: T[], size: number): T[][] {
   const pages: T[][] = [];
@@ -27,6 +28,7 @@ interface Props {
   onStartQuiz?: () => void;
   onPressVocab?: (vocab: VocabCard) => void;
   onPressSound?: (vocab: VocabCard) => void;
+  speakingWordId?: string | null;
 }
 
 export default function MyVocabsSection({
@@ -35,7 +37,9 @@ export default function MyVocabsSection({
   onStartQuiz,
   onPressVocab,
   onPressSound,
+  speakingWordId,
 }: Props) {
+  const { t } = useTranslation(); // Inicialize o hook de tradução
   const pages = useMemo(() => chunk(vocabs, 4), [vocabs]);
   const listRef = useRef<FlatList<VocabCard[]>>(null);
 
@@ -61,7 +65,7 @@ export default function MyVocabsSection({
     return (
       <View style={styles.section}>
         <View style={styles.header}>
-          <Text style={styles.title}>My Vocabs</Text>
+          <Text style={styles.title}>{t('home.myVocabs.title')}</Text>
           <Pressable
             style={styles.addBtn}
             onPress={() => {
@@ -73,10 +77,10 @@ export default function MyVocabsSection({
           </Pressable>
         </View>
 
-        <Text style={styles.emptyText}>Nenhum vocabulário encontrado.</Text>
+        <Text style={styles.emptyText}>{t('home.myVocabs.empty')}</Text>
 
         <Pressable style={styles.primaryBtn} onPress={onStartQuiz}>
-          <Text style={styles.primaryBtnText}>Teste Seu Conhecimento!</Text>
+          <Text style={styles.primaryBtnText}>{t('home.myVocabs.testKnowledge')}</Text>
         </Pressable>
       </View>
     );
@@ -86,7 +90,7 @@ export default function MyVocabsSection({
     <View style={styles.section}>
       {/* Header com + */}
       <View style={styles.header}>
-        <Text style={styles.title}>My Vocabs</Text>
+        <Text style={styles.title}>{t('home.myVocabs.title')}</Text>
         <Pressable style={styles.addBtn} onPress={onAddVocab}>
           <Ionicons name="add" size={14} color="#fff" />
         </Pressable>
@@ -118,14 +122,22 @@ export default function MyVocabsSection({
                     onPress={() => onPressVocab?.(card)}
                   >
                     <Pressable
-                      style={styles.soundBtn}
-                      onPress={(e) => {
-                        e.stopPropagation();
-                        onPressSound?.(card);
-                      }}
-                    >
-                      <Ionicons name="volume-medium-outline" size={15} color={colors.light} />
-                    </Pressable>
+  style={styles.soundBtn}
+  onPress={(e) => {
+    e.stopPropagation();
+    onPressSound?.(card);
+  }}
+>
+  <Ionicons
+    name={
+      speakingWordId === card.id
+        ? 'volume-high'
+        : 'volume-medium-outline'
+    }
+    size={15}
+    color={colors.light}
+  />
+</Pressable>
 
                     <Text style={styles.word} numberOfLines={2}>
                       {card.word}
@@ -154,7 +166,7 @@ export default function MyVocabsSection({
 
       {/* CTA */}
       <Pressable style={styles.primaryBtn} onPress={onStartQuiz}>
-        <Text style={styles.primaryBtnText}>Teste Seu Conhecimento!</Text>
+        <Text style={styles.primaryBtnText}>{t('home.myVocabs.testKnowledge')}</Text>
       </Pressable>
     </View>
   );

@@ -5,6 +5,7 @@ import { colors } from '../../../theme/colors';
 import { spacing } from '../../../theme/spacing';
 import { radio } from '../../../theme/radio';
 import { VocabList } from '../types';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   lists: VocabList[];
@@ -13,10 +14,12 @@ interface Props {
 }
 
 export default function VocabListsSection({ lists, onPressList, onAddList }: Props) {
+  const { t } = useTranslation(); // Inicialize o hook de tradução
+
   return (
     <View style={styles.section}>
       <View style={styles.header}>
-        <Text style={styles.title}>Vocabs List</Text>
+        <Text style={styles.title}>{t('home.vocabLists.title')}</Text>
 
         <Pressable
           style={styles.addBtn}
@@ -29,7 +32,7 @@ export default function VocabListsSection({ lists, onPressList, onAddList }: Pro
       </View>
 
       {lists.length === 0 ? (
-        <Text style={styles.emptyText}>Nenhuma lista encontrada.</Text>
+        <Text style={styles.emptyText}>{t('home.vocabLists.empty')}</Text>
       ) : (
         <View style={styles.grid}>
           {lists.map((item) => (
@@ -48,7 +51,7 @@ export default function VocabListsSection({ lists, onPressList, onAddList }: Pro
               </Text>
 
               <Text style={styles.cardCount}>
-                {item.count} Flashcards
+                {t('home.vocabLists.flashcardsCount', { count: item.count })}
               </Text>
             </Pressable>
           ))}

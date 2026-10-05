@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { useTranslation } from 'react-i18next'; // Importe o hook useTranslation
 import SelectionBox from '../../src/components/onboarding/SelectionBox';
 import GraphIcon from '../../src/components/icons/GraphIcon';
 import OnboardingButton from '../../src/components/onboarding/OnboardingButton';
@@ -28,13 +29,14 @@ const OnboardingStep2: React.FC<Step2Props> = ({
   currentStep,
   totalSteps,
 }) => {
+  const { t } = useTranslation(); // Inicialize o hook de tradução
   const progress = (currentStep / totalSteps) * 100;
   const isNextDisabled = !level;
 
   return (
     <View style={styles.fullScreen}>
       <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
-        <Text style={styles.title}>Qual é o seu nível nesse idioma?</Text>
+        <Text style={styles.title}>{t('onboarding.step2.title')}</Text>
         <View style={styles.levelOptions}>
           {levels.map((lvl) => (
             <SelectionBox
@@ -48,7 +50,7 @@ const OnboardingStep2: React.FC<Step2Props> = ({
           ))}
         </View>
       </ScrollView>
-      <OnboardingButton label="Continuar" onPress={onNext} isDisabled={isNextDisabled} />
+      <OnboardingButton label={t('onboarding.common.continueButton')} onPress={onNext} isDisabled={isNextDisabled} />
     </View>
   );
 };

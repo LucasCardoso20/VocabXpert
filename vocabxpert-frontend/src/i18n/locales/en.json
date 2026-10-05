@@ -1,0 +1,440 @@
+{
+  "rootLayout": {
+    "titles": {
+      "profile": "Profile",
+      "languages": "Languages"
+    }
+  },
+  "addVocab": {
+    "title": "Add Vocabulary",
+    "selectListPlaceholder": "Select list",
+    "alerts": {
+      "errorTitle": "Error",
+      "loadListsFailed": "Could not load lists. Please try again.",
+      "attentionTitle": "Attention",
+      "listNameRequired": "List name is required.",
+      "createListFailed": "Could not create list. Please try again.",
+      "successTitle": "Success!",
+      "successMessage": "Vocabulary saved successfully!",
+      "duplicateTitle": "Duplicate Entry",
+      "duplicateMessage": "This word already exists in this list.",
+      "listNotFound": "List not found.",
+      "saveFailed": "Could not save vocabulary. Please try again."
+    },
+    "wordLabel": "Word",
+    "wordPlaceholder": "Enter the word",
+    "translationLabel": "Translation",
+    "translationPlaceholder": "Enter the translation",
+    "listLabel": "List",
+    "newListLink": "Create new list",
+    "examplesLabel": "Examples",
+    "examplePlaceholder": "Add an example sentence",
+    "saveButton": "Save",
+    "cancelButton": "Cancel",
+    "modals": {
+      "selectListTitle": "Select a List",
+      "defaultSuffix": " (Default)",
+      "close": "Close",
+      "createListTitle": "Create New List",
+      "listNamePlaceholder": "Enter list name",
+      "cancel": "Cancel",
+      "create": "Create"
+    }
+  },
+  "tabs": {
+    "home": "Home",
+    "study": "Study",
+    "reviews": "Reviews",
+    "progress": "Progress"
+  },
+  "vocabListDetail": {
+    "errors": {
+      "notFound": "List not found (or does not belong to user).",
+      "loadFailed": "Could not load this list.",
+      "noData": "No data available for this list."
+    },
+    "subtitle_one": "{{count}} vocabulary",
+    "subtitle_other": "{{count}} vocabularies",
+    "searchPlaceholder": "Search word or translation...",
+    "empty": {
+      "noResultsTitle": "No results found",
+      "noResultsText": "No vocabulary matches your search.",
+      "title": "Nothing here yet",
+      "text": "Add your first vocabulary to this list!",
+      "addVocabButton": "Add Vocabulary"
+    },
+    "deleteAlert": {
+      "title": "Delete Vocabulary",
+      "message": "Are you sure you want to delete this vocabulary?",
+      "confirm": "Delete",
+      "cancel": "Cancel"
+    },
+    "editButton": "Edit",
+    "deleteButton": "Delete",
+    "addButton": "Add New"
+  },
+  "profile": {
+    "loadingProfile": "Loading profile...",
+    "errors": {
+      "loadFailed": "Could not load profile data.",
+      "updateFailed": "Could not update profile. Please try again."
+    },
+    "title": "My Profile",
+    "subtitle": "Manage your personal information and preferences.",
+    "displayNameSection": {
+      "title": "Display Name",
+      "editButton": "Edit Name"
+    },
+    "nativeLanguageSection": {
+      "title": "Native Language",
+      "editButton": "Edit Language"
+    },
+    "interestsSection": {
+      "title": "Interests",
+      "editButton": "Edit Interests"
+    },
+    "manageLanguagesButton": "Manage Languages",
+    "saveButton": "Save",
+    "cancelButton": "Cancel",
+    "editNameModal": {
+      "title": "Edit Display Name",
+      "subtitle": "Update the name that appears on your profile.",
+      "placeholder": "Enter your display name"
+    },
+    "editNativeLanguageModal": {
+      "title": "Edit Native Language",
+      "subtitle": "Select the language you are fluent in."
+    },
+    "editInterestsModal": {
+      "title": "Edit Interests",
+      "subtitle": "Choose topics you like to personalize your learning."
+    },
+    "customInterest": {
+      "addCustomInterestButton": "Add Custom Interest",
+      "placeholder": "Enter new interest",
+      "addButton": "Add",
+      "errors": {
+        "addFailed": "Could not add custom interest.",
+        "alreadyExists": "This interest already exists.",
+        "emptyName": "Interest name cannot be empty."
+      }
+    }
+  },
+  "home": {
+    "loading": "Loading home data...",
+    "title": "Welcome back, {{displayName}}!",
+    "subtitle": "Ready to learn something new today?",
+    "studyButton": "Start Study",
+    "reviewsButton": "Start Reviews",
+    "addVocabButton": "Add Vocabulary",
+    "listsSection": {
+      "title": "My Lists",
+      "empty": "No lists yet. Create one to start learning!",
+      "viewAll": "View All Lists"
+    },
+    "progressSection": {
+      "title": "Your Progress",
+      "totalVocab": "Total Vocabulary",
+      "wordsToReview": "Words to Review",
+      "wordsLearning": "Words Learning",
+      "wordsMastered": "Words Mastered",
+      "viewProgress": "View Full Progress"
+    },
+    "searchBar": {
+      "placeholder": "Search vocabulary..."
+    },
+    "myVocabs": {
+      "title": "My Vocabularies",
+      "empty": "You haven't added any vocabulary yet.",
+      "testKnowledge": "Test Knowledge"
+    },
+    "vocabLists": {
+      "title": "Vocabulary Lists",
+      "flashcardsCount_one": "{{count}} flashcard",
+      "flashcardsCount_other": "{{count}} flashcards"
+    }
+  },
+  "languagesScreen": {
+    "alerts": {
+      "activateErrorTitle": "Activation Error",
+      "activateErrorMessage": "Could not activate language. Please try again.",
+      "selectLanguageTitle": "Select Language",
+      "selectLanguageMessage": "Please select a language to add.",
+      "alreadyAddedTitle": "Language Already Added",
+      "alreadyAddedMessage": "This language has already been added to your profile.",
+      "addErrorTitle": "Error Adding Language",
+      "addErrorMessage": "Could not add language. Please try again.",
+      "updateErrorTitle": "Error Updating Language",
+      "updateErrorMessage": "Could not update language. Please try again."
+    },
+    "loading": "Loading languages...",
+    "title": "My Languages",
+    "subtitle": "Manage the languages you are learning.",
+    "infoText": "Tap a language to activate it for study.",
+    "listsCount_one": "{{count}} list",
+    "listsCount_many": "{{count}} lists",
+    "listsCount_other": "{{count}} lists",
+    "activeBadge": "Active",
+    "activateButton": "Activate",
+    "levelButton": "Level",
+    "addLanguage": "Add Language",
+    "goToProfile": "Go to Profile",
+    "addModal": {
+      "subtitle": "Add a new language to learn.",
+      "languageLabel": "Language",
+      "levelLabel": "Your Level",
+      "useNowTitle": "Use as active language?",
+      "useNowDescription": "This language will be set as your active study language."
+    },
+    "editModal": {
+      "title": "Edit Language",
+      "subtitle": "Update your language settings."
+    },
+    "languageNames": {
+      "en": "English",
+      "es": "Spanish",
+      "fr": "French",
+      "it": "Italian",
+      "de": "German",
+      "ja": "Japanese",
+      "ko": "Korean",
+      "zh": "Chinese",
+      "pt": "Portuguese"
+    },
+    "levels": {
+      "beginner": {
+        "label": "Beginner",
+        "description": "Starting out, learning basic phrases and grammar."
+      },
+      "intermediate": {
+        "label": "Intermediate",
+        "description": "Can converse, understands most common texts."
+      },
+      "advanced": {
+        "label": "Advanced",
+        "description": "Fluent in most situations, can read complex texts."
+      }
+    }
+  },
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "delete": "Delete",
+    "add": "Add",
+    "close": "Close",
+    "confirm": "Confirm",
+    "attention": "Attention",
+    "error": "Error",
+    "success": "Success",
+    "loading": "Loading...",
+    "retry": "Retry",
+    "back": "Back",
+    "create": "Create"
+  },
+  "progressScreen": {
+    "alerts": {
+      "loadFailed": "Could not load progress data.",
+      "noData": "No progress data available yet. Start studying to see your progress!",
+      "noReviews": "No reviews yet. Keep studying to generate reviews!",
+      "noActivity": "No recent activity. Nothing needs your attention."
+    },
+    "loading": "Loading progress...",
+    "retryButton": "Retry",
+    "title": "My Progress",
+    "subtitle": "Track your learning journey.",
+    "score": {
+      "label": "Score",
+      "title": "Overall Score"
+    },
+    "summary": {
+      "total": "Total Vocabulary",
+      "reviews": "Reviews Completed",
+      "pending": "Pending Reviews",
+      "learning": "Learning"
+    },
+    "activity": {
+      "title": "Activity",
+      "subtitle": "Your recent learning activity."
+    },
+    "reviewsButton": "Go to Reviews",
+    "studyButton": "Start Study",
+    "streak": {
+      "startNow": "Start now",
+      "zero": "0 days"
+    },
+    "performance": {
+      "empty": "No performance data yet."
+    },
+    "attention": {
+      "title": "Your Attention",
+      "subtitle": "Items that need your attention.",
+      "empty": "No items need your attention."
+    }
+  },
+  "reviewScreen": {
+    "date": {
+      "never": "Never",
+      "invalid": "Invalid Date"
+    },
+    "item": {
+      "repetitionsLabel": "Repetitions",
+      "streakLabel": "Streak",
+      "intervalLabel": "Interval",
+      "intervalValue_one": "{{count}} day",
+      "intervalValue_other": "{{count}} days",
+      "notStudiedYet": "Not studied yet",
+      "nextReview": "Next Review"
+    },
+    "errors": {
+      "loadFailed": "Could not load reviews.",
+      "listChangeFailed": "Could not change review list."
+    },
+    "alerts": {
+      "selectListTitle": "Select List",
+      "selectListMessage": "Please select a list to review.",
+      "noWordsTitle": "No Words to Review",
+      "noWordsMessage": "No words available for review in this list.",
+      "startErrorTitle": "Error Starting Review",
+      "startErrorMessage": "Could not start review session. Please try again."
+    },
+    "loading": "Loading reviews...",
+    "retry": "Retry",
+    "title": "Reviews",
+    "subtitle": "Manage your vocabulary reviews.",
+    "progressButton": {
+      "accessibilityLabel": "View Progress",
+      "label": "Progress"
+    },
+    "lists": {
+      "title": "Review Lists",
+      "empty": "No lists with reviews yet.",
+      "showingProgressOf": "Showing progress of:"
+    },
+    "summary": {
+      "due": "Due",
+      "new": "New",
+      "learning": "Learning",
+      "scheduled": "Scheduled"
+    },
+    "buttons": {
+      "reviewPendingAndNew": "Review Pending and New"
+    },
+    "allDone": "All done for now!",
+    "wordsList": {
+      "title": "Words in Review",
+      "count_one": "{{count}} word",
+      "count_other": "{{count}} words",
+      "empty": "No words in this review list."
+    }
+  },
+  "studyConfig": {
+    "errors": {
+      "loadConfig": "Could not load study configuration."
+    },
+    "startSession": {
+      "selectListTitle": "Select List",
+      "selectListMessage": "Please select a list to start studying.",
+      "noVocabTitle": "No Vocabulary",
+      "noVocabMessage": "No vocabulary in the selected list.",
+      "listNotFoundTitle": "List Not Found",
+      "listNotFoundMessage": "The selected list could not be found.",
+      "genericErrorTitle": "Error Starting Session",
+      "genericErrorMessage": "An error occurred while trying to start the session."
+    },
+    "loadingText": "Loading configuration...",
+    "title": "Study Configuration",
+    "subtitle": "Configure your next study session.",
+    "listSection": {
+      "title": "Select List",
+      "emptyState": "No lists available. Create one first!",
+      "selectedList": "Selected List:"
+    },
+    "reviewSection": {
+      "title": "Review Quantity",
+      "quantityTitle": "Number of words to review",
+      "quantityWords_one": "{{count}} word",
+      "quantityWords_other": "{{count}} words",
+      "scope": {
+        "LAST_10": "Last 10 words",
+        "ALL": "All words",
+        "DUE": "Only due words",
+        "NEW": "Only new words"
+      }
+    },
+    "directionSection": {
+      "title": "Study Direction",
+      "option": {
+        "WORD_TO_TRANSLATION": "Word to Translation",
+        "TRANSLATION_TO_WORD": "Translation to Word"
+      }
+    },
+    "exerciseFormatSection": {
+      "title": "Exercise Format",
+      "randomModeDescription": "Mix all exercise types for a varied session.",
+      "selectedModeDescription": "Focus on specific exercise types.",
+      "randomModeDescriptionAlt": "Random",
+      "selectedModeDescriptionAlt": "Selected",
+      "option": {
+        "RANDOM": "Random",
+        "FLASHCARD": "Flashcard",
+        "MULTIPLE_CHOICE_TRANSLATION": "Multiple Choice (Translation)",
+        "CLOZE": "Fill in the Blanks",
+        "CHOOSE_CORRECT_EXAMPLE": "Choose Correct Example",
+        "WORD_ORDER": "Word Order",
+        "DICTATION": "Dictation",
+        "MATCH": "Match",
+        "CREATE_SENTENCE": "Create Sentence"
+      }
+    },
+    "viewReviewsButton": "View Reviews",
+    "startButton": "Start Study"
+  },
+  "createVocab": {
+    "selectListPlaceholder": "Select a list",
+    "errors": {
+      "loadLists": "Could not load lists."
+    },
+    "createList": {
+      "emptyNameMessage": "List name cannot be empty.",
+      "errorMessage": "Could not create list."
+    },
+    "save": {
+      "successMessage": "Vocabulary saved successfully!",
+      "duplicateTitle": "Duplicate Entry",
+      "duplicateMessage": "This word already exists in this list.",
+      "listNotFoundMessage": "List not found.",
+      "genericErrorMessage": "Could not save vocabulary."
+    },
+    "title": "Add Vocabulary",
+    "wordLabel": "Word",
+    "wordPlaceholder": "Enter the word",
+    "translationLabel": "Translation",
+    "translationPlaceholder": "Enter the translation",
+    "listLabel": "List",
+    "newListButton": "Create New List",
+    "examplesLabel": "Examples",
+    "examplePlaceholder": "Add an example sentence",
+    "saveButton": "Save",
+    "selectListModal": {
+      "title": "Select a List",
+      "defaultSuffix": " (Default)"
+    },
+    "createListModal": {
+      "title": "Create New List",
+      "namePlaceholder": "Enter list name"
+    }
+  },
+  "vocab": {
+    "detail": {
+      "badge": "Vocabulary Detail",
+      "title": "Vocabulary Details",
+      "listenPronunciation": "Listen Pronunciation",
+      "tabs": {
+        "examples": "Examples",
+        "notes": "Notes"
+      },
+      "practiceWord": "Practice Word"
+    }
+  }
+}

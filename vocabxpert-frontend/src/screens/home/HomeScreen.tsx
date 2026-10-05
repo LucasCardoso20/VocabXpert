@@ -1,3 +1,4 @@
+// app/index.tsx (ou onde sua HomeScreen está definida)
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   View,
@@ -7,13 +8,12 @@ import {
   Text,
   Pressable,
   RefreshControl,
+  Alert, // Importar Alert para exibir mensagens de erro
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useFocusEffect } from '@react-navigation/native';
-
-import { colors } from '../../theme/colors';
-import { spacing } from '../../theme/spacing';
-
+import { useTranslation } from 'react-i18next';
+import * as Speech from 'expo-speech'; // Importar expo-speech
 import HomeSearchBar from './components/HomeSearchBar';
 import MyVocabsSection from './components/MyVocabsSection';
 import VocabListsSection from './components/VocabListsSection';
@@ -21,77 +21,109 @@ import { fetchHomeData } from './services/homeService';
 import { VocabCard, VocabList } from './types';
 import { useProfile } from '@/src/contexts/ProfileContext';
 import HomeHeader from '@/src/components/layout/HomeHeader';
+import { colors } from '@/src/theme/colors';
+import { spacing } from '@/src/theme/spacing';
 
 
 export default function HomeScreen() {
   const router = useRouter();
-  const { activeLanguage, isLoadingProfile } = useProfile();
+  const { t } = useTranslation();
+  const { activeLanguage, isLoadingProfile } = useProfile(); // Obter activeLanguage do contexto
 
   const [vocabs, setVocabs] = useState<VocabCard[]>([]);
   const [lists, setLists] = useState<VocabList[]>([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [speakingWordId, setSpeakingWordId] = useState<string | null>(null); // Estado para controlar qual palavra está sendo falada
 
   // Evita duplicar o load: um no mount + outro no primeiro focus
   const didInitialLoadRef = useRef(false);
 
-const loadHome = useCallback(async (isRefresh = false) => {
-  /**
-   * Enquanto o perfil ainda carrega, ainda não sabemos qual idioma está ativo.
-   * Evita uma chamada de Home em um contexto potencialmente antigo.
-   */
-  if (isLoadingProfile) {
-    return;
-  }
+  const loadHome = useCallback(async (isRefresh = false) => {
+    if (isLoadingProfile) {
+      // Se o perfil ainda está carregando, não tenta carregar a home para evitar erros de activeLanguage
+      return;
+    }
 
-  try {
-    if (isRefresh) setRefreshing(true);
-    else setLoading(true);
-
+    if (isRefresh) {
+      setRefreshing(true);
+    } else {
+      setLoading(true);
+    }
     setError(null);
 
-    const data = await fetchHomeData();
+    try {
+      const data = await fetchHomeData();
+      setVocabs(data.vocabs);
+      setLists(data.lists);
+    } catch (err) {
+      console.error("Failed to load home data:", err);
+      setError(t('home.errors.loadFailed'));
+    } finally {
+      setLoading(false);
+      setRefreshing(false);
+    }
+  }, [isLoadingProfile, t]); // Adicionar isLoadingProfile e t como dependências
 
-    setVocabs(data.vocabs);
-    setLists(data.lists);
-  } catch (err: any) {
-    console.error(
-      'Erro ao carregar Home:',
-      err?.response?.data || err?.message
-    );
-
-    setError('Não foi possível carregar os dados da Home.');
-  } finally {
-    setLoading(false);
-    setRefreshing(false);
-  }
-}, [isLoadingProfile, activeLanguage?.id]);
-
-  // Primeiro carregamento
+  // Recarrega a home quando o idioma ativo muda
   useEffect(() => {
-  if (isLoadingProfile) {
-    return;
-  }
+    if (!isLoadingProfile && activeLanguage) {
+      loadHome();
+    }
+  }, [activeLanguage, isLoadingProfile, loadHome]);
 
-  (async () => {
-    await loadHome(false);
-    didInitialLoadRef.current = true;
-  })();
-}, [isLoadingProfile, loadHome]);
-
-  // Recarrega sempre que voltar para a Home (ex: depois de criar vocab/lista)
   useFocusEffect(
     useCallback(() => {
-      if (!didInitialLoadRef.current) return;
-      loadHome(true);
+      if (!didInitialLoadRef.current) {
+        loadHome();
+        didInitialLoadRef.current = true;
+      }
     }, [loadHome])
   );
 
-  if (loading) {
+  // Função para lidar com a reprodução de áudio
+ const handleSpeak = useCallback(
+  (vocab: VocabCard) => {
+    const word = vocab.word.trim();
+
+    if (!word) {
+      Alert.alert(
+        t('common.error'),
+        t('vocab.myVocabs.alerts.noWordToSpeak')
+      );
+      return;
+    }
+
+    if (!activeLanguage?.language) {
+      Alert.alert(
+        t('common.error'),
+        t('vocab.myVocabs.alerts.noLanguageSelected')
+      );
+      return;
+    }
+
+    Speech.stop();
+    setSpeakingWordId(vocab.id);
+
+    Speech.speak(word, {
+      language: activeLanguage.language,
+      rate: 0.95,
+      pitch: 1,
+      onDone: () => setSpeakingWordId(null),
+      onStopped: () => setSpeakingWordId(null),
+      onError: () => setSpeakingWordId(null),
+    });
+  },
+  [activeLanguage, t]
+);
+
+
+  if (loading && !refreshing) {
     return (
       <View style={styles.center}>
         <ActivityIndicator size="large" color={colors.primary} />
+        <Text style={styles.loadingText}>{t('home.loading')}</Text>
       </View>
     );
   }
@@ -101,7 +133,7 @@ const loadHome = useCallback(async (isRefresh = false) => {
       <View style={styles.center}>
         <Text style={styles.errorText}>{error}</Text>
         <Pressable style={styles.retryBtn} onPress={() => loadHome(false)}>
-          <Text style={styles.retryText}>Tentar novamente</Text>
+          <Text style={styles.retryText}>{t('common.retry')}</Text>
         </Pressable>
       </View>
     );
@@ -109,6 +141,7 @@ const loadHome = useCallback(async (isRefresh = false) => {
 
   return (
     <View style={styles.container}>
+      <HomeHeader /> {/* Mantém o HomeHeader aqui, se ele for um componente separado */}
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.content}
@@ -132,19 +165,18 @@ const loadHome = useCallback(async (isRefresh = false) => {
               params: { vocabId: vocab.id },
             });
           }}
-          onPressSound={(vocab) => {
-            // sua lógica atual de fala/pronúncia
-          }}
+          onPressSound={handleSpeak}
+          speakingWordId={speakingWordId}
         />
 
-        <VocabListsSection 
-        lists={lists}  
-        onPressList={(list) => {
+        <VocabListsSection
+          lists={lists}
+          onPressList={(list) => {
             router.push({
               pathname: '/lists/[listId]',
               params: { listId: list.id },
             });
-          }}/>
+          }} />
 
         <View style={styles.bottomSpacer} />
       </ScrollView>
@@ -192,5 +224,11 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 12,
     right: 16,
+  },
+  loadingText: {
+    marginTop: spacing.s3,
+    color: colors.muted,
+    fontFamily: 'DM Sans Medium',
+    fontSize: 16,
   },
 });

@@ -18,11 +18,13 @@ import { spacing } from '../../src/theme/spacing';
 import { radio } from '../../src/theme/radio';
 
 import { fetchVocabDetail, type VocabDetail } from '../../src/screens/vocab/services/vocabDetailService';
+import { useTranslation } from 'react-i18next';
 
 type TabKey = 'examples' | 'notes';
 
 export default function VocabDetailScreen() {
   const router = useRouter();
+  const { t } = useTranslation(); // Inicialize o hook de tradução
   const { vocabId } = useLocalSearchParams<{ vocabId: string }>();
 
   const [activeTab, setActiveTab] = useState<TabKey>('examples');
@@ -41,11 +43,11 @@ export default function VocabDetailScreen() {
       setDetail(data);
     } catch (e: any) {
       console.error('Erro ao carregar vocab detail:', e?.response?.data || e?.message || e);
-      setError('Não foi possível carregar este vocabulário.');
+      setError(t('vocab.detail.errors.loadFailed'));
     } finally {
       setLoading(false);
     }
-  }, [vocabId]);
+  }, [vocabId, t]);
 
   // Recarrega sempre que a tela ganhar foco (ex: voltou de outra tela)
   useFocusEffect(
@@ -57,8 +59,8 @@ export default function VocabDetailScreen() {
   const badgeText = useMemo(() => {
     // No seu backend atual eu não vi "partOfSpeech" no schema.
     // Mantemos um placeholder elegante até você adicionar no backend.
-    return 'Vocab';
-  }, []);
+    return t('vocab.detail.badge');
+  }, [t]);
 
   const onSpeak = useCallback(() => {
     const word = detail?.word?.trim();
@@ -91,12 +93,12 @@ export default function VocabDetailScreen() {
   if (error || !detail) {
     return (
       <View style={styles.center}>
-        <Text style={styles.errorText}>{error ?? 'Vocab não encontrado.'}</Text>
+        <Text style={styles.errorText}>{error ?? t('vocab.detail.errors.notFound')}</Text>
         <Pressable style={styles.retryBtn} onPress={load}>
-          <Text style={styles.retryText}>Tentar novamente</Text>
+          <Text style={styles.retryText}>{t('vocab.detail.retry')}</Text>
         </Pressable>
         <Pressable style={styles.backBtnInline} onPress={() => router.back()}>
-          <Text style={styles.backBtnInlineText}>Voltar</Text>
+          <Text style={styles.backBtnInlineText}>{t('vocab.detail.back')}</Text>
         </Pressable>
       </View>
     );
@@ -115,7 +117,7 @@ export default function VocabDetailScreen() {
             <Ionicons name="chevron-back" size={22} color={colors.text} />
           </Pressable>
 
-          <Text style={styles.innerTitle}>Vocab</Text>
+          <Text style={styles.innerTitle}>{t('vocab.detail.title')}</Text>
 
           {/* espaço pra manter centralizado */}
           <View style={{ width: 36 }} />
@@ -136,7 +138,7 @@ export default function VocabDetailScreen() {
 
           <Pressable style={styles.soundPill} onPress={onSpeak}>
             <Ionicons name="volume-high-outline" size={16} color="#fff" />
-            <Text style={styles.soundPillText}>Ouvir pronúncia</Text>
+            <Text style={styles.soundPillText}>{t('vocab.detail.listenPronunciation')}</Text>
           </Pressable>
         </View>
 
@@ -147,7 +149,7 @@ export default function VocabDetailScreen() {
             style={[styles.tabBtn, activeTab === 'examples' && styles.tabBtnActive]}
           >
             <Text style={[styles.tabText, activeTab === 'examples' && styles.tabTextActive]}>
-              Exemplos
+              {t('vocab.detail.tabs.examples')}
             </Text>
           </Pressable>
 
@@ -156,7 +158,7 @@ export default function VocabDetailScreen() {
             style={[styles.tabBtn, activeTab === 'notes' && styles.tabBtnActive]}
           >
             <Text style={[styles.tabText, activeTab === 'notes' && styles.tabTextActive]}>
-              Notas
+              {t('vocab.detail.tabs.notes')}
             </Text>
           </Pressable>
         </View>
@@ -173,7 +175,7 @@ export default function VocabDetailScreen() {
                 </View>
               ))
             ) : (
-              <Text style={styles.emptyText}>Nenhum exemplo disponível.</Text>
+              <Text style={styles.emptyText}>{t('vocab.detail.noExamples')}</Text>
             )}
           </View>
         ) : (
@@ -186,21 +188,20 @@ export default function VocabDetailScreen() {
                 </View>
               ))
             ) : (
-              <Text style={styles.emptyText}>Nenhuma nota adicionada.</Text>
+              <Text style={styles.emptyText}>{t('vocab.detail.noNotes')}</Text>
             )}
           </View>
         )}
 
         <View style={styles.bottomPad}>
           <Pressable style={styles.primaryBtn} onPress={onPractice}>
-            <Text style={styles.primaryBtnText}>Praticar esta palavra</Text>
+            <Text style={styles.primaryBtnText}>{t('vocab.detail.practiceWord')}</Text>
           </Pressable>
         </View>
       </ScrollView>
     </View>
   );
 }
-
 const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: colors.background },
   scroll: { flex: 1 },

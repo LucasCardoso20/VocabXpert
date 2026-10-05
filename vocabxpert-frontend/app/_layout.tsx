@@ -3,6 +3,8 @@ import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useCallback, useEffect, useState } from 'react';
 import { View } from 'react-native';
+import { useTranslation } from 'react-i18next'; // Importe o hook useTranslation
+import '../src/i18n/i18n'; // Importe o arquivo de configuração do i18n
 
 import { appStorage } from '@/src/storage/appStorage';
 import { useAppFonts } from '@/src/theme/typography';
@@ -12,6 +14,7 @@ SplashScreen.preventAutoHideAsync();
 type OnboardingStatus = 'loading' | 'completed' | 'not_completed';
 
 export default function RootLayout() {
+  const { t } = useTranslation(); // Inicialize o hook de tradução
   const fontsLoaded = useAppFonts();
 
   const [onboardingStatus, setOnboardingStatus] =
@@ -52,48 +55,68 @@ export default function RootLayout() {
 
   return (
     <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
-  <StatusBar style="dark" />
+      <StatusBar style="dark" />
 
-  <ProfileProvider>
-    <Stack
-      initialRouteName={initialRouteName}
-      screenOptions={{
-        headerShown: false,
-        animation: 'fade_from_bottom',
-        animationDuration: 220,
-        gestureEnabled: true,
-      }}
-    >
-      <Stack.Screen
-        name="onboarding"
-        options={{ headerShown: false }}
-      />
+      <ProfileProvider>
+        <Stack
+          initialRouteName={initialRouteName}
+          screenOptions={{
+            headerShown: false,
+            animation: 'fade_from_bottom',
+            animationDuration: 220,
+            gestureEnabled: true,
+          }}
+        >
+          <Stack.Screen
+            name="onboarding"
+            options={{ headerShown: false }}
+          />
 
-      <Stack.Screen
-        name="(tabs)"
-        options={{ headerShown: false }}
-      />
+          <Stack.Screen
+            name="(tabs)"
+            options={{ headerShown: false }}
+          />
 
-      <Stack.Screen
-        name="vocab/create"
-        options={{
-          headerShown: true,
-          title: 'Adicionar Vocab',
-          presentation: 'card',
-        }}
-      />
+          <Stack.Screen
+            name="profile"
+            options={{
+              headerShown: true,
+              title: t('rootLayout.titles.profile'),
+              presentation: 'card',
+            }}
+          />
 
-      <Stack.Screen
-        name="study/exercise"
-        options={{ headerShown: false }}
-      />
+          <Stack.Screen
+            name="languages"
+            options={{
+              headerShown: true,
+              title: t('rootLayout.titles.languages'),
+              presentation: 'card',
+            }}
+          />
 
-      <Stack.Screen
-        name="study/results"
-        options={{ headerShown: false }}
-      />
-    </Stack>
-  </ProfileProvider>
-</View>
+          <Stack.Screen
+            name="vocab/create"
+            options={{
+              headerShown: true,
+              title: t('addVocab.title'),
+              presentation: 'card',
+            }}
+          />
+
+          <Stack.Screen
+            name="study/exercise"
+            options={{ headerShown: false }}
+          />
+
+          <Stack.Screen
+            name="study/results"
+            options={{ headerShown: false }}
+          />
+
+
+        </Stack>
+      </ProfileProvider>
+    </View>
   );
 }

@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 
 import { colors } from '../../theme/colors';
 import { spacing } from '../../theme/spacing';
@@ -30,6 +31,7 @@ import {
   type ReviewDashboardItem,
   type ReviewStatus,
 } from './services/reviewService';
+import { useProfile } from '@/src/contexts/ProfileContext';
 
 const REVIEW_EXERCISE_TYPES: ConcreteExerciseType[] = [
   'FLASHCARD',
@@ -45,47 +47,50 @@ const REVIEW_EXERCISE_TYPES: ConcreteExerciseType[] = [
 const statusConfig: Record<
   ReviewStatus,
   {
-    label: string;
+    labelKey: string;
     icon: React.ComponentProps<typeof Ionicons>['name'];
     backgroundColor: string;
     textColor: string;
   }
 > = {
   DUE: {
-    label: 'Para revisar',
+    labelKey: 'reviewScreen.status.due',
     icon: 'alarm-outline',
     backgroundColor: '#FEE2E2',
     textColor: '#B91C1C',
   },
   NEW: {
-    label: 'Nova',
+    labelKey: 'reviewScreen.status.new',
     icon: 'sparkles-outline',
     backgroundColor: '#E0E7FF',
     textColor: '#3730A3',
   },
   LEARNING: {
-    label: 'Em estudo',
+    labelKey: 'reviewScreen.status.learning',
     icon: 'school-outline',
     backgroundColor: '#FEF3C7',
     textColor: '#92400E',
   },
   SCHEDULED: {
-    label: 'Agendada',
+    labelKey: 'reviewScreen.status.scheduled',
     icon: 'calendar-outline',
     backgroundColor: '#DCFCE7',
     textColor: '#166534',
   },
 };
 
-function formatReviewDate(dateValue: string | null) {
+function formatReviewDate(
+  t: (key: string, options?: Record<string, unknown>) => string,
+  dateValue: string | null
+) {
   if (!dateValue) {
-    return 'Nunca revisada';
+    return t('reviewScreen.date.never');
   }
 
   const date = new Date(dateValue);
 
   if (Number.isNaN(date.getTime())) {
-    return 'Data indisponível';
+    return t('reviewScreen.date.invalid');
   }
 
   return date.toLocaleDateString('pt-BR', {
@@ -119,6 +124,7 @@ function SummaryCard({
 }
 
 function VocabReviewItem({ item }: { item: ReviewDashboardItem }) {
+  const { t } = useTranslation();
   const config = statusConfig[item.status];
 
   return (
@@ -141,32 +147,34 @@ function VocabReviewItem({ item }: { item: ReviewDashboardItem }) {
           <Ionicons name={config.icon} size={13} color={config.textColor} />
 
           <Text style={[styles.statusText, { color: config.textColor }]}>
-            {config.label}
+            {t(config.labelKey)}
           </Text>
         </View>
       </View>
 
       <View style={styles.vocabDetails}>
         <Text style={styles.detailText}>
-          Revisões: <Text style={styles.detailValue}>{item.repetitions}</Text>
+          {t('reviewScreen.item.repetitionsLabel')} <Text style={styles.detailValue}>{item.repetitions}</Text>
         </Text>
 
         <Text style={styles.detailText}>
-          Sequência: <Text style={styles.detailValue}>{item.streak}</Text>
+          {t('reviewScreen.item.streakLabel')} <Text style={styles.detailValue}>{item.streak}</Text>
         </Text>
 
         <Text style={styles.detailText}>
-          Intervalo:{' '}
+          {t('reviewScreen.item.intervalLabel')}{' '}
           <Text style={styles.detailValue}>
-            {item.interval === 1 ? '1 dia' : `${item.interval} dias`}
+            {t('reviewScreen.item.intervalValue', { count: item.interval })}
           </Text>
         </Text>
       </View>
 
       <Text style={styles.nextReviewText}>
         {item.status === 'NEW'
-          ? 'Ainda não estudada'
-          : `Próxima revisão: ${formatReviewDate(item.nextDueAt)}`}
+          ? t('reviewScreen.item.notStudiedYet')
+          : t('reviewScreen.item.nextReview', {
+              date: formatReviewDate(t, item.nextDueAt),
+            })}
       </Text>
     </View>
   );
@@ -174,7 +182,8 @@ function VocabReviewItem({ item }: { item: ReviewDashboardItem }) {
 
 export default function VocabReviewScreen() {
   const router = useRouter();
-
+  const { t } = useTranslation();
+  const { activeLanguage, isLoadingProfile } = useProfile();
   const [lists, setLists] = useState<StudyList[]>([]);
   const [selectedListId, setSelectedListId] = useState('');
   const [dashboard, setDashboard] = useState<ReviewDashboard | null>(null);
@@ -221,7 +230,7 @@ export default function VocabReviewScreen() {
   }, []);
 
   const loadScreen = useCallback(
-    async (isRefresh = false) => {
+    async (isRefresh = false, reloadListsForCurrentLanguage = false) => {
       try {
         if (isRefresh) {
           setRefreshing(true);
@@ -231,14 +240,26 @@ export default function VocabReviewScreen() {
 
         setError(null);
 
+        /**
+         * Ao trocar o idioma, a listId previamente selecionada pertence
+         * ao idioma anterior. Portanto, ela não pode ser reutilizada.
+         */
+        if (reloadListsForCurrentLanguage) {
+          setDashboard(null);
+          setLists([]);
+          setSelectedListId('');
+        }
+
         let listIdToLoad = selectedListId;
 
-        if (!listIdToLoad) {
+        if (reloadListsForCurrentLanguage || !listIdToLoad) {
           listIdToLoad = await loadInitialData();
         }
 
         if (listIdToLoad) {
           await loadDashboard(listIdToLoad);
+        } else {
+          setDashboard(null);
         }
       } catch (err: any) {
         console.error(
@@ -246,18 +267,26 @@ export default function VocabReviewScreen() {
           err?.response?.data ?? err?.message ?? err
         );
 
-        setError('Não foi possível carregar as revisões.');
+        setError(t('reviewScreen.errors.loadFailed'));
       } finally {
         setLoading(false);
         setRefreshing(false);
       }
     },
-    [loadDashboard, loadInitialData, selectedListId]
+    [loadDashboard, loadInitialData, selectedListId, t]
   );
 
   useEffect(() => {
-    void loadScreen();
-  }, [loadScreen]);
+    if (isLoadingProfile || !activeLanguage?.id) {
+      return;
+    }
+
+    /**
+     * true força a tela a esquecer a lista selecionada no idioma anterior
+     * e carregar a lista padrão do idioma recém-ativado.
+     */
+    void loadScreen(false, true);
+  }, [activeLanguage?.id, isLoadingProfile, loadScreen]);
 
   const selectList = useCallback(
     async (listId: string) => {
@@ -273,19 +302,19 @@ export default function VocabReviewScreen() {
           err?.response?.data ?? err?.message ?? err
         );
 
-        setError('Não foi possível carregar esta lista.');
+        setError(t('reviewScreen.errors.listChangeFailed'));
       } finally {
         setRefreshing(false);
       }
     },
-    [loadDashboard]
+    [loadDashboard, t]
   );
 
   const startDueReview = useCallback(async () => {
     if (!selectedListId) {
       Alert.alert(
-        'Selecione uma lista',
-        'Escolha uma lista antes de iniciar a revisão.'
+        t('reviewScreen.alerts.selectListTitle'),
+        t('reviewScreen.alerts.selectListMessage')
       );
       return;
     }
@@ -304,8 +333,8 @@ export default function VocabReviewScreen() {
 
       if (!session.firstExercise) {
         Alert.alert(
-          'Nenhuma palavra pendente',
-          'Esta lista não possui palavras disponíveis para revisão agora.'
+          t('reviewScreen.alerts.noWordsTitle'),
+          t('reviewScreen.alerts.noWordsMessage')
         );
 
         await loadDashboard(selectedListId);
@@ -330,19 +359,19 @@ export default function VocabReviewScreen() {
       );
 
       Alert.alert(
-        'Não foi possível iniciar',
-        'Ocorreu um erro ao criar sua sessão de revisão.'
+        t('reviewScreen.alerts.startErrorTitle'),
+        t('reviewScreen.alerts.startErrorMessage')
       );
     } finally {
       setStarting(false);
     }
-  }, [loadDashboard, router, selectedListId]);
+  }, [loadDashboard, router, selectedListId, t]);
 
   if (loading) {
     return (
       <View style={styles.center}>
         <ActivityIndicator size="large" color={colors.primary} />
-        <Text style={styles.loadingText}>Carregando suas revisões...</Text>
+        <Text style={styles.loadingText}>{t('reviewScreen.loading')}</Text>
       </View>
     );
   }
@@ -354,7 +383,7 @@ export default function VocabReviewScreen() {
         <Text style={styles.errorText}>{error}</Text>
 
         <Pressable style={styles.primaryButton} onPress={() => loadScreen()}>
-          <Text style={styles.primaryButtonText}>Tentar novamente</Text>
+          <Text style={styles.primaryButtonText}>{t('reviewScreen.retry')}</Text>
         </Pressable>
       </View>
     );
@@ -374,36 +403,36 @@ export default function VocabReviewScreen() {
       }
     >
       <View style={styles.pageHeader}>
-  <View style={styles.headerText}>
-    <Text style={styles.title}>Revisões</Text>
+        <View style={styles.headerText}>
+          <Text style={styles.title}>{t('reviewScreen.title')}</Text>
 
-    <Text style={styles.subtitle}>
-      Acompanhe seu progresso e mantenha as palavras frescas na memória.
-    </Text>
-  </View>
+          <Text style={styles.subtitle}>
+            {t('reviewScreen.subtitle')}
+          </Text>
+        </View>
 
-  <Pressable
-    style={styles.progressButton}
-    onPress={() => router.push('/progress')}
-    accessibilityRole="button"
-    accessibilityLabel="Abrir progresso"
-  >
-    <Ionicons
-      name="stats-chart-outline"
-      size={18}
-      color={colors.primary}
-    />
+        <Pressable
+          style={styles.progressButton}
+          onPress={() => router.push('/progress')}
+          accessibilityRole="button"
+          accessibilityLabel={t('reviewScreen.progressButton.accessibilityLabel')}
+        >
+          <Ionicons
+            name="stats-chart-outline"
+            size={18}
+            color={colors.primary}
+          />
 
-    <Text style={styles.progressButtonText}>Progresso</Text>
-  </Pressable>
-</View>
+          <Text style={styles.progressButtonText}>{t('reviewScreen.progressButton.label')}</Text>
+        </Pressable>
+      </View>
 
       <View style={styles.card}>
-        <Text style={styles.sectionTitle}>Lista de vocabulários</Text>
+        <Text style={styles.sectionTitle}>{t('reviewScreen.lists.title')}</Text>
 
         {lists.length === 0 ? (
           <Text style={styles.emptyText}>
-            Você ainda não possui listas de vocabulário.
+            {t('reviewScreen.lists.empty')}
           </Text>
         ) : (
           <>
@@ -434,7 +463,9 @@ export default function VocabReviewScreen() {
 
             {!!selectedList && (
               <Text style={styles.helperText}>
-                Exibindo o progresso de: {selectedList.name}
+                {t('reviewScreen.lists.showingProgressOf', {
+                  name: selectedList.name,
+                })}
               </Text>
             )}
           </>
@@ -445,28 +476,28 @@ export default function VocabReviewScreen() {
         <>
           <View style={styles.summaryGrid}>
             <SummaryCard
-              label="Para revisar"
+              label={t('reviewScreen.summary.due')}
               value={dashboard.summary.dueNow}
               icon="alarm-outline"
               color="#DC2626"
             />
 
             <SummaryCard
-              label="Novas"
+              label={t('reviewScreen.summary.new')}
               value={dashboard.summary.newVocabs}
               icon="sparkles-outline"
               color="#4F46E5"
             />
 
             <SummaryCard
-              label="Em estudo"
+              label={t('reviewScreen.summary.learning')}
               value={dashboard.summary.learning}
               icon="school-outline"
               color="#D97706"
             />
 
             <SummaryCard
-              label="Agendadas"
+              label={t('reviewScreen.summary.scheduled')}
               value={dashboard.summary.scheduled}
               icon="calendar-outline"
               color="#16A34A"
@@ -487,7 +518,7 @@ export default function VocabReviewScreen() {
               <>
                 <Ionicons name="play-outline" size={20} color="#FFFFFF" />
                 <Text style={styles.primaryButtonText}>
-                  Revisar pendentes e novas
+                  {t('reviewScreen.buttons.reviewPendingAndNew')}
                 </Text>
               </>
             )}
@@ -495,18 +526,17 @@ export default function VocabReviewScreen() {
 
           {!hasItemsToStudy && (
             <Text style={styles.allDoneText}>
-              Tudo em dia. Suas palavras estão agendadas para revisões futuras. ✨
+              {t('reviewScreen.allDone')}
             </Text>
           )}
 
           <View style={styles.listHeader}>
-            <Text style={styles.sectionTitle}>Palavras da lista</Text>
+            <Text style={styles.sectionTitle}>{t('reviewScreen.wordsList.title')}</Text>
 
             <Text style={styles.listCount}>
-              {dashboard.summary.totalVocabs}{' '}
-              {dashboard.summary.totalVocabs === 1
-                ? 'palavra'
-                : 'palavras'}
+              {t('reviewScreen.wordsList.count', {
+                count: dashboard.summary.totalVocabs,
+              })}
             </Text>
           </View>
 
@@ -518,7 +548,7 @@ export default function VocabReviewScreen() {
                 color={colors.muted}
               />
               <Text style={styles.emptyText}>
-                Esta lista ainda não possui palavras.
+                {t('reviewScreen.wordsList.empty')}
               </Text>
             </View>
           ) : (
@@ -566,34 +596,34 @@ const styles = StyleSheet.create({
     color: colors.muted,
   },
   pageHeader: {
-  flexDirection: 'row',
-  alignItems: 'flex-start',
-  justifyContent: 'space-between',
-  gap: spacing.s3,
-},
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
+    gap: spacing.s3,
+  },
 
-headerText: {
-  flex: 1,
-},
+  headerText: {
+    flex: 1,
+  },
 
-progressButton: {
-  minHeight: 38,
-  flexDirection: 'row',
-  alignItems: 'center',
-  justifyContent: 'center',
-  gap: 6,
-  paddingHorizontal: spacing.s3,
-  borderWidth: 1,
-  borderColor: colors.primary,
-  borderRadius: radio.full,
-  backgroundColor: colors.surface,
-},
+  progressButton: {
+    minHeight: 38,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 6,
+    paddingHorizontal: spacing.s3,
+    borderWidth: 1,
+    borderColor: colors.primary,
+    borderRadius: radio.full,
+    backgroundColor: colors.surface,
+  },
 
-progressButtonText: {
-  color: colors.primary,
-  fontFamily: 'DM Sans SemiBold',
-  fontSize: 12,
-},
+  progressButtonText: {
+    color: colors.primary,
+    fontFamily: 'DM Sans SemiBold',
+    fontSize: 12,
+  },
 
   card: {
     backgroundColor: colors.surface,

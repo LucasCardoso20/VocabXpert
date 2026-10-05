@@ -8,6 +8,7 @@ import {
   Alert,
   TouchableOpacity,
 } from 'react-native';
+import { useTranslation } from 'react-i18next'; // Importe o hook useTranslation
 import SearchIcon from '../../src/components/icons/SearchIcon';
 import OnboardingButton from '../../src/components/onboarding/OnboardingButton';
 import { interests } from '../../src/data/onboardingData';
@@ -38,6 +39,7 @@ const OnboardingStep3: React.FC<Step3Props> = ({
   onNext,
   isLoading,
 }) => {
+  const { t } = useTranslation(); // Inicialize o hook de tradução
   const [searchQuery, setSearchQuery] = useState('');
   const [customInterestText, setCustomInterestText] = useState('');
 
@@ -67,7 +69,7 @@ const OnboardingStep3: React.FC<Step3Props> = ({
     if (!trimmedText) return;
 
     if (selectedInterests.includes(trimmedText)) {
-      Alert.alert('Atenção', 'Este interesse já foi adicionado.');
+      Alert.alert(t('onboarding.step3.alerts.attentionTitle'), t('onboarding.step3.alerts.duplicateInterest')); // Usando a chave de tradução
       return;
     }
 
@@ -81,24 +83,24 @@ const OnboardingStep3: React.FC<Step3Props> = ({
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
-        <Text style={styles.title}>Quais são seus interesses?</Text>
+        <Text style={styles.title}>{t('onboarding.step3.title')}</Text>
 
         <View style={[styles.searchInputContainer, getShadow('sh1')]}>
           <SearchIcon color={colors.light} size={18} />
           <TextInput
             style={styles.searchInput}
-            placeholder="Pesquisar..."
+            placeholder={t('onboarding.step3.searchPlaceholder')}
             placeholderTextColor={colors.light}
             value={searchQuery}
             onChangeText={setSearchQuery}
           />
         </View>
 
-        <Text style={styles.label}>Adicionar interesse personalizado:</Text>
+        <Text style={styles.label}>{t('onboarding.step3.customInterestLabel')}</Text>
         <View style={[styles.customInterestInputContainer, getShadow('sh1')]}>
           <TextInput
             style={styles.customInterestInput}
-            placeholder="Ex: Criptomoedas, Astrofísica, Culinária Francesa..."
+            placeholder={t('onboarding.step3.customInterestPlaceholder')}
             placeholderTextColor={colors.light}
             value={customInterestText}
             onChangeText={setCustomInterestText}
@@ -108,7 +110,7 @@ const OnboardingStep3: React.FC<Step3Props> = ({
             onPress={handleAddCustomInterest}
             style={styles.addInterestButton}
           >
-            <Text style={styles.addInterestButtonText}>Adicionar</Text>
+            <Text style={styles.addInterestButtonText}>{t('onboarding.step3.addButton')}</Text>
           </TouchableOpacity>
         </View>
 
@@ -159,7 +161,7 @@ const OnboardingStep3: React.FC<Step3Props> = ({
       </ScrollView>
 
       <OnboardingButton
-        label="Começar a Aprender!"
+        label={t('onboarding.step3.startButton')}
         onPress={onNext}
         isLoading={isLoading}
         isDisabled={isNextDisabled}

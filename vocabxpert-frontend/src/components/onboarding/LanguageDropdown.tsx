@@ -1,6 +1,7 @@
 // src/components/onboarding/LanguageDropdown.tsx
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Modal, FlatList } from 'react-native';
+import { useTranslation } from 'react-i18next'; // Importe o hook useTranslation
 import ChevronDownIcon from '../icons/ChevronDownIcon';
 import CheckmarkIcon from '../icons/CheckmarkIcon';
 import { colors } from '../../theme/colors';
@@ -16,6 +17,7 @@ interface LanguageDropdownProps {
 }
 
 const LanguageDropdown: React.FC<LanguageDropdownProps> = ({ selectedLanguageId, onSelectLanguage, label }) => {
+  const { t } = useTranslation(); // Inicialize o hook de tradução
   const [modalVisible, setModalVisible] = useState(false);
   const selectedLanguage = languages.find(lang => lang.id === selectedLanguageId);
 
@@ -38,7 +40,7 @@ const LanguageDropdown: React.FC<LanguageDropdownProps> = ({ selectedLanguageId,
               <Text style={styles.selectedText}>{selectedLanguage.name}</Text>
             </>
           ) : (
-            <Text style={styles.placeholderText}>Selecione um idioma</Text>
+            <Text style={styles.placeholderText}>{t('onboarding.languageDropdown.placeholder')}</Text>
           )}
         </View>
         <ChevronDownIcon size={20} color={colors.muted} />

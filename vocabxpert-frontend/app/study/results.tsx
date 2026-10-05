@@ -17,6 +17,7 @@ import {
   getStudySessionStats,
   StudySessionStats,
 } from '@/src/screens/study/services/studyStatsService';
+import { useTranslation } from 'react-i18next';
 
 function getSessionDuration(
   startedAt: string,
@@ -37,11 +38,11 @@ function getSessionDuration(
   return `${minutes}min ${remainingSeconds}s`;
 }
 
-function getPerformanceLabel(percentage: number) {
-  if (percentage >= 90) return 'Excelente!';
-  if (percentage >= 75) return 'Muito bom!';
-  if (percentage >= 55) return 'Bom progresso!';
-  return 'Continue praticando!';
+function getPerformanceLabel(percentage: number, t: any) {
+  if (percentage >= 90) return t('study.results.performance.excellent');
+  if (percentage >= 75) return t('study.results.performance.veryGood');
+  if (percentage >= 55) return t('study.results.performance.goodProgress');
+  return t('study.results.performance.keepPracticing');
 }
 
 type MetricProps = {
@@ -61,6 +62,7 @@ function Metric({ value, label, color }: MetricProps) {
 
 export default function StudyResultsScreen() {
   const router = useRouter();
+  const { t } = useTranslation(); // Inicialize o hook de tradução
   const params = useLocalSearchParams<{ sessionId?: string | string[] }>();
 
   const sessionId = Array.isArray(params.sessionId)
@@ -102,7 +104,7 @@ export default function StudyResultsScreen() {
     return (
       <View style={styles.center}>
         <ActivityIndicator color={colors.primary} />
-        <Text style={styles.loadingText}>Preparando seu resultado...</Text>
+        <Text style={styles.loadingText}>{t('study.results.preparing')}</Text>
       </View>
     );
   }
@@ -110,17 +112,17 @@ export default function StudyResultsScreen() {
   if (!stats) {
     return (
       <View style={styles.center}>
-        <Text style={styles.errorTitle}>Resultado indisponível</Text>
+        <Text style={styles.errorTitle}>{t('study.results.unavailableTitle')}</Text>
 
         <Text style={styles.errorText}>
-          Não encontramos os dados desta sessão de estudo.
+          {t('study.results.unavailableText')}
         </Text>
 
         <Pressable
           style={styles.primaryButton}
           onPress={() => router.replace('/(tabs)')}
         >
-          <Text style={styles.primaryButtonText}>Voltar ao início</Text>
+          <Text style={styles.primaryButtonText}>{t('study.results.backToHome')}</Text>
         </Pressable>
       </View>
     );
@@ -139,85 +141,85 @@ export default function StudyResultsScreen() {
             <Text style={styles.trophyEmoji}>🎉</Text>
           </View>
 
-          <Text style={styles.title}>Sessão concluída!</Text>
+          <Text style={styles.title}>{t('study.results.sessionCompleted')}</Text>
 
           <Text style={styles.subtitle}>
-            {getPerformanceLabel(performance)}
+            {getPerformanceLabel(performance, t)}
           </Text>
 
           <View style={styles.performanceCircle}>
             <Text style={styles.performanceValue}>{performance}%</Text>
-            <Text style={styles.performanceLabel}>desempenho</Text>
+            <Text style={styles.performanceLabel}>{t('study.results.performance')}</Text>
           </View>
         </View>
 
         <View style={styles.summaryCard}>
-          <Text style={styles.cardTitle}>Resumo da sessão</Text>
+          <Text style={styles.cardTitle}>{t('study.results.sessionSummary')}</Text>
 
           <View style={styles.metricsGrid}>
             <Metric
               value={stats.answered}
-              label="Respondidos"
+              label={t('study.results.metrics.answered')}
               color={colors.primary}
             />
 
             <Metric
               value={duration}
-              label="Duração"
+              label={t('study.results.metrics.duration')}
               color="#8B5CF6"
             />
 
             <Metric
               value={stats.known}
-              label="Conhecidos"
+              label={t('study.results.metrics.known')}
               color="#16A34A"
             />
 
             <Metric
               value={stats.unknown}
-              label="Revisar"
+              label={t('study.results.metrics.review')}
               color="#EA580C"
             />
 
             <Metric
               value={stats.skipped}
-              label="Pulados"
+              label={t('study.results.metrics.skipped')}
               color="#64748B"
             />
           </View>
         </View>
 
         <View style={styles.summaryCard}>
-          <Text style={styles.cardTitle}>Resultados</Text>
+          <Text style={styles.cardTitle}>{t('study.results.results')}</Text>
 
           <View style={styles.resultRow}>
             <View style={[styles.dot, { backgroundColor: '#16A34A' }]} />
-            <Text style={styles.resultLabel}>Corretas</Text>
+            <Text style={styles.resultLabel}>{t('study.results.correct')}</Text>
             <Text style={styles.resultValue}>{stats.correct}</Text>
           </View>
 
           <View style={styles.resultRow}>
             <View style={[styles.dot, { backgroundColor: '#F59E0B' }]} />
-            <Text style={styles.resultLabel}>Parciais</Text>
+            <Text style={styles.resultLabel}>{t('study.results.partial')}</Text>
             <Text style={styles.resultValue}>{stats.partial}</Text>
           </View>
 
           <View style={styles.resultRow}>
             <View style={[styles.dot, { backgroundColor: '#EF4444' }]} />
-            <Text style={styles.resultLabel}>Incorretas</Text>
+            <Text style={styles.resultLabel}>{t('study.results.incorrect')}</Text>
             <Text style={styles.resultValue}>{stats.incorrect}</Text>
           </View>
 
           <View style={styles.resultRow}>
             <View style={[styles.dot, { backgroundColor: '#64748B' }]} />
-            <Text style={styles.resultLabel}>Pulados</Text>
+            <Text style={styles.resultLabel}>{t('study.results.skipped')}</Text>
             <Text style={styles.resultValue}>{stats.skipped}</Text>
           </View>
         </View>
 
         {Object.keys(stats.exerciseTypes).length > 0 && (
           <View style={styles.summaryCard}>
-            <Text style={styles.cardTitle}>Exercícios praticados</Text>
+            <Text style={styles.cardTitle}>{t('study.results.exercisesPracticed')}</Text>
 
             {Object.entries(stats.exerciseTypes).map(
               ([exerciseType, total]) => (
@@ -227,7 +229,7 @@ export default function StudyResultsScreen() {
                   </Text>
 
                   <Text style={styles.exerciseTypeValue}>
-                    {total} {total === 1 ? 'vez' : 'vezes'}
+                    {t('study.results.timesCount', { count: total })}
                   </Text>
                 </View>
               )
@@ -237,7 +239,7 @@ export default function StudyResultsScreen() {
 
         {Object.keys(stats.skippedExerciseTypes).length > 0 && (
           <View style={styles.summaryCard}>
-            <Text style={styles.cardTitle}>Exercícios pulados</Text>
+            <Text style={styles.cardTitle}>{t('study.results.exercisesSkipped')}</Text>
 
             {Object.entries(stats.skippedExerciseTypes).map(
               ([exerciseType, total]) => (
@@ -247,7 +249,7 @@ export default function StudyResultsScreen() {
                   </Text>
 
                   <Text style={styles.exerciseTypeValue}>
-                    {total} {total === 1 ? 'vez' : 'vezes'}
+                    {t('study.results.timesCount', { count: total })}
                   </Text>
                 </View>
               )
@@ -259,27 +261,26 @@ export default function StudyResultsScreen() {
           style={styles.primaryButton}
           onPress={() => router.replace('/reviews')}
         >
-          <Text style={styles.primaryButtonText}>Ver minhas revisões</Text>
+          <Text style={styles.primaryButtonText}>{t('study.results.viewReviews')}</Text>
         </Pressable>
 
         <Pressable
           style={styles.outlineButton}
           onPress={() => router.replace('/study')}
         >
-          <Text style={styles.outlineButtonText}>Estudar novamente</Text>
+          <Text style={styles.outlineButtonText}>{t('study.results.studyAgain')}</Text>
         </Pressable>
 
         <Pressable
           style={styles.secondaryButton}
           onPress={() => router.replace('/(tabs)')}
         >
-          <Text style={styles.secondaryButtonText}>Voltar ao início</Text>
+          <Text style={styles.secondaryButtonText}>{t('study.results.backToHome')}</Text>
         </Pressable>
       </ScrollView>
     </View>
   );
 }
-
 const styles = StyleSheet.create({
   screen: {
     flex: 1,

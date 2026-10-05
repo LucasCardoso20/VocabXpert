@@ -10,6 +10,7 @@ import {
   Text,
   View,
 } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 import { colors } from '@/src/theme/colors';
 import { radio } from '@/src/theme/radio';
@@ -20,21 +21,26 @@ import {
   type ProgressActivityItem,
   type ProgressOverview,
 } from './services/progressService';
+import { useProfile } from '@/src/contexts/ProfileContext';
 
-function getPerformanceMessage(score: number, totalReviews: number) {
+function getPerformanceMessage(
+  t: (key: string, options?: Record<string, unknown>) => string,
+  score: number,
+  totalReviews: number
+) {
   if (totalReviews === 0) {
-    return 'Conclua alguns exercícios para acompanhar seu desempenho.';
+    return t('progressScreen.performance.empty');
   }
 
   if (score >= 85) {
-    return 'Excelente trabalho. Seu vocabulário está ficando bem sólido.';
+    return t('progressScreen.performance.excellent');
   }
 
   if (score >= 60) {
-    return 'Bom progresso. Continue revisando para consolidar as palavras.';
+    return t('progressScreen.performance.good');
   }
 
-  return 'Você está praticando — essas palavras voltarão em breve.';
+  return t('progressScreen.performance.practicing');
 }
 
 function getDayLabel(dateString: string) {
@@ -48,16 +54,15 @@ function getDayLabel(dateString: string) {
     .replace(/^./, (letter) => letter.toUpperCase());
 }
 
-function getStreakLabel(streak: number) {
+function getStreakLabel(
+  t: (key: string, options?: Record<string, unknown>) => string,
+  streak: number
+) {
   if (streak === 0) {
-    return 'Comece sua sequência hoje';
+    return t('progressScreen.streak.zero');
   }
 
-  if (streak === 1) {
-    return '1 dia seguido estudando';
-  }
-
-  return `${streak} dias seguidos estudando`;
+  return t('progressScreen.streak.label', { count: streak });
 }
 
 function SummaryCard({
@@ -124,7 +129,8 @@ function ActivityChart({ activity }: { activity: ProgressActivityItem[] }) {
 
 export default function ProgressScreen() {
   const router = useRouter();
-
+  const { t } = useTranslation();
+  const { activeLanguage, isLoadingProfile } = useProfile();
   const [data, setData] = useState<ProgressOverview | null>(null);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
@@ -140,6 +146,12 @@ export default function ProgressScreen() {
 
       setError(null);
 
+      /**
+       * Ao trocar idioma, removemos o resultado anterior enquanto o backend
+       * calcula o overview do novo contexto.
+       */
+      setData(null);
+
       const overview = await fetchProgressOverview();
       setData(overview);
     } catch (err: any) {
@@ -148,16 +160,20 @@ export default function ProgressScreen() {
         err?.response?.data ?? err?.message ?? err
       );
 
-      setError('Não foi possível carregar seu progresso.');
+      setError(t('progressScreen.errors.loadFailed'));
     } finally {
       setLoading(false);
       setRefreshing(false);
     }
-  }, []);
+  }, [activeLanguage?.id, t]);
 
   useEffect(() => {
+  if (isLoadingProfile || !activeLanguage?.id) {
+    return;
+  }
+
   void loadProgress();
-}, [loadProgress]);
+}, [activeLanguage?.id, isLoadingProfile, loadProgress]);
 
   const attentionItems = useMemo(() => {
     if (!data) {
@@ -169,36 +185,30 @@ export default function ProgressScreen() {
 
     if (summary.dueNow > 0) {
       items.push(
-        `${summary.dueNow} ${
-          summary.dueNow === 1 ? 'palavra precisa' : 'palavras precisam'
-        } de revisão`
+        t('progressScreen.attention.dueNow', { count: summary.dueNow })
       );
     }
 
     if (summary.newVocabs > 0) {
       items.push(
-        `${summary.newVocabs} ${
-          summary.newVocabs === 1 ? 'palavra ainda é nova' : 'palavras ainda são novas'
-        }`
+        t('progressScreen.attention.newVocabs', { count: summary.newVocabs })
       );
     }
 
     if (summary.scheduled > 0) {
       items.push(
-        `${summary.scheduled} ${
-          summary.scheduled === 1 ? 'palavra está agendada' : 'palavras estão agendadas'
-        }`
+        t('progressScreen.attention.scheduled', { count: summary.scheduled })
       );
     }
 
     return items;
-  }, [data]);
+  }, [data, t]);
 
   if (loading) {
     return (
       <View style={styles.center}>
         <ActivityIndicator size="large" color={colors.primary} />
-        <Text style={styles.loadingText}>Carregando seu progresso...</Text>
+        <Text style={styles.loadingText}>{t('progressScreen.loading')}</Text>
       </View>
     );
   }
@@ -211,7 +221,7 @@ export default function ProgressScreen() {
         <Text style={styles.errorText}>{error}</Text>
 
         <Pressable style={styles.primaryButton} onPress={() => loadProgress()}>
-          <Text style={styles.primaryButtonText}>Tentar novamente</Text>
+          <Text style={styles.primaryButtonText}>{t('progressScreen.retryButton')}</Text>
         </Pressable>
       </View>
     );
@@ -237,10 +247,10 @@ export default function ProgressScreen() {
       }
     >
       <View>
-        <Text style={styles.title}>Seu progresso</Text>
+        <Text style={styles.title}>{t('progressScreen.title')}</Text>
 
         <Text style={styles.subtitle}>
-          Veja como seu vocabulário evolui a cada sessão.
+          {t('progressScreen.subtitle')}
         </Text>
       </View>
 
@@ -252,14 +262,12 @@ export default function ProgressScreen() {
         <View style={styles.streakContent}>
           <Text style={styles.streakValue}>
             {summary.currentStreak === 0
-              ? 'Sua sequência começa agora'
-              : `${summary.currentStreak} ${
-                  summary.currentStreak === 1 ? 'dia' : 'dias'
-                }`}
+              ? t('progressScreen.streak.startNow')
+              : t('progressScreen.streak.days', { count: summary.currentStreak })}
           </Text>
 
           <Text style={styles.streakLabel}>
-            {getStreakLabel(summary.currentStreak)}
+            {getStreakLabel(t, summary.currentStreak)}
           </Text>
         </View>
       </View>
@@ -270,42 +278,42 @@ export default function ProgressScreen() {
             {summary.totalReviews > 0 ? `${summary.averageScore}%` : '—'}
           </Text>
 
-          <Text style={styles.scoreLabel}>média</Text>
+          <Text style={styles.scoreLabel}>{t('progressScreen.score.label')}</Text>
         </View>
 
         <View style={styles.scoreContent}>
-          <Text style={styles.scoreTitle}>Desempenho geral</Text>
+          <Text style={styles.scoreTitle}>{t('progressScreen.score.title')}</Text>
 
           <Text style={styles.scoreDescription}>
-            {getPerformanceMessage(summary.averageScore, summary.totalReviews)}
+            {getPerformanceMessage(t, summary.averageScore, summary.totalReviews)}
           </Text>
         </View>
       </View>
 
       <View style={styles.summaryGrid}>
         <SummaryCard
-          label="Total"
+          label={t('progressScreen.summary.total')}
           value={summary.totalVocabs}
           icon="library-outline"
           color={colors.primary}
         />
 
         <SummaryCard
-          label="Revisões"
+          label={t('progressScreen.summary.reviews')}
           value={summary.totalReviews}
           icon="checkmark-done-outline"
           color="#16A34A"
         />
 
         <SummaryCard
-          label="Pendentes"
+          label={t('progressScreen.summary.pending')}
           value={summary.dueNow}
           icon="alarm-outline"
           color="#DC2626"
         />
 
         <SummaryCard
-          label="Em estudo"
+          label={t('progressScreen.summary.learning')}
           value={summary.learning}
           icon="school-outline"
           color="#D97706"
@@ -315,8 +323,8 @@ export default function ProgressScreen() {
       <View style={styles.card}>
         <View style={styles.cardHeader}>
           <View>
-            <Text style={styles.cardTitle}>Atividade semanal</Text>
-            <Text style={styles.cardSubtitle}>Revisões nos últimos 7 dias</Text>
+            <Text style={styles.cardTitle}>{t('progressScreen.activity.title')}</Text>
+            <Text style={styles.cardSubtitle}>{t('progressScreen.activity.subtitle')}</Text>
           </View>
 
           <Ionicons name="bar-chart-outline" size={22} color={colors.primary} />
@@ -328,9 +336,9 @@ export default function ProgressScreen() {
       <View style={styles.card}>
         <View style={styles.cardHeader}>
           <View>
-            <Text style={styles.cardTitle}>Pontos de atenção</Text>
+            <Text style={styles.cardTitle}>{t('progressScreen.attention.title')}</Text>
             <Text style={styles.cardSubtitle}>
-              Uma visão rápida da sua agenda
+              {t('progressScreen.attention.subtitle')}
             </Text>
           </View>
 
@@ -343,7 +351,7 @@ export default function ProgressScreen() {
 
         {attentionItems.length === 0 ? (
           <Text style={styles.emptyText}>
-            Adicione palavras e conclua sessões para acompanhar sua evolução.
+            {t('progressScreen.attention.empty')}
           </Text>
         ) : (
           <View style={styles.attentionList}>
@@ -362,7 +370,7 @@ export default function ProgressScreen() {
         onPress={() => router.push('/reviews')}
       >
         <Ionicons name="calendar-outline" size={19} color="#FFFFFF" />
-        <Text style={styles.primaryButtonText}>Ver minhas revisões</Text>
+        <Text style={styles.primaryButtonText}>{t('progressScreen.reviewsButton')}</Text>
       </Pressable>
 
       <Pressable
@@ -370,7 +378,7 @@ export default function ProgressScreen() {
         onPress={() => router.push('/study')}
       >
         <Ionicons name="play-outline" size={19} color={colors.primary} />
-        <Text style={styles.outlineButtonText}>Estudar agora</Text>
+        <Text style={styles.outlineButtonText}>{t('progressScreen.studyButton')}</Text>
       </Pressable>
     </ScrollView>
   );
